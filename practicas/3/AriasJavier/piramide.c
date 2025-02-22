@@ -1,7 +1,9 @@
 #include <stdio.h>
 
 int main () {
-    int n = 6;
+    int n;
+    printf("Ingresa el tamaño de la piramide: ");
+    scanf("%d", &n);
 
     printf("Hola.\n");
     for(int i = 0; i < n; i++) {
