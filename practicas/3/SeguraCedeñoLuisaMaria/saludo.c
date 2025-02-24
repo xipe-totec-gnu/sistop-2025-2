@@ -1,6 +1,13 @@
 #include <stdio.h>
+#include <string.h>
 
-int main() {
-    printf("Hola, mundo!\n");
-    return 0;
+int main(int argc, char *argv[]) {
+  if (argc > 1) {
+    printf("Hola, %s!\n", argv[1]);
+  } else {
+    printf("Hola, Mundo!\n");
+  }
+  return 0;
 }
+
+
