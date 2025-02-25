@@ -1,9 +1,14 @@
 #include<stdio.h>
 
 int main (void) {
-  printf("Hola mundo\n");
+  char nombre[10];
+  printf("Cual es tu nombre? ");
+  scanf("%s", &nombre);
+  printf("Hola %s\n", nombre);
   return(0);
 }
+
+
 
 
 
