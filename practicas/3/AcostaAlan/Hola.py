@@ -1,2 +1,2 @@
-
-print(f"¡Hola, Alan Acosta Jacinto!")
+nombre = input("Ingresa tu nombre: ")
+print(f"¡Hola, {nombre}!")
