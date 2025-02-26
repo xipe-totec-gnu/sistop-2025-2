@@ -1,7 +1,13 @@
 // Nombre del archivo: HolaAnuar.java
 
+import java.util.Scanner;
+
 public class HolaAnuar {
     public static void main(String[] args) {
-        // Imprime "Hola sooooooy Anuar" en la consola
-        System.out.println("Hola soooooy Anuar");
-    }A
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Por favor, ingresa tu nombre: ");
+        String nombre = scanner.nextLine();
+        System.out.println("Hola, " + nombre + ":)");
+        scanner.close();
+    }
+}
