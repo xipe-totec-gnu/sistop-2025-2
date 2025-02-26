@@ -1,0 +1,1 @@
+sistema operativo: MINGW64_NT-10.0-22621 OlympusNet 3.5.4-395fda67.x86_64 2024-11-25 09:49 UTC x86_64 Msys
