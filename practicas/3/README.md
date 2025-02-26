@@ -1,7 +1,7 @@
 # Práctica 3: ¡Mis proyectos evolucionan!
 
 	Práctica creada: 2025.02.20
-	Entrega en tiempo: 2020.02.27
+	Entrega en tiempo: 2025.02.27
 
 ## Un proyecto implica avance
 
@@ -199,6 +199,9 @@ importa es realizar la práctica.
    diferencias entre ① el repositorio antes de que inicien su trabajo, ② en el
    punto intermedio en que tienen el programa en su primer estado, y ③ el estado
    final, con el programa con el saludo personlizado.
+
+   ¡Ojo! Entrega los pantallazos _como archivos, como parte del pull request_, y
+   no como comentarios en el *commit*.
 
 Puntos fundamental a considerar:
 

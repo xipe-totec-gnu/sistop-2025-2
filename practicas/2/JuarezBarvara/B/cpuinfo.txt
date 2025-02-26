@@ -1,0 +1,1 @@
+Información de CPU no disponible en Windows, agregando texto de prueba.
