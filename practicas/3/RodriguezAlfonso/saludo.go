@@ -1,7 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+)
 
 func main() {
-	fmt.Println("Hola mundo!")
+	fmt.Println("Introduzca su nombre:")
+	reader := bufio.NewReader(os.Stdin)
+	line, err := reader.ReadString('\n')
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%s mundo! Digo, Hola %s", line, line)
 }
