@@ -21,6 +21,7 @@ int ordenaM (int *a, int n) { //Se envia el arreglo y el numero de datos que deb
 int main () {
     int n = 10;
     int a[] = {3, 22, 9, 100, 19, 0,11000,15632,201932,2012010};
+    printf("Bienvenido usuario\n");
     printf("Tu numero mas grande es: %d\n", ordenaM(a, n));
     return(0);
 }
