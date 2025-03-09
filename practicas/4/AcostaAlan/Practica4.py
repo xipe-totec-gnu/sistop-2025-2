@@ -11,7 +11,7 @@ def tarea(nombre, tiempo):
 hilo1 = threading.Thread(target=tarea, args=("Hilo 1", 1))
 hilo2 = threading.Thread(target=tarea, args=("Hilo 2", 1.5))
 
-# Iniciar hilos
+# Iniciar hiloss
 hilo1.start()
 hilo2.start()
 
@@ -19,4 +19,6 @@ hilo2.start()
 hilo1.join()
 hilo2.join()
 
+#Se hizo un comenatrio donde se aprecia el cambio 
+#que se realizo al codigo 
 print("Ejecución finalizada.")
