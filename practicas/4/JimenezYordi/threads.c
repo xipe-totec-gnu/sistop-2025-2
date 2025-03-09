@@ -11,7 +11,7 @@ int main() {
     #pragma omp parallel
     {
         int thread_id = omp_get_thread_num();
-        printf("Hello, this is thread number %d", thread_id);
+        printf("Hello, this is thread number %d/n", thread_id);
     }
 
     return 0;
