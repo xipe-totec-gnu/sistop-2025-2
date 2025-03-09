@@ -12,9 +12,9 @@ int main() {
     pthread_t hilo;  
 
     pthread_create(&hilo, NULL, imprimir_numeros, NULL);
-    printf("Este mensaje se ejecuta mientras el hilo trabaja.\n");
+    printf("Mensaje que se ejecuta mientras el hilo trabaja.\n");
     pthread_join(hilo, NULL);
-    printf("El hilo ha finalizado.\n");
+    printf("Fin del hilo.\n");
 
     return 0;
 }
