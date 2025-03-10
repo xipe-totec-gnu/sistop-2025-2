@@ -13,6 +13,6 @@ class Hilo extends Thread{
 	public static void main(String[] args) {
 		new Hilo("Primer Hilo").start();
 		new Hilo("Segundo Hilo").start();
-		System.out.print("Termina el hilo principal");
+		System.out.println("Termina el hilo principal");
 	}
 }
