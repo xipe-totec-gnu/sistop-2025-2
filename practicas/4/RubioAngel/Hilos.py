@@ -21,5 +21,6 @@ hilo2.start()
 # Esperar a que los hilos terminen
 hilo1.join()
 hilo2.join()
-
+#Agregamos solo un comentario para que se visualice
+print("Comentario")
 print("Tarea finalizada. Revisa 'resultado.txt'.")
