@@ -1,7 +1,7 @@
 # Práctica 3: ¡Mis proyectos evolucionan!
 
 	Práctica creada: 2025.02.20
-	Entrega en tiempo: 2020.02.27
+	Entrega en tiempo: 2025.02.27
 
 ## Un proyecto implica avance
 
