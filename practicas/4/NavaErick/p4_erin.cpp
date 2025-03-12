@@ -22,7 +22,7 @@ int main(){
     }
     //imprimir resultados
     for(int i=0;i<3;i++){
-        cout << "Resultado de la primer multiplicacion: " << resultados[i];
+        cout << "Resultado de la primer multiplicacion: " << resultados[i] << endl;
     }
     
     
