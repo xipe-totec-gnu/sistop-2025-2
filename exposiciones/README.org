@@ -24,6 +24,7 @@
   | 2025.04.08 | Pacman: El motor de gestión de software en Arch Linux                                         | Andrea Saldaña y Emiliano Salgado          |       |            |           |            |
   | 2025.04.08 | Manejo de recursos en los videojuegos de 8 bits                                               | Alfonso Rodríguez y Emilia Macarena        |       |            |           |            |
   | 2025.04.14 | /Vacaciones de Semana Santa/                                                                  |                                            |       |            |           |            |
+  | 2025.04.21 | Unix y su papel en la historia de los Sistemas Operativos                                     | Alan Acosta y José Ángel Rubio             |       |            |           |            |
   |------------+-----------------------------------------------------------------------------------------------+--------------------------------------------+-------+------------+-----------+------------|
 
 * Rúbrica de evaluación
