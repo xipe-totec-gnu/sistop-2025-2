@@ -43,8 +43,13 @@
     Ojo: Reconozco como natural que empleen herramientas generativas de IA para
     realizar parte de su investigación e incluso para estructurar las ideas,
     pero /tanto para los documentos como para la presentación/, es indispensable
-    que la autoría (incluyendo redacción y formateo) de sus entregas sea de
+    que _la autoría (incluyendo redacción y formateo) de sus entregas_ sea de
     /ustedes/, no de una herramienta.
+
+  - El documento que desarrollen debe ser /conciso/ (3 a 4 páginas) y /completo/
+    (cubrir el material completo que quieran exponer). Consideren que la
+    exposición en video debe ser de unos 15-20 minutos; desarrollar más de 4
+    páginas llevará a un material demasiado largo 😐
 
   - La elección de tema y fecha deben ser acordadas previamente con el
     profesor, con no menos de dos semanas de anticipación.
