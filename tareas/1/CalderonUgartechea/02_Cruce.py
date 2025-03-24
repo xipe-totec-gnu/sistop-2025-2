@@ -14,7 +14,6 @@
 
 import threading
 import random
-import time
 import tkinter as tk
 import math
 
@@ -27,16 +26,16 @@ class IntersectionGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Intersection Simulation with Two Roads per Direction")
-        self.root.geometry("800x800")
+        self.root.geometry("1200x1200")
         self.frame = tk.Frame(root)
         self.frame.pack(fill=tk.BOTH, expand=True)
         self.canvas = tk.Canvas(self.frame, bg="white")
         self.canvas.pack(fill=tk.BOTH, expand=True)
         self.control_panel = tk.Frame(root)
         self.control_panel.pack(fill=tk.X, pady=5)
-        self.status_label = tk.Label(self.control_panel, text="Simulation Status: Running", font=("Courier", 10))
+        self.status_label = tk.Label(self.control_panel, text="Simulation Status: Running", font=("Courier", 14))
         self.status_label.pack(side=tk.LEFT, padx=10)
-        self.car_count_label = tk.Label(self.control_panel, text="Cars: 0", font=("Courier", 10))
+        self.car_count_label = tk.Label(self.control_panel, text="Cars: 0", font=("Courier", 14))
         self.car_count_label.pack(side=tk.RIGHT, padx=10)
         self.canvas.bind("<Configure>", self.draw_intersection)
         self.car_objects = {}
@@ -49,8 +48,8 @@ class IntersectionGUI:
         self.center_x = width // 2
         self.center_y = height // 2
 
-        # Define lane_width so that each road (with two lanes).
-        lane_width = min(width, height) // 16
+        # Define lane_width so that each road (with two lanes) is wider now
+        lane_width = min(width, height) // 12
         self.lane_width = lane_width
 
         # Draw roads (each direction gets two lanes)
@@ -135,17 +134,17 @@ class IntersectionGUI:
             fill="lightgray", outline="white", width=2, tags="q3"
         )
 
-        # Label the roads/directions
-        self.canvas.create_text(self.center_x, 20, text="North", font=("Courier", 12, "bold"))
-        self.canvas.create_text(width - 40, self.center_y, text="East", font=("Courier", 12, "bold"))
-        self.canvas.create_text(self.center_x, height - 20, text="South", font=("Courier", 12, "bold"))
-        self.canvas.create_text(40, self.center_y, text="West", font=("Courier", 12, "bold"))
+        # Label the roads/directions with larger fonts
+        self.canvas.create_text(self.center_x, 30, text="North", font=("Courier", 16, "bold"))
+        self.canvas.create_text(width - 60, self.center_y, text="East", font=("Courier", 16, "bold"))
+        self.canvas.create_text(self.center_x, height - 30, text="South", font=("Courier", 16, "bold"))
+        self.canvas.create_text(60, self.center_y, text="West", font=("Courier", 16, "bold"))
 
-        # Label quadrants
-        self.canvas.create_text(self.center_x - lane_width/2, self.center_y - lane_width/2, text="0", font=("Courier", 10, "bold"))
-        self.canvas.create_text(self.center_x + lane_width/2, self.center_y - lane_width/2, text="1", font=("Courier", 10, "bold"))
-        self.canvas.create_text(self.center_x + lane_width/2, self.center_y + lane_width/2, text="2", font=("Courier", 10, "bold"))
-        self.canvas.create_text(self.center_x - lane_width/2, self.center_y + lane_width/2, text="3", font=("Courier", 10, "bold"))
+        # Label quadrants with larger font
+        self.canvas.create_text(self.center_x - lane_width/2, self.center_y - lane_width/2, text="0", font=("Courier", 14, "bold"))
+        self.canvas.create_text(self.center_x + lane_width/2, self.center_y - lane_width/2, text="1", font=("Courier", 14, "bold"))
+        self.canvas.create_text(self.center_x + lane_width/2, self.center_y + lane_width/2, text="2", font=("Courier", 14, "bold"))
+        self.canvas.create_text(self.center_x - lane_width/2, self.center_y + lane_width/2, text="3", font=("Courier", 14, "bold"))
 
     # Update the color of a quadrant to indicate if it is occupied by a car.
     def update_section(self, section, occupied, car_color="red"):
@@ -160,7 +159,7 @@ class IntersectionGUI:
     def create_car(self, car_id, origin, color):
         width = self.canvas.winfo_width()
         height = self.canvas.winfo_height()
-        lane_width = min(width, height) // 16
+        lane_width = min(width, height) // 12
         self.lane_width = lane_width
 
         start_positions = {
@@ -170,14 +169,14 @@ class IntersectionGUI:
             3: (50, self.center_y + lane_width/2)                               # West incoming (bottom lane)
         }
         x, y = start_positions[origin]
-        car_size = lane_width // 2
+        car_size = lane_width // 1.7
         car = self.canvas.create_oval(
             x - car_size, y - car_size,
             x + car_size, y + car_size,
             fill=color, outline="black", tags=f"car_{car_id}"
         )
         label = self.canvas.create_text(
-            x, y, text=str(car_id), fill="white", font=("Courier", 9, "bold")
+            x, y, text=str(car_id), fill="black", font=("Courier", 14, "bold")
         )
         self.car_objects[car_id] = {"car": car, "label": label, "position": (x, y)}
         self.car_count += 1
