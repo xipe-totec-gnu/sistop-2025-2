@@ -299,7 +299,7 @@ class Car(threading.Thread):
         path = self.gui.calculate_car_path(self.origin, self.destiny)
         base = (self.origin + 1) % 4
 
-        # Acquire locks before movement, but don't sleep immediately
+        # Acquire locks before movement
         if (self.origin + 1) % 4 == self.destiny:
             mutexIntersection[base].acquire()
             self.gui.move_car(
@@ -309,29 +309,24 @@ class Car(threading.Thread):
                 on_exit=lambda: self.release_locks([base])
             )
         elif (self.origin + 2) % 4 == self.destiny:
-            second = (base + 1) % 4
-            mutexIntersection[base].acquire()
-            mutexIntersection[second].acquire()
+            locks = sorted([base, (base + 1) % 4])
+            for l in locks:
+                mutexIntersection[l].acquire()
             self.gui.move_car(
                 self.id,
                 path,
-                on_enter=lambda: (self.gui.update_section(base, True, self.color),
-                                  self.gui.update_section(second, True, self.color)),
-                on_exit=lambda: self.release_locks([base, second])
+                on_enter=lambda: (self.gui.update_section(l, True, self.color) for l in locks),
+                on_exit=lambda: self.release_locks(list(reversed(locks)))
             )
         else:
-            second = (base + 1) % 4
-            third = (base + 2) % 4
-            mutexIntersection[base].acquire()
-            mutexIntersection[second].acquire()
-            mutexIntersection[third].acquire()
+            locks = sorted([base, (base + 1) % 4, (base + 2) % 4])
+            for l in locks:
+                mutexIntersection[l].acquire()
             self.gui.move_car(
                 self.id,
                 path,
-                on_enter=lambda: (self.gui.update_section(base, True, self.color),
-                                  self.gui.update_section(second, True, self.color),
-                                  self.gui.update_section(third, True, self.color)),
-                on_exit=lambda: self.release_locks([base, second, third])
+                on_enter=lambda: (self.gui.update_section(l, True, self.color) for l in locks),
+                on_exit=lambda: self.release_locks(list(reversed(locks)))
             )
 
     def release_locks(self, locks):
