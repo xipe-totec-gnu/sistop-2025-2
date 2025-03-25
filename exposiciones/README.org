@@ -6,17 +6,12 @@
   la última sección de este archivo (/Criterios de evaluación grupal/
   y /por el docente/).
 
-  Los temas sugeridos para exposición están disponibles [[http://gwolf.sistop.org/][en la página Web
-  del curso]]. Les reitero, sin embargo, que resulta más enriquecedor (y
-  como lo refleja la rúbrica, obtiene una calificación un poco más alta)
-  el que ustedes me planteen los temas de su interés.
-
   |------------+-----------------------------------------------------------------------------------------------+--------------------------------------------+-------+------------+-----------+------------|
   |      Fecha | Tema                                                                                          | Integrantes                                | Video | Documentos | Preguntas | Evaluación |
   |------------+-----------------------------------------------------------------------------------------------+--------------------------------------------+-------+------------+-----------+------------|
   | 2025.03.25 | Sistemas Operativos de Tiempo Real                                                            | David Emilio Nava  y David Emmanuel Tavera |       |            |           |            |
   | 2025.03.25 | Virtualización: Cómo los sistemas operativos gestionan múltiples entornos en un sólo hardware | Luisa Segura                               |       |            |           |            |
-  | 2025.03.25 | Docker vs. Virtualización de un SO                                                            | Juan Pablo Vera  y Carlos López Estrada    |       |            |           |            |
+  | 2025.03.25 | Orquestadores de contenedores: Docker, Kubernetes, Proxmox VE y Podman                        | Juan Pablo Vera  y Carlos López Estrada    |       |            |           |            |
   | 2025.04.01 | Uso de los hilos en sistemas de comunicación: Chats interactivos                              | Hansel Tepal y Luis Salazar                |       |            |           |            |
   | 2025.04.01 | Sistemas operativos para /edge computing/                                                     | Oscar Montiel y Samuel Torres              |       |            |           |            |
   | 2025.04.01 | Comparación de rendimiento de ejecución de tareas en distintos sistemas operativos            | Jocelyn Miramón e Isaías Iñaki Membrilla   |       |            |           |            |
@@ -25,7 +20,29 @@
   | 2025.04.08 | Manejo de recursos en los videojuegos de 8 bits                                               | Alfonso Rodríguez y Emilia Macarena        |       |            |           |            |
   | 2025.04.14 | /Vacaciones de Semana Santa/                                                                  |                                            |       |            |           |            |
   | 2025.04.21 | Unix y su papel en la historia de los Sistemas Operativos                                     | Alan Acosta y José Ángel Rubio             |       |            |           |            |
+  | 2025.04.21 | Optimizaciones de proceso operativos con inteligencia artificial                              | María Fernanda Ayala y Elizabeth Portilla  |       |            |           |            |
+  | 2025.04.21 |                                                                                               | Barvara Juárez                             |       |            |           |            |
   |------------+-----------------------------------------------------------------------------------------------+--------------------------------------------+-------+------------+-----------+------------|
+
+* ¿Y el tema?
+
+  ¿De qué tema presentar su exposición? De algún tema /relacionado con/ la
+  materia, que llame su atención. Que no sea un tema formal del temario de
+  cursado, pero que tenga vinculación con estos. ¡Con lo amplia que es la
+  /huella/ de los sistemas operativos en el cómputo, estoy seguro que podrán
+  encontrar temas interesantes!
+
+  Busco que los temas que expongan ustedes sean:
+  - Aterrizados técnicamente :: Que el foco principal de la exposición sea el
+    /cómo/, no el /qué/ o el /por qué/
+  - De profundidad acorde :: No describan una situación. Presenten temas
+    interesantes y novedosos desde un ángulo que sus compañeros (apasionados de
+    la computación y con conocimientos específicos muy por encima de los que
+    tiene la media poblacional) encuentren novedosos.
+
+  ¿No saben qué presentar? Platíquenlo conmigo por correo o al terminar la
+  clase, y estoy seguro que podremos ir llegando a algo que les resulte de
+  interés.
 
 * Rúbrica de evaluación
 
