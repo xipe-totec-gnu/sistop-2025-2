@@ -22,6 +22,33 @@ mutexIntersection = [threading.Semaphore(1) for _ in range(4)]
 
 CAR_COLORS = ["red", "blue", "green", "orange", "purple", "pink", "cyan", "magenta", "yellow"]
 
+# Mutex that uses a queue to have a FIFO behavior
+class fifoMutex:
+    def __init__(self):
+        self.queue = []
+        self.lock = threading.Semaphore(1)
+        # Condition is used to signal between threads
+        self.condition = threading.Condition()
+
+    def acquire(self, id):
+        with self.condition:
+            self.queue.append(id)
+            # We use while instead of if to avoid waking up threads that are not the next
+            while self.queue[0] != id:
+                # Wait until the condition is notified
+                self.condition.wait()
+        self.lock.acquire()
+
+    def release(self):
+        with self.condition:
+            self.queue.pop(0)
+            self.lock.release()
+            # Notify all threads, if the thread is the next, it will acquire the lock, else it will go to sleep again
+            self.condition.notify_all()
+
+# Mutex to control the order of the cars from the same direction
+mutexDirection = [fifoMutex() for _ in range(4)]
+
 class IntersectionGUI:
     def __init__(self, root):
         self.root = root
@@ -298,6 +325,9 @@ class Car(threading.Thread):
         path = self.gui.calculate_car_path(self.origin, self.destiny)
         base = (self.origin + 1) % 4
 
+        # Get the lock for the direction
+        mutexDirection[self.origin].acquire(self.id)
+
         # Acquire locks before movement
         if (self.origin + 1) % 4 == self.destiny:
             mutexIntersection[base].acquire()
@@ -327,6 +357,9 @@ class Car(threading.Thread):
                 on_enter=lambda: (self.gui.update_section(l, True, self.color) for l in locks),
                 on_exit=lambda: self.release_locks(list(reversed(locks)))
             )
+
+        # Release the lock for the direction
+        mutexDirection[self.origin].release()
 
     def release_locks(self, locks):
         for l in locks:
