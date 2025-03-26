@@ -174,15 +174,6 @@ class IntersectionGUI:
         self.canvas.create_text(self.center_x + lane_width/2, self.center_y + lane_width/2, text="2", font=("Courier", 14, "bold"))
         self.canvas.create_text(self.center_x - lane_width/2, self.center_y + lane_width/2, text="3", font=("Courier", 14, "bold"))
 
-    # Update the color of a quadrant to indicate if it is occupied by a car.
-    def update_section(self, section, occupied, car_color="red"):
-        quadrants = [self.q0, self.q1, self.q2, self.q3]
-        if occupied:
-            color = car_color
-        else:
-            color = "lightgray"
-        self.canvas.itemconfig(quadrants[section], fill=color)
-
     # Create a car graphic at the incoming lane of the specified direction.
     def create_car(self, car_id, origin, color, emoji=None):
         width = self.canvas.winfo_width()
@@ -199,19 +190,19 @@ class IntersectionGUI:
         x, y = start_positions[origin]
         car_size = lane_width // 1.7
         car = self.canvas.create_oval(
-            x - car_size, y - car_size,
-            x + car_size, y + car_size,
+            x - (car_size/1.5), y - (car_size/1.5),
+            x + (car_size/1.5), y + (car_size/1.5),
             fill=color, outline="black", tags=f"car_{car_id}"
         )
         label = self.canvas.create_text(
-            x, y, text=str(car_id)+emoji, fill="black", font=("Courier", 30, "bold")
+            x, y, text=str(car_id)+emoji, fill="black", font=("Courier", 20, "bold")
         )
         self.car_objects[car_id] = {"car": car, "label": label, "position": (x, y)}
         self.car_count += 1
         self.car_count_label.config(text=f"Cars: {self.car_count}")
         return car
 
-    def move_car(self, car_id, path_points, speed=100, on_enter=None, on_exit=None):
+    def move_car(self, car_id, path_points, speed=100, on_exit=None):
         if car_id not in self.car_objects:
             return
         car_obj = self.car_objects[car_id]
@@ -219,10 +210,6 @@ class IntersectionGUI:
         label = car_obj["label"]
 
         def animate_path(points, idx=0):
-            # Call on_enter once, at the beginning.
-            if idx == 0 and on_enter:
-                on_enter()
-
             # If we've reached the end of the path, call on_exit and remove the car.
             if idx >= len(points) - 1:
                 if on_exit:
@@ -238,6 +225,7 @@ class IntersectionGUI:
             end_x, end_y = points[idx+1]
             distance = math.sqrt((end_x - start_x)**2 + (end_y - start_y)**2)
             steps = max(int(distance / speed * 10), 1)
+            steps = 30
             dx = (end_x - start_x) / steps
             dy = (end_y - start_y) / steps
 
@@ -336,7 +324,6 @@ class Car(threading.Thread):
             self.gui.move_car(
                 self.id,
                 path,
-                on_enter=lambda: self.gui.update_section(base, True, self.color),
                 on_exit=lambda: self.release_locks([base])
             )
         elif (self.origin + 2) % 4 == self.destiny:
@@ -346,7 +333,6 @@ class Car(threading.Thread):
             self.gui.move_car(
                 self.id,
                 path,
-                on_enter=lambda: (self.gui.update_section(l, True, self.color) for l in locks),
                 on_exit=lambda: self.release_locks(list(reversed(locks)))
             )
         else:
@@ -356,7 +342,6 @@ class Car(threading.Thread):
             self.gui.move_car(
                 self.id,
                 path,
-                on_enter=lambda: (self.gui.update_section(l, True, self.color) for l in locks),
                 on_exit=lambda: self.release_locks(list(reversed(locks)))
             )
 
@@ -366,7 +351,6 @@ class Car(threading.Thread):
     def release_locks(self, locks):
         for l in locks:
             mutexIntersection[l].release()
-            self.gui.update_section(l, False, self.color)
 
 def spawn_cars(gui, num_cars=10):
     cars_created = 0
