@@ -21,6 +21,7 @@ import math
 mutexIntersection = [threading.Semaphore(1) for _ in range(4)]
 
 CAR_COLORS = ["red", "blue", "green", "orange", "purple", "pink", "cyan", "magenta", "yellow"]
+CAR_EMOJIS = ["🚗", "🚙", "🚕", "🚒", "🚜", "🚌", "🛻", "🏎️", "🏍️"]
 
 # Mutex that uses a queue to have a FIFO behavior
 class fifoMutex:
@@ -183,7 +184,7 @@ class IntersectionGUI:
         self.canvas.itemconfig(quadrants[section], fill=color)
 
     # Create a car graphic at the incoming lane of the specified direction.
-    def create_car(self, car_id, origin, color):
+    def create_car(self, car_id, origin, color, emoji=None):
         width = self.canvas.winfo_width()
         height = self.canvas.winfo_height()
         lane_width = min(width, height) // 12
@@ -203,7 +204,7 @@ class IntersectionGUI:
             fill=color, outline="black", tags=f"car_{car_id}"
         )
         label = self.canvas.create_text(
-            x, y, text=str(car_id), fill="black", font=("Courier", 14, "bold")
+            x, y, text=str(car_id)+emoji, fill="black", font=("Courier", 30, "bold")
         )
         self.car_objects[car_id] = {"car": car, "label": label, "position": (x, y)}
         self.car_count += 1
@@ -318,10 +319,11 @@ class Car(threading.Thread):
         self.destiny = destiny
         self.gui = gui
         self.color = CAR_COLORS[id % len(CAR_COLORS)]
+        self.emoji = CAR_EMOJIS[id % len(CAR_EMOJIS)]
 
     def run(self):
         # Create the car graphic and calculate its path through the intersection.
-        self.gui.create_car(self.id, self.origin, self.color)
+        self.gui.create_car(self.id, self.origin, self.color, self.emoji)
         path = self.gui.calculate_car_path(self.origin, self.destiny)
         base = (self.origin + 1) % 4
 
