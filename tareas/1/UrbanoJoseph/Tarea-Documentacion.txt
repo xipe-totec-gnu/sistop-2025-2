@@ -1,0 +1,40 @@
+Nombres de los integrantes:
+
+Martinez Garcia Luis Angel
+
+Urbano Meza Joseph Gael
+
+
+Problema Resuelto que elegimos nosotros:
+
+El problema abordado es "El Cruce del Río", donde un grupo de desarrolladores (hackers y serfs) debe cruzar un río en una balsa con capacidad para cuatro personas. Se deben respetar las siguientes reglas:
+
+La balsa debe llenarse exactamente con cuatro personas antes de cruzar.
+
+Para evitar conflictos, no puede haber tres hackers y un serf, ni tres serfs y un hacker.
+
+Puede haber cuatro hackers, cuatro serfs o un balance de dos y dos.
+
+La balsa regresa automáticamente después de cada cruce.
+
+Lenguaje y Entorno que usamos para desarrollar la tarea:
+
+El programa fue desarrollado en Python, utilizando la biblioteca threading para la sincronización de los desarrolladores.
+
+Requisitos para ejecutar la tarea en su equipo:
+
+Tener instalado Python 3.
+
+Ejecutarlo en un entorno compatible con Python (puede ser la terminal o un IDE).
+
+No requiere librerías adicionales más allá de las estándar de Python.
+
+La forma en la que abordamos el ejercicio fue la siguiente:
+
+Se utilizó threading.Condition junto con un Lock para gestionar el abordaje de los desarrolladores de forma segura. Se implementa una estrategia de sincronización basada en:
+
+Un mutex para evitar condiciones de carrera al modificar las variables compartidas (hackers y serfs).
+
+Una condición (Condition) para hacer que los hilos esperen hasta que haya una combinación válida de pasajeros antes de abordar.
+
+Un mecanismo de notificación (notify_all) para avisar a los desarrolladores cuando la balsa está lista para zarpar y cuando regresa.
