@@ -1,0 +1,17 @@
+Autor: Segura Cedeño Luisa
+Tarea 1: Ejercicio de sincronización
+
+Se implementó el ejercicio de Santa Claus. El problema dice que Santa duerme hasta que hay al menos 3 elfos con problemas o todos los renos regresan de sus vacaciones. Los elfos se despiertan a Santa cuando tienen problemas, y los renos lo despiertan cuando regresan.
+
+El lenguaje utilizado es Java, y el programa fue desarrollado en un entorno de concurrencia usando clases de Java como Semaphore, Lock, Condition, y Thread para manejar la sincronización.
+
+Para compilarlo solo hay que tener instalado JDK, y compilarlo desde la terminal:
+javac Santa.java
+java Santa
+
+Para la estrategia de sincronización usada se usaron:
+- Lock y Condition: Para asegurar que solo un hilo (Santa) pueda acceder a la sección crítica a la vez, y para permitir que los elfos y renos despierten a Santa en condiciones específicas.
+
+- Semaphore: Para controlar la cantidad de elfos y renos esperando ayuda o para ser enganchados al trineo.
+
+En este código, se implementó una sincronización básica de múltiples hilos con el uso de semáforos y condiciones para coordinar la ejecución de los elfos y los renos con Santa.
