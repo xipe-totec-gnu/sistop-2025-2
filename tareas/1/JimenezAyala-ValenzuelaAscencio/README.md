@@ -34,7 +34,7 @@ Nuestro trabajo esta realizado en su totalidad con el lenguaje Python, usando al
 
 Usamos un semáforo acotado para poder controlar la cantidad de personas que subían al elevador, a su vez
 ocupamos dos condiciones para poder controlar la subida y bajada de los pasajeros (debe suceder cuando estén en el
-piso al que desean ir y cuando las puertas del elevador estén abiertas).
+piso al que desean ir y cuando las puertas del elevador estén abiertas). Con esto controlamos el acceso al recurso (elevador) y la cantidad de personas que lo están utilizando.
 
 ## ¿Cómo evitamos la inanición?
 
@@ -46,6 +46,6 @@ SCAN es un algoritmo de planificación de disco (usado también en sistemas de e
 
 - Atiende todas las solicitudes que encuentra en su camino.
 
-- Cuando llega al extremo (piso más alto o más bajo), cambia de dirección y repite el proceso.
+- Cuando llega al extremo (piso más alto o más bajo), cambia de dirección y repite el proceso.S
 
 
