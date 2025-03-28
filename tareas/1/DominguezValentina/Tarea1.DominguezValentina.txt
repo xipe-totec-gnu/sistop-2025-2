@@ -1,0 +1,30 @@
+Tarea 1			Dominguez Zavala Valentina
+
+
+-PROBLEMA A RESOLVER: El cruce del rio.
+
+En algún lugar hay un bote de remos, que es usado por Linux hackers y trabajadores de Microsoft (servs) para cruzar el rio, en este caben exactamente 4 personas, no puede partir con más, ni con menos. Para garantizar la seguridad de los pasajeros en el bote, no puede ir un hacker y 3 serfs, ni viceversa, todas las demás combinaciones son seguras. 
+
+Cada que un hilo aborda el bote debe de invocar a una función llamada "board". Garantizando que los 4 hilos han abordado, antes que los 4 hilos del bote siguiente.
+
+Después de que los 4 hilos hayan invocado "board", exactamente uno deberá llamar a la función llamada "rowboat", indicando que el hilo tomará los remos, no importa cual lo haga, si sólo uno lo hace. 
+
+No te preocupes por la dirección del viaje, asumamos que sólo estamos interesados en que sólo va en una de las direcciones.
+
+-LENGUAJE Y ENTORNO EN EL QUE SE DESARROLLO:
+
+El lenguaje usado fue c, ya que quería hacer uso de "Progvis" para la simulación de los hilos.
+
+- ESTRATEGIA DE SINCRONIZACIÓN IMPLEMENTADA:
+
+Uso de Semáforos como colas, para asegurar que las combinaciones de pasajeros fueran las indicadas, además del uso de barreras de forma indirecta, ya que en su lugar, para asegurar que fueran exactamente 4 pasajeros, se hizo uso de if´s, con ayuda de mutex para la protección de estas variables contadoras.
+
+- REFINAMIENTOS:
+
+Como ya mencioné, se hizo uso de "Progvis", por lo que no vi necesario, el implementar tiempos de espera en mis hilos, ya que si, bien el simulador, va un poco lento, además de que lo puedes pausar y cambiar la velocidad a tu conveniencia. Además del uso de mutex, para proteger zonas criticas y así evitar condiciones carrera.
+
+- DUDAS:
+
+Realmente no se si la solución fue del todo correcta, ya que hice uso de if´s cuando según mi lógica pude haber hecho uso de barreras, sin embargo, por el uso de progvis, no encontre mucha información acerca de como hacer uso de, lo intenté con lo visto en clase, sin embargo, mi código paso de servir parcialmente a no servir nada nada. Igual hice algunas pruebas y algunas veces se presentan deadlocks, al variar el número de posibles pasajeros, sin embargo, por ser sólo a veces, no supe muy bien por que se presentaban.
+
+
