@@ -1,4 +1,4 @@
-# 🔍EL SERVIDOR WEB
+# 🔍 PROBLEMA: EL SERVIDOR WEB
 
 Simula un sistema en el que un jefe recibe solicitudes de trabajo, este asignara dichas solicitudes a k trabajadores asignados, y estos trabajadores las procesan. El jefe elige a cualquier trabajador disponible. Cada hilo (trabajador)  debe notificar cuando termine su actividad solicitada. 
 
