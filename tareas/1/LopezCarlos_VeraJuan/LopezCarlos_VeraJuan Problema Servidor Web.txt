@@ -1,0 +1,26 @@
+Carlos Lopez Estrada
+Vera Morales Juan Pablo
+
+¿Que problema decidieron resolver?
+Elegimos el problema del servidor web, lo que hay que hacer es gestionar múltiples trabajadores que procesan solicitudes de manera concurrente. Se busca asignar tareas a trabajadores disponibles y controlar que no se asignen más solicitudes si no hay trabajadores libres.
+
+Lenguaje y entorno de desarrollo.
+El programa está desarrollado en Java, el entorno utilizado fue IntelliJ Idea.
+
+¿Qué tengo que saber / tener / hacer para ejecutar su programa en mi computadora?
+Tener instalado Java Development Kit y un entorno para ejecutar programas en Java como IntelliJ IDEA o ejecutar desde la terminal con:
+
+javac GestorTrabajadores.java
+java GestorTrabajadores 
+
+La estrategia de sincronización (mecanismo / patrón) que emplearon para lograrlo.
+
+Se utiliza un Semaphore para controlar el acceso de los trabajadores y sincronizar la asignación de tareas. El semáforo comienza con 0 permisos, lo que hace que los trabajadores esperen hasta que el gestor libere una solicitud. También se utiliza un AtomicInteger para mantener el conteo de trabajadores disponibles y garantizar modificaciones atómicas.
+
+¿Están implementando alguno de los refinamientos?
+
+El programa asigna tareas de forma secuencial y espera a que los trabajadores procesen las páginas, no hay un refinamiento explícito pero el mecanismo de semáforo controla la disponibilidad de trabajadores.
+
+Mejora a la implementacion.
+
+Un posible punto de mejora sería agregar un mecanismo para terminar el programa de forma ordenada, ya que los hilos de los trabajadores ejecutan un bucle infinito. Podría implementarse un flag booleano para detenerlos cuando el gestor haya procesado todas las solicitudes.
