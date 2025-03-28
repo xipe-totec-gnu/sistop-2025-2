@@ -1,0 +1,23 @@
+Tarea por: Alfonso Rodríguez
+
+¿Qué ejercicio decidí resolver?
+Decidí resolver el ejercicio propuesto de Santa Claus y sus elfos/renos.
+
+¿En qué lenguaje y entorno lo desarrollé? 
+Desarrollé el problema en Python en una computadora Windows. No hay mucho más que saber, debido a que Python es fácil de ejecutar en distintos sistemas, y
+todas las clases utilizadas en el problema ya son parte de las clases base que vienen con la instalación de Python.
+
+¿Qué estrategia de sincronización estoy utilizando? 
+Barrera: Para poder considerar a todos los elfos y a todos los renos que se encuentran ya sea teniendo dudas o regresando de vacaciones,
+debemos de tener un semáforo que permita corroborar que todos los bandos involucrados se encuentran ya listos.
+
+Apagador: Por más que el gran hombre sea mágico y demás, no se puede encontrar en dos lugares al mismo tiempo (...¿verdad?), por lo que
+lo vi necesario implementar un apagador para poder permitir que Santa haga una cosa a la vez.
+
+Dudas, preguntas:
+
+Encontré un poco de más la implementación de los renos, podría simplemente haber hecho la parte del contador sin tener que utilizar la barrera,
+¿hay verdad en esta parte? ¿Era necesaria mi implementación con barrera?
+
+¿Faltó algún elemento? Siento que la simulación de Santa Claus dormido fue fácil de hacer por medio de la parte del activador, siento que en
+general el problema fue un tanto fácil de resolver. 
