@@ -106,8 +106,6 @@ def usuario(id):
         #Realizar una nueva solicitud
         nuevaSolicitud(id)
 
-
-
 threading.Thread(target=lider).start()
 for i in range(usuarios):
     threading.Thread(target=usuario, args=[i]).start()
