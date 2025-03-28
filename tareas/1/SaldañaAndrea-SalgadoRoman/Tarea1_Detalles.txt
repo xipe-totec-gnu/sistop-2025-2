@@ -1,0 +1,30 @@
+﻿TAREA 1. EJERCICIOS DE SINCRONIZACIÓN.
+
+
+TAREA 1.  EJERCICIOS DE SINCRONIZACIÓN
+Ejercicio por resolver: SANTA CLAUS
+Planteamiento
+·         Santa Claus duerme en el Polo Norte mientras sus elfos trabajan frenéticamente en la construcción de millones de nuevos juguetes
+o   A veces se topan con un problema — Pueden pedir ayuda a Santa Claus, pero sólo de tres en tres.
+·         Sus nueve renos pasan todo el año de vacaciones en las playas del Caribe
+o   Santa debe despertar a tiempo para iniciar su viaje anual
+Reglas
+·         Si los nueve renos están de vuelta, es hora de despertar a Santa Claus para que inicie su recorrido.
+·         Si los elfos tienen problemas construyendo algún juguete, le piden ayuda a Santa Claus.
+o   Pero para no darle demasiada lata, lo hacen sólo cuando hay tres elfos que tienen un problema. Mientras tanto, lo dejan dormir.
+o   Puede haber cualquier cantidad de elfos.
+
+
+Lenguaje y entorno de desarrollo: El lenguaje utilizado para esto fue C. No existe mayor requerimiento para ejecutar el programa, se emple
+
+
+Para ejecutar el programa sólo es necesario descargar el archivo con extensión .c y un compilador de C.
+
+
+La estrategia de sincronización que utilizamos para poder controlar el comportamiento de Santa, los renos y los elfos fueron mayoritariamente semáforos muy similar al ejercicio realizado en clase, haciendo uso de los mutex para proteger las secciones críticas y actualizar contadores de forma segura. 
+
+
+ Refinamientos implementados: no se implementaron refinamientos. 
+
+
+Notas: Tuvimos problemas en el desarrollo del programa, se trató de seguir el razonamiento visto en clase, y creemos tener la estructura de lo que podría ser el código final, sin embargo existen aún varios problemas en el mismo, surgen diversas excepciones y el código no termina de compilar correctamente, tratamos de corregirlo pero no logramos mejorar mucho. La intención es lo que cuenta :).
