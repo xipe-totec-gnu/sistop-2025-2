@@ -1,0 +1,19 @@
+Jesús Talonia Fuentes - 320218910
+
+Hola **otra vez** profe.
+(Sin querer ya borré este archivo 2 veces, la tercera es la vencida)
+
+Decidí intentar el problema del profesor y la asesoría. Para mi implementación en python consideré:
+	*La ejecución es infinta. Los alumnos pueden entrar, salir y regresar a la sala de asesoría
+	*El profesor duerme cada que la sala se queda sin alumnos, y no hay ningún alumno que haya notificado estar en espera para pasar (no sé si era un requerimiento o si yo malinterpreté esta parte, pero me gustó trabajar en crear este estado)
+	*Los alumnos tienen de 1 a 3 preguntas, pero mientras están preguntando se les puede ocurrir otra pregunta que consultarán antes de salir de la sala. No pueden hacer preguntas consecutivas, a menos de que sean el único alumno en el salón
+
+En general, se trata de un multex para simular una sala con un máximo de n alumnos, un mutex para restringir 'el turno para preguntar', y otro mutex para el acceso a la variable global que cuenta cuántos alumnos hay en el salón.
+Originalmente no había deifinido al profesor, todo se hacía desde alumno, pero no tenía mucho sentido y era difícil implementar el sueño
+Cuando lo definí, por poco y dejo una espera activa, pero lo solucioné con un rendevouz entre el profesor y quien quiera que fuese el alumno activo (sí, implica que tengo mutex anidados, pero le juro que en ningún momento se llega a un deadlock)
+Otros comportamientos curiosos que noté, es que mi implementación es propensa a la inanición, pues un solo alumno entraba y salía de la asesoría sin dar espacio a los demás. Por eso hay unos cuantos time.sleep() en el código, para evitarlo. Además, con las pruebas que realicé, para que el profesor pueda entrar al estado de la siesta (que no haya nadie dentro ni esperando), es necesario que los alumnos se tarden en regresar cuando ya salieron de la aesoría, pero además no puede haber más de n+1 alumnos (n es el número de sillas disponibles). Entre más alumnos, más tiempo habría que hacerlos dormir, y la idea no me agrada del todo. 
+También se podría haber hecho que el programa terminase en algún punto (agregando un máximo de vueltas por alumno, o que el estado de siesta fuese el terminador), pero creo que la sincronización se aprecia mejor en procesos indefinidamente largos.
+
+Me gustó trabajar en esta tarea, me hubiera gustado intentar otras cosas como que una sola respuesta del profesor fuese válida para más de un alumno si es que tenían la misma pregunta, pero implicaba o una sola pregunta por alumno, o usar una matriz para almacenar múltiples preguntas con múltiples valores para múltiples alumnos que iban a comparar sus valores múltiples veces. Eso se come el rendimiento, y además ya me quedé sin tiempo
+
+En conclusión, hay que imprimir mas profes, porque el del programa sólo duerme y se queja cuando está despierto
