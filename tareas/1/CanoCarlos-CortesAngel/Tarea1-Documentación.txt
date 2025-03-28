@@ -1,0 +1,32 @@
+Tarea 1. CanoNieto, CortésAngel
+
+Escogimos el ejecricio del elevador
+
+El problema del elevador lo resolvimos con semáforos para gestionar la concurrencia entre múltiples usuarios que desean utilizar el elevador al mismo tiempo. Sin embargo nuestra implementación creemos no nos logró quedar del todo eficiente ya que condicionamos a qué el elevador simplemente esté subiendo y bajando y no es controlado por la decisión del usuario. 
+
+Se usó un mutex para garantizar que solo un hilo a la vez modifique variables compartidas críticas, como el número de pasajeros o el piso actual.
+
+Esto previene condiciones de carrera, donde múltiples hilos pueden leer y modificar una variable simultáneamente, generando inconsistencias.
+
+Se usa un semáforo para controlar la cantidad máxima de pasajeros en el elevador (capacidad de 5 pasajeros).
+
+Un semáforo decrementa su contador cada vez que un pasajero entra y lo incrementa cuando un pasajero sale.
+
+Si el semáforo está en cero, ningún pasajero adicional puede abordar hasta que alguien desocupe el elevador.
+
+Un usuario elige un piso de origen y un destino.
+
+Si el elevador está en otro piso, se mueve hasta el usuario.
+
+Antes de abordar, un usuario verifica que haya espacio en el elevador.
+
+Si hay cupo, el usuario sube y actualiza la cantidad de pasajeros.
+
+El elevador se mueve entre los pisos de manera secuencial.
+
+Cada vez que llega a un piso, verifica si hay usuarios que quieren subir o bajar.
+
+
+Se evita que un solo grupo de pasajeros monopolice el elevador garantizando que los pasajeros que desean salir tengan prioridad.
+
+Si hay usuarios esperando en un piso intermedio, también pueden abordar cuando el elevador pase por su piso, incluso si inicialmente iba en otra dirección.
