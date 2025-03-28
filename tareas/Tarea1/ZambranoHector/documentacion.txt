@@ -1,0 +1,23 @@
+Integrantes:
+Hector Zambrano Serrano
+
+- PROBLEMA SELECCIONADO
+Opte por resolver el problema de "El cruce del rio", el lenguaje que utilice fue python, con ayuda de VSCode. 
+No es necesario instalar ninguna libreria, use librerias basicas de python para el manejo de hilos, de la hora y la randomizacion. Se requiere una version de python 3
+
+- LENGUAJE Y ENTORNO
+La estrategia de sincronizacion usada es la misma que en el problema visto en clase anteriormente: 
+El código utiliza una combinación de candados (Lock) y variables de condición (Condition) para lograr una sincronización efectiva entre los hilos. En términos de mecanismo o patrón de sincronización, este código sigue el patrón del problema de los ratones y gatos, que es una variación del patrón de Barrera en concurrencia.
+
+- LOGICA DE RESOLUCION DEL PROBLEMA
+Este código resuelve el problema de la balsa de hackers y serfs usando hilos y sincronización para confirmar que la balsa cruce el río solo cuando haya una combinación válida de pasajeros.
+
+1. Cada desarrollador (hacker o serf) llega en un hilo separado y trata de abordar la balsa, estos desarrolladores se generan de manera aleatoria con ayuda de la randomizacion del programa.
+2. Si no hay suficiente gente o la combinación no es válida, el hilo espera (wait()).
+3. Cuando se forma un grupo válido de 4 personas (4 hackers, 4 serfs o 2 de cada uno), la balsa zarpa.
+4. Los pasajeros cruzan el río y los contadores se reinician.
+
+En cuanto al manejo de hilos: 
+1. Mutex (Lock): Evita que varios hilos modifiquen los contadores (hackers y serfs) al mismo tiempo.
+2. Variable de condición (Condition): Hace que los hilos esperen cuando no hay un grupo válido y los despierta cuando la balsa está lista.
+3. Patrón de sincronización: Barrera condicional: Asegura que la balsa solo cruce cuando haya exactamente 4 desarrolladores en una combinación permitida.
