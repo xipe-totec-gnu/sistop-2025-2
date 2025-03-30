@@ -5,8 +5,8 @@ from rich.console import Console
 from rich.table import Table
 from rich.live import Live
 
-capacidadFisica = 50
-sobreCupo = 60
+capacidadFisica = 15
+sobreCupo = 20
 espacios = {f"A{i}": False for i in range(1, capacidadFisica + 1)}
 mutexEspacios = threading.Lock()
 condicionEspacio = threading.Condition(mutexEspacios)
