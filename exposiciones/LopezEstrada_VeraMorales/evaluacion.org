@@ -1,0 +1,77 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Orquestadores de contenedores: Docker y Kubernetes
+
+- Tema presentado por :: Juan Pablo Vera  y Carlos López Estrada
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.16 |  0.3 |               7.75 |  0.7 |    8.17 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 |  5 | Total |
+|--------------+---+---+---+---+----+-------|
+| Originalidad | 0 | 0 | 1 | 3 | 18 |  9.55 |
+| Nivel        | 0 | 0 | 0 | 7 | 15 |  9.36 |
+| Relevancia   | 0 | 0 | 1 | 5 | 16 |  9.36 |
+| Claridad     | 0 | 0 | 4 | 3 | 15 |  9.00 |
+| Presencia    | 0 | 2 | 2 | 6 | 12 |  8.55 |
+|--------------+---+---+---+---+----+-------|
+|              |   |   |   |   |    |  9.16 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- La presentación contenía un poco de información de más, lo que podría saturar
+  la exposición y no hacerla tan llamativa, aunque oda la información es de
+  relevancia. Igualmente el uso de imágenes y gráficos podría ser útil para
+  aligerar la presentación.
+
+  A la hora de ejemplificar con el código se vuelve mucho más entendible y se le
+  ve la utilidad que se le puede dar; sobretodo nosotros los estudiantes.
+- Muy buena exposición. Gracias por hacer una presentación 100% en modo oscuro
+- Me gustó el tema y como lo fueron llevando a cabo
+- Tema relevante
+- muy entretenida.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |            4 |      0.6 |
+| Organización                       |   0.15 |            7 |     1.05 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |           10 |      1.5 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     7.75 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Cuando presenten un tema en conjunto, intenten /articular/ más la parte que
+  presenta uno con el otro. En este caso, resultaron dos presentaciones
+  completamente distintas entre sí, y el salto se sintió muy abrupto; la
+  temática y forma de desarrollar de una parte y de la otra fue completamente
+  distinta
+- Mencionan únicamente un video como fuente bibliográfica 🙁
+
+
