@@ -28,7 +28,7 @@ int impresoras_disponibles; // Número de impresoras en funcionamiento
 int usuarios_activos; // Número de usuarios en el sistema
 int terminar_mantenimiento = 0; // Indicador para finalizar el hilo de mantenimiento
 int estado_impresoras[IMPRESORAS]; // Estado de cada impresora (1 = funcional, 0 = descompuesta)
-char *nombres_impresoras[IMPRESORAS] = {"Impresora Norte", "Impresora Sur", "Impresora Oriente", "Impresora Poniente"};
+char *nombres_impresoras[IMPRESORAS] = {"Impresora Norte", "Impresora Sur", "Impresora Oriente", "Impresora Poniente"};//nombres de las impresoras
 int ultima_impresora_usada = -1; // Última impresora asignada
 int impresora_descompuesta = 0; // Indicador de si hay una impresora descompuesta
 int en_uso[IMPRESORAS] = {0}; // Indica si una impresora está en uso
@@ -39,14 +39,15 @@ void *tarea(void *arg); // Función que simula la tarea de un usuario
 int obtenerEntero(char *mensaje, int min, int max);// Función para obtener un número entero dentro de un rango
 void *ImpresoraDescompuesta(void *arg);// Función para simular la descomposición de una impresora
 int obtenerImpresoraDisponible(); // Función para obtener una impresora disponible
-void *RepararImpresora(void *arg);
+void *RepararImpresora(void *arg);//Función para reparar una impresora dañada
+void mostrarMapaImpresoras();//Función para mostra la ubicación de las impresoras
 void linea_separadora(); // Función para mostrar una línea separadora en la interfaz
 
 int main() {
     int num_usuarios, num_impresoras, i;
     
     linea_separadora();
-    printf(COLOR_BOLD "Bienvenido al sistema de impresoras.\n" COLOR_RESET);
+    printf(COLOR_BOLD "Sistema de impresoras.\n" COLOR_RESET);
     linea_separadora();
     
     num_usuarios = obtenerEntero("Ingrese el numero de usuarios que van a trabajar el dia de hoy: ", 1, 100);
@@ -54,7 +55,8 @@ int main() {
     impresoras_disponibles = num_impresoras;
     usuarios_activos = num_usuarios;
     for (i = 0; i < IMPRESORAS; i++) estado_impresoras[i] = (i < num_impresoras) ? 1 : 0;
-    
+    MapaImpresoras();
+    sleep(2);
     pthread_t usuarios[num_usuarios], hilo_mantenimiento;
     pthread_mutex_init(&lock, NULL);
     sem_init(&impresora, 0, num_impresoras);
@@ -68,7 +70,6 @@ int main() {
 	for (i = 0; i < num_usuarios; i++) {
 	    ids[i] = i + 1; 
 	}
-	
 	// Mezcla aleatoria de los IDs 
 	for (i = num_usuarios - 1; i > 0; i--) {
 	    int j = rand() % (i + 1);
@@ -81,7 +82,6 @@ int main() {
 	    int *id = malloc(sizeof(int));
 	    *id = ids[i];
 	    pthread_create(&usuarios[i], NULL, tarea, id);
-	    usleep(100000); // Puedes aumentar o quitar este delay si quieres
 	}
     
     for (i = 0; i < num_usuarios; i++) {
@@ -165,6 +165,7 @@ void *ImpresoraDescompuesta(void *arg)  {
         impresora_descompuesta = 1;
         sem_trywait(&impresora);
         printf(COLOR_RED "\n%s se ha descompuesto! Impresoras disponibles: %d\n" COLOR_RESET, nombres_impresoras[impresora_id], impresoras_disponibles);
+        MapaImpresoras();
     }
     pthread_mutex_unlock(&lock);
     return NULL;
@@ -197,12 +198,52 @@ void *RepararImpresora(void *arg) {
                 impresora_descompuesta = 0;
                 sem_post(&impresora);
                 printf(COLOR_GREEN "\n%s ha sido reparada! Impresoras disponibles: %d\n" COLOR_RESET, nombres_impresoras[i], impresoras_disponibles);
+                MapaImpresoras();
                 break;
             }
         }
         pthread_mutex_unlock(&lock);
     }
     return NULL;
+}
+
+void MapaImpresoras() {
+    printf(COLOR_BOLD "\n\tUbicacion de las impresoras:\n" COLOR_RESET);
+
+    // Impresora Norte 
+    printf(COLOR_BLUE "\n\t\t     [NORTE]\n" COLOR_RESET);
+    printf("\t\t");
+    if (estado_impresoras[0])
+        printf(COLOR_GREEN "[OK] %s\n" COLOR_RESET, nombres_impresoras[0]);
+    else
+        printf(COLOR_RED "[XX] %s\n" COLOR_RESET, nombres_impresoras[0]);
+
+    printf("\n");
+
+    // Impresoras Poniente y Oriente 
+    printf(COLOR_YELLOW "\t[PONIENTE]\t\t\t[ORIENTE]\n" COLOR_RESET);
+
+    if (estado_impresoras[3])
+        printf(COLOR_GREEN "[OK] %s\t\t", nombres_impresoras[3]);
+    else
+        printf(COLOR_RED "[XX] %s\t\t", nombres_impresoras[3]);
+
+    if (estado_impresoras[2])
+        printf(COLOR_GREEN "[OK] %s\n" COLOR_RESET, nombres_impresoras[2]);
+    else
+        printf(COLOR_RED "[XX] %s\n" COLOR_RESET, nombres_impresoras[2]);
+
+    printf("\n");
+
+    // Impresora Sur 
+    printf(COLOR_BLUE "\t\t     [SUR]\n" COLOR_RESET);
+    printf("\t\t");
+    if (estado_impresoras[1])
+        printf(COLOR_GREEN "[OK] %s\n" COLOR_RESET, nombres_impresoras[1]);
+    else
+        printf(COLOR_RED "[XX] %s\n" COLOR_RESET, nombres_impresoras[1]);
+
+    linea_separadora();
 }
 
 void linea_separadora() {
