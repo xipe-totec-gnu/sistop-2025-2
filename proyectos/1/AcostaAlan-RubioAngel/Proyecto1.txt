@@ -1,0 +1,10 @@
+
+Planteamiento del proyecto
+Un problema del día a día:Recarga de tarjetas en el metro
+
+El objetivo del proyecto, es visualizar una problemática casual o no tan casual del mundo real.
+Es costumbre que el metro de la ciudad de México tenga fallas, pero sus equipos igual, uno de ellos son las maquinas de recargas, el cual actualmente son la única forma de forma recarga físicamente.
+
+Normalmente al recargar debes formarte, pero al hacerlo puede que falle la maquina, o que simplemente tarde el usuario(muy típico), por ello se planteo este ejercicio , ya que es un problema del día a día, mas hablando de los estudiantes, los cuales se  trasladan por este medio de transporte para llegar al escuela diariamente.
+
+Donde para este proyecto se buscara simular la experiencia de recarga de tarjetas en un escenario concurrido como el metro, utilizando concurrencia y sincronización para modelar el comportamiento de múltiples usuarios que esperan su turno, recargan su tarjeta, y enfrentan posibles fallos en el proceso.
