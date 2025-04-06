@@ -1,40 +1,49 @@
+# Acosta Jacinto Alan
+# Rubio Carmona Jose Angel
+# Proyecto 1: Una situación cotidiana con concurrencia y sincronización  
+# Sistemas Operativos  grupo: 6 2025-2
+
 import threading
 import time
 import random
 from queue import Queue
 
-#Acosta Jacinto Alan
-#Rubio Carmona Jose Angel
-#Proyecto 1:Una situación cotidiana con concurrencia y sincronización  
-#Sistemas Operativos  grupo: 6 2025-2
-
 NUM_MAQUINAS = 2
 NUM_USUARIOS = 10
 
-# Semáforos para las máquinas, se permite 1 usuario por máquina
+# Semáforos para las máquinas: controlan que solo un usuario acceda a cada máquina
 maquinas = [threading.Semaphore(1) for _ in range(NUM_MAQUINAS)]
+
+# Cola que mantiene el orden de llegada de los usuarios
 fila = Queue()
 
+# Condición que permite coordinar el acceso a la fila
 condicion = threading.Condition()
+
 
 intentos_fallidos = {i: 0 for i in range(1, NUM_USUARIOS + 1)}
 usuarios_terminados = set()
 
+
 def log(tipo, id_, mensaje, color="\033[94m", extra=""):
     print(f"{color}[{tipo} {id_}] \033[0m{mensaje} {extra}")
 
+# Lógica de intento de recarga
 def usar_maquina(id_usuario):
     while True:
         with condicion:
+            # Espera hasta que el usuario sea el primero en la fila
             while fila.queue[0] != id_usuario:
                 condicion.wait()
 
+            # Busca una máquina disponible
             maquina_disponible = -1
             for i in range(NUM_MAQUINAS):
                 if maquinas[i].acquire(blocking=False):
                     maquina_disponible = i
                     break
 
+            # Si no hay máquina libre, vuelve a esperar
             if maquina_disponible == -1:
                 condicion.wait()
                 continue
@@ -43,14 +52,14 @@ def usar_maquina(id_usuario):
             condicion.notify_all()
 
         log("Máquina", maquina_disponible + 1, "🔄Usuario está recargando...", "\033[92m", f"\033[93m(Usuario {id_usuario})\033[0m")
-        tiempo = random.uniform(1.5, 3.5)# Simular tiempo de recarga y posibles errores
+        tiempo = random.uniform(1.5, 3.5)
         time.sleep(tiempo)
 
         if random.random() < 0.15:
             log("Máquina", maquina_disponible + 1, "❌ No aceptó la tarjeta. Volviendo a la fila...", "\033[91m", f"\033[93m(Usuario {id_usuario})\033[0m")
             maquinas[maquina_disponible].release()
             with condicion:
-                fila.put(id_usuario)
+                fila.put(id_usuario)  # Se vuelve a formar
                 intentos_fallidos[id_usuario] += 1
                 condicion.notify_all()
         else:
@@ -59,7 +68,7 @@ def usar_maquina(id_usuario):
             with condicion:
                 usuarios_terminados.add(id_usuario)
                 condicion.notify_all()
-            break
+            break  
 
 def usuario(id_usuario):
     with condicion:
@@ -74,15 +83,17 @@ for i in range(1, NUM_USUARIOS + 1):
     hilo = threading.Thread(target=usuario, args=(i,))
     hilos.append(hilo)
     hilo.start()
-    time.sleep(0.5)
+    time.sleep(0.5) 
 
 for h in hilos:
     h.join()
 
+
 print("\n🎉 Todos los usuarios han recargado su tarjeta, ¡Feliz viaje!\n")
 print("📊 Intentos fallidos por usuario:")
 for i in range(1, NUM_USUARIOS + 1):
-    print(f" - Usuario {i}: {intentos_fallidos[i]} ")
+    print(f" - Usuario {i}: {intentos_fallidos[i]}")
+
 
 
 '''
