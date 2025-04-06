@@ -11,6 +11,7 @@ SO		Gpo: 6
 #include <unistd.h>
 #include <time.h>
 
+
 #define IMPRESORAS 4
 // Definicion de colores para mejorar la interfaz
 #define COLOR_RESET   "\x1b[0m"
@@ -20,30 +21,39 @@ SO		Gpo: 6
 #define COLOR_BLUE    "\x1b[34m"
 #define COLOR_RED     "\x1b[31m"
 
-//Semaforo para controlar el acceso a una impresora
-sem_t impresora;
-pthread_mutex_t lock;
-int impresoras_disponibles;
-int usuarios_activos;
-int terminar_mantenimiento = 0;
+// Variables compartidas y sincronización
+sem_t impresora; // Semáforo para controlar el acceso a las impresoras
+pthread_mutex_t lock; // Mutex para sincronizar el acceso a variables compartidas
+int impresoras_disponibles; // Número de impresoras en funcionamiento
+int usuarios_activos; // Número de usuarios en el sistema
+int terminar_mantenimiento = 0; // Indicador para finalizar el hilo de mantenimiento
+int estado_impresoras[IMPRESORAS]; // Estado de cada impresora (1 = funcional, 0 = descompuesta)
+char *nombres_impresoras[IMPRESORAS] = {"Impresora Norte", "Impresora Sur", "Impresora Oriente", "Impresora Poniente"};
+int ultima_impresora_usada = -1; // Última impresora asignada
+int impresora_descompuesta = 0; // Indicador de si hay una impresora descompuesta
+int en_uso[IMPRESORAS] = {0}; // Indica si una impresora está en uso
 
 
-void *tarea(void *arg);
-int obtenerEntero(char *mensaje, int min, int max);
-void *ImpresoraDescompuesta(void *arg);
-void linea_separadora();
+
+void *tarea(void *arg); // Función que simula la tarea de un usuario
+int obtenerEntero(char *mensaje, int min, int max);// Función para obtener un número entero dentro de un rango
+void *ImpresoraDescompuesta(void *arg);// Función para simular la descomposición de una impresora
+int obtenerImpresoraDisponible(); // Función para obtener una impresora disponible
+void *RepararImpresora(void *arg);
+void linea_separadora(); // Función para mostrar una línea separadora en la interfaz
 
 int main() {
     int num_usuarios, num_impresoras, i;
     
     linea_separadora();
-    printf(COLOR_BOLD "Sistema de impresoras.\n" COLOR_RESET);
+    printf(COLOR_BOLD "Bienvenido al sistema de impresoras.\n" COLOR_RESET);
     linea_separadora();
     
-    num_usuarios = obtenerEntero("Ingrese el numero de usuarios: ", 1, 100);
-    num_impresoras = obtenerEntero("Ingrese el numero total de impresoras (max 4): ", 1, IMPRESORAS);
+    num_usuarios = obtenerEntero("Ingrese el numero de usuarios que van a trabajar el dia de hoy: ", 1, 100);
+    num_impresoras = IMPRESORAS;
     impresoras_disponibles = num_impresoras;
     usuarios_activos = num_usuarios;
+    for (i = 0; i < IMPRESORAS; i++) estado_impresoras[i] = (i < num_impresoras) ? 1 : 0;
     
     pthread_t usuarios[num_usuarios], hilo_mantenimiento;
     pthread_mutex_init(&lock, NULL);
@@ -51,57 +61,55 @@ int main() {
     srand(time(NULL));
     
     pthread_create(&hilo_mantenimiento, NULL, ImpresoraDescompuesta, NULL);
+    pthread_t hilo_reparacion;
+	pthread_create(&hilo_reparacion, NULL, RepararImpresora, NULL);
     
-    printf(COLOR_GREEN "\nIniciando tareas de los usuarios...\n" COLOR_RESET);
-    linea_separadora();
-    
+    int ids[num_usuarios];
+	for (i = 0; i < num_usuarios; i++) {
+	    ids[i] = i + 1; 
+	}
+	
+	// Mezcla aleatoria de los IDs 
+	for (i = num_usuarios - 1; i > 0; i--) {
+	    int j = rand() % (i + 1);
+	    int temp = ids[i];
+	    ids[i] = ids[j];
+	    ids[j] = temp;
+	}
+	
     for (i = 0; i < num_usuarios; i++) {
-        int *id = malloc(sizeof(int));
-        *id = i + 1;
-        pthread_create(&usuarios[i], NULL, tarea, id);
-        usleep(100000);  // Pausa corta entre creaciones de hilos
-    }
+	    int *id = malloc(sizeof(int));
+	    *id = ids[i];
+	    pthread_create(&usuarios[i], NULL, tarea, id);
+	    usleep(100000); // Puedes aumentar o quitar este delay si quieres
+	}
     
     for (i = 0; i < num_usuarios; i++) {
         pthread_join(usuarios[i], NULL);
     }
-    
-    pthread_mutex_lock(&lock);
-    terminar_mantenimiento = 1;
-    pthread_mutex_unlock(&lock);
-    
     pthread_join(hilo_mantenimiento, NULL);
+	pthread_join(hilo_reparacion, NULL);
     pthread_mutex_destroy(&lock);
     sem_destroy(&impresora);
-    
-    linea_separadora();
-    printf(COLOR_GREEN "El sistema ha finalizado todas las tareas.\n" COLOR_RESET);
-    linea_separadora();
-    
     return 0;
 }
-
 
 void *tarea(void *arg) {
     int id = *(int *)arg;
     free(arg);
-
-    printf(COLOR_YELLOW "Usuario %d esperando su turno...\n" COLOR_RESET, id);
+	printf(COLOR_YELLOW "Usuario %d esperando su turno en la sala de espera... \n" COLOR_RESET, id);
     sem_wait(&impresora);
-
-    pthread_mutex_lock(&lock);
-    if (impresoras_disponibles == 0) {
-        pthread_mutex_unlock(&lock);
-        printf(COLOR_RED "Usuario %d reubicado debido a una impresora descompuesta.\n" COLOR_RESET, id);
-        sem_wait(&impresora);
-    } else {
-        pthread_mutex_unlock(&lock);
-    }
-
-    unsigned int seed = time(NULL) + id * 31; 
-    srand(seed);
-    int accion = rand() % 3;
+    int impresora_id;
+    do {
+        impresora_id = obtenerImpresoraDisponible();
+        if (impresora_id == -1) {
+            usleep(500000); // Esperar medio segundo antes de reintentar
+        }
+    } while (impresora_id == -1);
+    printf(COLOR_BLUE "Usuario %d esta usando %s...\n" COLOR_RESET, id, nombres_impresoras[impresora_id]);
     
+    srand(time(NULL) + id);
+    int accion = rand() % 3; // Determina qué acción realizará el usuario
     switch (accion) {
         case 0:
             printf(COLOR_BLUE "Usuario %d esta imprimiendo...\n" COLOR_RESET, id);
@@ -116,18 +124,17 @@ void *tarea(void *arg) {
             sleep(4);
             break;
     }
-    
-    printf(COLOR_YELLOW "Usuario %d ha terminado su tarea.\n" COLOR_RESET, id);
+
+    printf(COLOR_YELLOW "Usuario %d ha terminado su tarea en %s.\n" COLOR_RESET, id, nombres_impresoras[impresora_id]);
+    en_uso[impresora_id] = 0;
     sem_post(&impresora);
 
     pthread_mutex_lock(&lock);
     usuarios_activos--;
     pthread_mutex_unlock(&lock);
-    
     return NULL;
 }
 
-//validación de entradas 
 int obtenerEntero(char *mensaje, int min, int max) {
     int valor;
     char c;
@@ -143,34 +150,55 @@ int obtenerEntero(char *mensaje, int min, int max) {
         }
     }
 }
-//Función para emular cuando una impresora se descompone.
-void *ImpresoraDescompuesta(void *arg) {
-    while (1) {
-        sleep(1); 
-        
-        pthread_mutex_lock(&lock);
-        if (terminar_mantenimiento) {
+
+void *ImpresoraDescompuesta(void *arg)  {
+    sleep(rand() % 5 + 3); // Espera aleatoria antes de descomponer una impresora
+    pthread_mutex_lock(&lock);
+    if (impresoras_disponibles > 1 && !impresora_descompuesta) {
+        int impresora_id;
+        do {
+            impresora_id = rand() % IMPRESORAS;
+        } while (estado_impresoras[impresora_id] == 0 || en_uso[impresora_id] == 1);
+
+        estado_impresoras[impresora_id] = 0;
+        impresoras_disponibles--;
+        impresora_descompuesta = 1;
+        sem_trywait(&impresora);
+        printf(COLOR_RED "\n%s se ha descompuesto! Impresoras disponibles: %d\n" COLOR_RESET, nombres_impresoras[impresora_id], impresoras_disponibles);
+    }
+    pthread_mutex_unlock(&lock);
+    return NULL;
+}
+
+int obtenerImpresoraDisponible() {
+    pthread_mutex_lock(&lock);
+    int i;
+    for ( i = 1; i <= IMPRESORAS; i++) {
+        int index = (ultima_impresora_usada + i) % IMPRESORAS;
+        if (estado_impresoras[index] == 1 && en_uso[index] == 0) {
+            ultima_impresora_usada = index;
+            en_uso[index] = 1;
             pthread_mutex_unlock(&lock);
-            break;
+            return index;
         }
-        pthread_mutex_unlock(&lock);
-        
-        int espera = rand() % 6 + 5,i; // Tiempo entre 5 y 10 segundos
-        for ( i = 0; i < espera; i++) {
-            sleep(1);
-            pthread_mutex_lock(&lock);
-            if (terminar_mantenimiento) {
-                pthread_mutex_unlock(&lock);
-                return NULL;
+    }
+    pthread_mutex_unlock(&lock);
+    return -1; // No hay impresoras disponibles
+}
+void *RepararImpresora(void *arg) {
+	int i;
+    while (usuarios_activos > 0) {
+        sleep(10); // Cada cierto tiempo intenta reparar
+        pthread_mutex_lock(&lock);
+        for(i = 0; i < IMPRESORAS; i++){
+            if (estado_impresoras[i] == 0) {
+                estado_impresoras[i] = 1;
+                impresoras_disponibles++;
+                impresora_descompuesta = 0;
+                sem_post(&impresora);
+                printf(COLOR_GREEN "\n%s ha sido reparada! Impresoras disponibles: %d\n" COLOR_RESET, nombres_impresoras[i], impresoras_disponibles);
+                break;
             }
-            pthread_mutex_unlock(&lock);
-        }
-        
-        pthread_mutex_lock(&lock);
-        if (impresoras_disponibles > 1 && usuarios_activos > 0) {
-            impresoras_disponibles--;
-            sem_trywait(&impresora);  // Reducir disponibilidad sin bloquear
-            printf(COLOR_RED "\nUna impresora se ha descompuesto! Impresoras disponibles: %d\n" COLOR_RESET, impresoras_disponibles);
         }
         pthread_mutex_unlock(&lock);
     }
