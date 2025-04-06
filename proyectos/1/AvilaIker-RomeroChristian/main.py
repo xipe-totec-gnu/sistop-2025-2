@@ -1,10 +1,8 @@
 #Este programa simula la conexión de varios jugadores a un servidor. Cada jugador se conecta de manera concurrente, y el servidor procesa cada conexión de manera sincronizada.
-#Versión 1.0
-#Esta primera versión aún no incluye la sincronización, y contiene solo la estructura básica del programa.
-#Como la variable compartida no cuenta con protección, puede que se produzcan condiciones de carrera.
+#Versión 2.0
+#Esta versión incluye semáforos para limitar el número de conexiones simultaneas.
 
-#Faltan:
-#Incluir sincronización.
+#Falta:
 #Incluir interfaz gráfica.
 
 #Importaciones
@@ -13,7 +11,7 @@ from jugador import Jugador
 
 #Main
 def main():
-    servidor = Servidor() # Crea una instancia del servidor
+    servidor = Servidor(max_conexiones=3) # Crea una instancia del servidor
     jugadores = [] # Lista para almacenar los hilos de los jugadores
 
     num_jugadores = 10 # Número de jugadores a simular
