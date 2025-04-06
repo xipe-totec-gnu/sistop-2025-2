@@ -2,7 +2,9 @@ import random
 import threading
 import time
 
-trabajos_totales = 5
+trabajos_totales = 3
+miembros_totales = 2
+
 trabajos = []
 tareas_pendientes = []
 tareas_completadas = []
@@ -14,22 +16,22 @@ semaf_planificador = threading.Semaphore(0)
 semaf_tareas = threading.Semaphore(0)
 
 def crearTrabajo(id):
-    global trabajos_totales
 
-    trabajo = []
+    trabajo = {"id": id, "tareas": []}
 
-    trabajo.append(crearTarea(id, 0, []))
-    trabajo.append(crearTarea(id, 1, [0]))
-    trabajo.append(crearTarea(id, 2, [0]))
-    trabajo.append(crearTarea(id, 3, [1,2]))
+    trabajo['tareas'].append(crearTarea(id, 0, []))
+    trabajo['tareas'].append(crearTarea(id, 1, [0]))
+    trabajo['tareas'].append(crearTarea(id, 2, [0]))
+    trabajo['tareas'].append(crearTarea(id, 3, [1,2]))
 
-    threading.Thread(target=planificador, args=[trabajos_totales]).start()
+    trabajos.append(trabajo)
+
 
 def crearTarea(id_trabajo, id, requerimientos):
     tarea = {
-        "id_trabajo": 1,
+        "id_trabajo": id_trabajo,
         "id": id,
-        "estado": "pendiente",
+        "estado": "no empezada",
         "requerimientos": requerimientos,
         "duracion": random.randint(2,5)
     }
@@ -44,10 +46,13 @@ def planificador():
         for trabajo in trabajos:
             if not trabajo['id'] in trabajos_actualizados:
                 continue
-            for tarea in trabajo:
-                if tarea['estado'] == "pendiente" and comprobarTarea(trabajo, tarea):
+            for tarea in trabajo['tareas']:
+                if tarea['estado'] == "no empezada" and comprobarTarea(trabajo['tareas'], tarea):
+
                     mutex_tareas_pendientes.acquire()
                     tareas_pendientes.append(tarea)
+                    tarea['estado'] = "pendiente"
+                    print(f"La tarea {tarea['id']} del trabajo {tarea['id_trabajo']} puede empezar a realizarse.")
                     mutex_tareas_pendientes.release()
 
                     semaf_tareas.release()
@@ -58,10 +63,9 @@ def planificador():
 
         mutex_tareas_completadas.acquire()
         while tareas_completadas:
-            tarea = tareas_completadas.pop()
+            tarea = tareas_completadas.pop(0)
             trabajos_actualizados.add(tarea['id_trabajo'])
         mutex_tareas_completadas.release()
-
 
 def miembro(id):
     while True:
@@ -71,6 +75,8 @@ def miembro(id):
         tarea = tareas_pendientes.pop(0)
         mutex_tareas_pendientes.release()
 
+        print(f"+ El miembro {id} ha empezado la tarea {tarea['id']} del trabajo {tarea['id_trabajo']}.")
+
         #Realizando la tarea
         time.sleep(tarea['duracion'])
         tarea['estado'] = "completado"
@@ -79,13 +85,22 @@ def miembro(id):
         tareas_completadas.append(tarea)
         mutex_tareas_completadas.release()
 
-        print(f"El miembro {id} ha realizado la tarea {tarea['id']}")
+        print(f"- El miembro {id} ha realizado la tarea {tarea['id']} del trabajo {tarea['id_trabajo']}.")
 
         semaf_planificador.release()
 
 #Comprobar que se hayan completado todos los requerimientos previos para empezar la tarea
-def comprobarTarea(trabajo, tarea):
+def comprobarTarea(tareas, tarea):
     for requerimiento in tarea['requerimientos']:
-        if trabajo[requerimiento]['estado'] != "completado":
+        if tareas[requerimiento]['estado'] != "completado":
             return False
     return True
+
+
+for i in range(trabajos_totales):
+    crearTrabajo(i)
+
+for i in range(miembros_totales):
+    threading.Thread(target = miembro, args=[i]).start()
+
+threading.Thread(target = planificador, args=[]).start()
