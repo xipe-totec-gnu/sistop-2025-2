@@ -12,6 +12,10 @@ tareas_completadas = []
 mutex_tareas_pendientes= threading.Semaphore(1)
 mutex_tareas_completadas= threading.Semaphore(1)
 
+# Agregar variables para el estado actual de los miembros
+estado_miembros = {}
+lock_estado = threading.Lock()
+
 semaf_planificador = threading.Semaphore(0)
 semaf_tareas = threading.Semaphore(0)
 
@@ -52,7 +56,6 @@ def planificador():
                     mutex_tareas_pendientes.acquire()
                     tareas_pendientes.append(tarea)
                     tarea['estado'] = "pendiente"
-                    print(f"La tarea {tarea['id']} del trabajo {tarea['id_trabajo']} puede empezar a realizarse.")
                     mutex_tareas_pendientes.release()
 
                     semaf_tareas.release()
@@ -68,6 +71,10 @@ def planificador():
         mutex_tareas_completadas.release()
 
 def miembro(id):
+    # Inicializar estado del miembro
+    with lock_estado:
+        estado_miembros[id] = None
+
     while True:
         semaf_tareas.acquire()
 
@@ -75,17 +82,21 @@ def miembro(id):
         tarea = tareas_pendientes.pop(0)
         mutex_tareas_pendientes.release()
 
-        print(f"+ El miembro {id} ha empezado la tarea {tarea['id']} del trabajo {tarea['id_trabajo']}.")
+        # Actualizar estado del miembro
+        with lock_estado:
+            estado_miembros[id] = tarea
 
-        #Realizando la tarea
+        # Realizando la tarea
         time.sleep(tarea['duracion'])
         tarea['estado'] = "completado"
+
+        # Limpiar estado del miembro
+        with lock_estado:
+            estado_miembros[id] = None
 
         mutex_tareas_completadas.acquire()
         tareas_completadas.append(tarea)
         mutex_tareas_completadas.release()
-
-        print(f"- El miembro {id} ha realizado la tarea {tarea['id']} del trabajo {tarea['id_trabajo']}.")
 
         semaf_planificador.release()
 
