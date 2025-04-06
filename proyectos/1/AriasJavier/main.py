@@ -1,11 +1,20 @@
 import threading
+import sys
 import time
 import curses
 from curses import wrapper
-from sincronizacion_proyecto import planificador, crearTrabajo, trabajos, tareas_pendientes, miembro, estado_miembros
+from sincronizacion_proyecto import (
+    crearTrabajo,
+    estado_miembros,
+    miembro,
+    miembros_totales,
+    planificador,
+    tareas_pendientes,
+    trabajos,
+    trabajos_totales
+)
 
-trabajos_totales = 6
-miembros_totales = 2
+evento_cierre = threading.Event()
 
 def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     stdscr.clear()
@@ -28,9 +37,11 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
             stdscr.addstr(y, 40 + j*8, f"T{tarea['id']}[{estado_symbol}]")
 
     # Mostrar estado de los miembros
-    stdscr.addstr(4 + trabajos_totales, 0, "ESTADO DE LOS MIEMBROS:", curses.A_UNDERLINE)
+    y_miembros = 4 + trabajos_totales
+
+    stdscr.addstr(y_miembros, 0, "ESTADO DE LOS MIEMBROS:", curses.A_UNDERLINE)
     for miembro_id, estado in estado_miembros.items():
-        y = 5 + trabajos_totales + miembro_id
+        y = y_miembros + 1 + miembro_id
         if estado:
             stdscr.addstr(y, 2, f"Miembro {miembro_id}: Trabajando en Tarea {estado['id']} del Trabajo {estado['id_trabajo']}")
         else:
@@ -45,18 +56,17 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     stdscr.refresh()
 
 def pantalla_principal(stdscr):
-    # Configuración inicial de curses
     curses.curs_set(0)
     stdscr.nodelay(1)
 
-    while True:
+    while not evento_cierre.is_set():
         try:
             actualizar_pantalla(stdscr, trabajos, estado_miembros)
-            # Actualizar cada 100ms
             time.sleep(0.1)
 
-            # Salir si se presiona 'q'
+            # Si se presiona 'q', establecer el evento de cierre
             if stdscr.getch() == ord('q'):
+                evento_cierre.set()
                 break
         except:
             break
@@ -80,6 +90,9 @@ def main(stdscr):
 
     # Iniciar interfaz
     pantalla_principal(stdscr)
+
+    # Forzar la salida del programa
+    sys.exit(0)
 
 if __name__ == '__main__':
     wrapper(main)

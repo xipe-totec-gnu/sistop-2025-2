@@ -2,7 +2,7 @@ import random
 import threading
 import time
 
-trabajos_totales = 3
+trabajos_totales = 6
 miembros_totales = 2
 
 trabajos = []
@@ -106,12 +106,3 @@ def comprobarTarea(tareas, tarea):
         if tareas[requerimiento]['estado'] != "completado":
             return False
     return True
-
-
-for i in range(trabajos_totales):
-    crearTrabajo(i)
-
-for i in range(miembros_totales):
-    threading.Thread(target = miembro, args=[i]).start()
-
-threading.Thread(target = planificador, args=[]).start()
