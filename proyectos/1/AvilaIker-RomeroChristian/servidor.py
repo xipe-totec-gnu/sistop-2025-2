@@ -1,73 +1,75 @@
-#Versión 5.0
-
 import threading
-import time
-import random
 import queue
 
-class Servidor: #Clase que representa al servidor
-    def __init__(self, max_conexiones = 3, limite_premium_seguidos = 2): # Constructor de la clase
-        self.jugadores_conectados = [] # Lista para almacenar los jugadores conectados
-        self.lock = threading.Lock() # Lock para sincronizar el acceso a la lista de jugadores conectados
-        self.semaforo = threading.Semaphore(max_conexiones) # Semaforo para limitar el número de conexiones simultaneas
-        self.cola_espera = queue.Queue() # Cola de espera para los jugadores
-        self.limite_premium = limite_premium_seguidos # Límite de jugadores premium seguidos
-        self.premium_seguidos = 0 # Contador de jugadores premium seguidos
+class Servidor:
+    def __init__(self, max_conexiones=12, max_vip_seguidos=3):
+        self.cola_espera = queue.PriorityQueue()
+        self.jugadores_conectados = []
+        self.lock = threading.Lock()
+        self.semaforo = threading.Semaphore(max_conexiones)
+        self.vip_seguidos = 0
+        self.max_vip_seguidos = max_vip_seguidos
 
-    def agregar_a_cola(self, jugador): # Método para agregar un jugador a la cola de espera
-        prioridad = 0 if jugador.es_premium else 1 # Asigna una prioridad al jugador según su tipo (premium o no)
-        self.cola_espera.put((prioridad, jugador.id_jugador, jugador)) # Agrega el jugador a la cola de espera
-        print(f"[Servidor] Jugador {jugador.id_jugador} agregado a la cola (Premium: {jugador.es_premium})")
+    def agregar_jugador(self, jugador):
+        prioridad = 0 if jugador.es_vip else 1
+        self.cola_espera.put((prioridad, jugador.id, jugador))
 
-    
-    def procesar_conexiones(self): # Método para procesar la conexión de un jugador
-        while not self.cola_espera.empty(): # Mientras haya jugadores en la cola de espera
-            siguiente = self._siguiente_jugador_justo()
-            if siguiente:
-                prioridad, id_jugador, jugador = siguiente
-                self.semaforo.acquire() # Adquiere el semáforo para limitar el número de conexiones simultaneas
-                threading.Thread(target=self._atender_jugador, args=(jugador,)).start() # Crea un hilo para atender al jugador
+    def procesar_conexiones(self, actualizar_historial, actualizar_ui):
+        def ciclo():
+            while True:
+                if not self.cola_espera.empty():
+                    jugador = self._obtener_siguiente()
+                    if jugador:
+                        self.semaforo.acquire()
+                        with self.lock:
+                            jugador.conectado = True
+                            self.jugadores_conectados.append(jugador)
+                        actualizar_historial(f"Jugador {jugador.id} conectado. (VIP: {jugador.es_vip})")
+                        actualizar_ui()
+
+                        hilo = threading.Thread(
+                            target=jugador.jugar,
+                            args=(self, actualizar_historial, actualizar_ui),
+                            daemon=True
+                        )
+                        hilo.start()
+                else:
+                    time.sleep(1)
+        threading.Thread(target=ciclo, daemon=True).start()
+
+    def _obtener_siguiente(self):
+        temporales = []
+        jugador_normal = None
+
+        while not self.cola_espera.empty():
+            prioridad, _, jugador = self.cola_espera.get()
+            if self.vip_seguidos >= self.max_vip_seguidos and prioridad == 1:
+                jugador_normal = jugador
+                break
             else:
-                time.sleep(0.1)
+                temporales.append((prioridad, jugador.id, jugador))
 
-    def _siguiente_jugador_justo(self): # Devuelve el siguiente jugador a atender, aplicando la política de justicia:
-                                        # Si hay muchos premium seguidos, se atiende a un jugador normal, si hay alguno.
-        temporales = [] # Lista para almacenar los jugadores temporalmente
-        jugador_normal_encontrado = None # Variable para almacenar el jugador normal si es encontrado
+        for item in temporales:
+            self.cola_espera.put(item)
 
-        while not self.cola_espera.empty(): # Mientras haya jugadores en la cola de espera
-            item = self.cola_espera.get() # Obtiene el siguiente jugador de la cola de espera
-            prioridad, id_jugador, jugador = item # Desempaqueta los datos del jugador
+        if jugador_normal:
+            self.vip_seguidos = 0
+            return jugador_normal
 
-            if self.premium_seguidos >= self.limite_premium and prioridad == 1: # Si hay muchos premium seguidos y el jugador es normal
-                jugador_normal_encontrado = item # Almacena el jugador normal
-                break # Sale del bucle
-            else: # Si no, agrega el jugador a la lista temporal
-                temporales.append(item)
+        if not self.cola_espera.empty():
+            prioridad, _, jugador = self.cola_espera.get()
+            if prioridad == 0:
+                self.vip_seguidos += 1
+            else:
+                self.vip_seguidos = 0
+            return jugador
 
-        for item in temporales: # Vuelve a agregar los jugadores temporales a la cola de espera
-            self.cola_espera.put(item) # Agrega el jugador a la cola de espera
+        return None
 
-        if jugador_normal_encontrado: # Si se encontró un jugador normal, se atiende primero
-            self.premium_seguidos = 0 # Reinicia el contador de jugadores premium seguidos
-            return jugador_normal_encontrado
+    def desconectar_jugador(self, jugador):
+        with self.lock:
+            if jugador in self.jugadores_conectados:
+                self.jugadores_conectados.remove(jugador)
+                jugador.conectado = False
+        self.semaforo.release()
 
-        if temporales: # Si hay jugadores en la lista temporal, se atiende el primero
-            primero = self.cola_espera.get() # Obtiene el siguiente jugador de la cola de espera
-            if primero[0] == 0: # Si el jugador es premium, incrementa el contador de jugadores premium seguidos
-                self.premium_seguidos += 1
-            else: # Si el jugador es normal, reinicia el contador de jugadores premium seguidos
-                self.premium_seguidos = 0
-            return primero
-
-        return None # Si no hay jugadores en la cola de espera, devuelve None
-    
-    def _atender_jugador(self, jugador): # Método para atender a un jugador
-        print(f"[Servidor] Atendiendo a Jugador {jugador.id_jugador} (Premium: {jugador.es_premium})")
-        time.sleep(random.uniform(0.5, 1.5)) # Simula el tiempo de atención al jugador
-        
-        with self.lock: # Bloquea el acceso a la lista de jugadores conectados
-            self.jugadores_conectados.append(jugador.id_jugador) # Agrega el jugador a la lista de jugadores conectados
-            print(f"[Servidor] Jugador {jugador.id_jugador} conectado exitosamente.")
-            
-        self.semaforo.release() # Libera el semáforo

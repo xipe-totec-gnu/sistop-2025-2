@@ -1,29 +1,25 @@
-#Este programa simula la conexión de varios jugadores a un servidor. Cada jugador se conecta de manera concurrente, y el servidor procesa cada conexión de manera sincronizada.
-#Versión 3.0
+#Este programa simula la conexión de varios jugadores a un servidor.
+#Al principio, se generan 24 jugadores, los cuales intentan entrar a un servidor de máximo 12 jugadores.
+#Cada 20 segundos, entra un nuevo jugados a la cola de jugadores que quieren entrar al servidor.
+#Entrando ya al servidor, los jugadores permanecen de 10 a 30 segundos.
+#En lo que permanecen en el servidor, los jugadores acumulan kills or muertes.
+#Si su KD actual es mayor a 2.0, reciben una recompenza de 100 monedas por cada kill.
+#La ventana muestra una sección con los jugadores en la cola de espera, los que se encuentran jugando, y el historial de eventos.
 
-#Falta:
-#Incluir interfaz gráfica.
+#Por arreglar:
+#Errores en la implementación del semaforo. En ocasiones se muestran más de 12 jugadores conectados en el servidor.
+#Reducir el número de eventos que aparecen en el historial, es dificil de interpretar lo que está sucediendo.
+#Balancear tasa de nuevos jugadores contra jugadores que se salen del servidor. Se acaban muy rápido los jugadores.
+#Mejorar la estética de la ventana.
+#Comentar código.
 
-#Importaciones
+from tkinter import Tk
 from servidor import Servidor
-from jugador import Jugador
-import random
-
-#Main
-def main():
-    servidor = Servidor(max_conexiones=3) # Crea una instancia del servidor
-    jugadores = [] # Lista para almacenar los hilos de los jugadores
-
-    num_jugadores = 10 # Número de jugadores a simular
-
-    for i in range(num_jugadores): # Crea y inicia los hilos de los jugadores
-        es_premium = random.choice([True, False]) # Determina aleatoriamente si el jugador es premium o no
-        jugador = Jugador(id_jugador=i+1, servidor=servidor, es_premium=es_premium) # Crea una instancia del jugador
-        jugadores.append(jugador) # Agrega el jugador a la lista de jugadores
-        jugador.solicitar_conexion() # Solicita la conexión del jugador al servidor
-
-    print("\n[Servidor] Iniciando procesamiento de conexiones...\n")
-    servidor.procesar_conexiones() # Procesa las conexiones de los jugadores
+from ui import Interfaz
 
 if __name__ == "__main__":
-    main()
+    root = Tk()
+    servidor = Servidor()
+    app = Interfaz(root, servidor)
+    root.mainloop()
+
