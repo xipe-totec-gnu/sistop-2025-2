@@ -25,6 +25,7 @@ class TiendaSprite:
 
     def build(self):
         workers=[]
+        coords=[]
         self.canvas.create_rectangle(
                 self.leftUpperCorner[0], self.leftUpperCorner[1],  # Esquina rightUpperCorner izquierda (x1, y1)
                 self.rightBottomCorner[0], self.rightBottomCorner[1], # Esquina leftUpperCorner derecha (x2, y2)
@@ -43,13 +44,16 @@ class TiendaSprite:
                 outline="black",   # Color del borde
                 width=2           # Grosor del borde
             ))
-        return workers
+            coords.append([newX,newY,newX+self.diameter,newY+self.diameter])
+        return workers,coords
 
 
 class TiendaApp:
     def __init__(self, root):
+        self.queries=queue.Queue()
         self.root = root
         self.workers=[]
+        self.coords=[]
         self.canvas = tk.Canvas(root, width=400, height=300, bg="white")
         self.canvas.pack()
         #Título de la interfaz
@@ -57,27 +61,36 @@ class TiendaApp:
         # Interfaz gráfica
         self.setup_ui()
         # Inicio de los trabajadores
-        self.start()
+        threading.Thread(target=self.inicio,args=[]).start()
+        self.hearing()
 
-    def start(self):
+    def inicio(self):
         for i in range(bs.numWorkers):
-            threading.Thread(target=bs.workers, args=[self.canvas,i,self.workers[i],self.root],daemon=True).start()
-        for i in range(10):
-            threading.Thread(target=bs.alumnos, args=[self.canvas,self.workers]).start()
+            threading.Thread(target=bs.workers, args=[i,self.queries,self.workers[i],self.canvas]).start()
+        while True:
+            threading.Thread(target=bs.alumnos, args=[self.queries,self.workers,self.canvas,self.coords]).start()
+
+
+    def hearing(self):
+        """Revisa periódicamente la cola y ejecuta las acciones en la UI."""
+        try:
+            #while True:  # Saca todos los disponibles
+                task = self.queries.get_nowait()
+                task.begin()  # Ejecuta el cambio en la UI (en el hilo principal)
+        except queue.Empty:
+            pass
+        self.root.after(500, self.hearing)  # Vuelve a revisar en 100ms
+
     
     def setup_ui(self):
         # Frame principal
         frame = tk.Frame(self.root, padx=10, pady=10)
         frame.pack(fill=tk.BOTH, expand=True)
-        #frame.pack(expand=True)
         # Título
         tk.Label(frame, text="🏪 Simulación de Don Rata", font=("Arial", 16)).pack(pady=5)
 
         tienda=TiendaSprite(canvas=self.canvas,leftUpperCorner=(50,50),rightBottomCorner=(350,100),base=30,diameter=20,dFromUpper=20)
-        self.workers=tienda.build()
-
-        #alumno=alumnoSprite(canvas=canvas,leftUpperCorner=(50,200),rightBottomCorner=(80,230))
-        #alumno.build()
+        self.workers,self.coords=tienda.build()
         
         # Botón para detener la simulación
         tk.Button(frame, text="Detener Simulación", command=self.detener_simulacion).pack(pady=5)

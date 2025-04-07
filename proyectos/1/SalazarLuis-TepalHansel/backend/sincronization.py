@@ -20,11 +20,13 @@ capacityAlumnos=threading.Semaphore(numWorkers)
 verticalDes=10
 
 class AlumnoSprite:
-    contador=0
     def __init__(self,canvas,leftUpperCorner,rightBottomCorner):
-        self.contador+=1
+        #global contador
+        #contador+=1
         self.setImage(canvas,leftUpperCorner,rightBottomCorner)
         self.colors=["red","yellow","blue","green","orange","purple"]
+        self.headId=0
+        self.bodyId=0
 
     def setImage(self,canvas,leftUpperCorner,rightBottomCorner):
         self.canvas=canvas
@@ -41,14 +43,15 @@ class AlumnoSprite:
         self.bodyRightBottomCorner=self.rightBottomCorner
 
     def build(self):
-        self.canvas.create_oval(
+        global contador
+        self.headId=self.canvas.create_oval(
             *self.circleLeftUpperCorner,
             *self.circleRightBottomCorner,
             fill="pink",
             outline="black",
             width=2
         )
-        self.canvas.create_rectangle(
+        self.bodyId=self.canvas.create_rectangle(
             *self.bodyLeftUpperCorner,
             *self.bodyRightBottomCorner,
             fill=self.colors[random.randint(0,len(self.colors)-1)],
@@ -57,28 +60,51 @@ class AlumnoSprite:
         )
         centerX=(self.bodyLeftUpperCorner[0]+self.bodyRightBottomCorner[0])/2
         centerY=(self.bodyLeftUpperCorner[1]+self.bodyRightBottomCorner[1])/2
-        self.canvas.create_text(
+        self.textId=self.canvas.create_text(
             centerX,centerY,
-            text=f"{self.contador}",
+            text=f"{contador}",
             font=("Arial",10,"bold")
         )
+    def getBodyId(self):
+        return self.bodyId
+    def getHeadId(self):
+        return self.headId
+        
+class Query:
+    def __init__(self,id,**args):
+        self.id=id
+        self.args=args
+
+    def begin(self):
+        if(self.id==1):
+            self.args["canvas"].itemconfig(self.args["worker"],fill="white")
+        elif(self.id==2):
+            self.args["canvas"].itemconfig(self.args["worker"],fill="red")
+        elif(self.id==3):
+            self.args["alumno"].build()
+        else:
+            self.args["canvas"].delete(self.args["alumno"])
         
 
-def workers(id,worker=None,canvas=None):
+def workers(id,queries=None,worker=None,canvas=None):
     while True:
         if __name__=="__main__":
             print(f"Soy el trabajador {id} y no tengo nada que hacer")
             TrabajadorSleep[id].acquire()
             print(f"Atendiendo {id}")
             TrabajadorActivo[id].acquire()
-
-
+####ATENCION
         else:
-            canvas.itemconfig(worker,fill="white")
-            #TrabajadorSleep[id].acquire()
-            canvas.itemconfig(worker,fill="red")
+            queries.put(Query(1,canvas=canvas,worker=worker))
+            #print(f"Soy el trabajador {id} y no tengo nada que hacer")
+            #canvas.itemconfig(worker,fill="white") #id=1
+            TrabajadorSleep[id].acquire()
+            queries.put(Query(2,canvas=canvas,worker=worker))
+            #canvas.itemconfig(worker,fill="red")  #id=2
+            #print(f"Atendiendo {id}")
+            TrabajadorActivo[id].acquire()
         
-def alumnos(workers=None,canvas=None):
+def alumnos(queries=None,workers=None,canvas=None,coords=None):
     global verticalDes
     global available
     global contador
@@ -89,30 +115,29 @@ def alumnos(workers=None,canvas=None):
     if __name__=="__main__":
         idWorker=available.get(block=True,timeout=None)
         print(f"Es el turno de {idAlumno}, pasa a {idWorker}")
-
-        #Pasa por algunas fases
-
         TrabajadorSleep[idWorker].release()
         print(f"{idAlumno} recibio su pedido")
         TrabajadorActivo[idWorker].release()
         print(f"Se libera {idWorker}")
         available.put(idWorker)
-
+####ATENCION
     else:
-            #capacityAlumnos.acquire()
-        with mutexAvailable:
-            #idWorker=available.pop()
-            idWorker=2
+        #capacityAlumnos.acquire()
+        idWorker=available.get(block=True,timeout=None)
+        TrabajadorSleep[idWorker].release()
         with mutexAtendiendo[idWorker]:
-            coords=canvas.coords(workers[idWorker])
-            coords[1]+=verticalDes
-            alumno=AlumnoSprite((coords[0],coords[1]),(coords[0]+20,coords[1]+20))
-            alumno.build()
-            print("Don Rata atiendame")
-            with mutexAvailable:
-                available.append(idWorker)
-            #TrabajadorSleep[idWorker].release()
-
+            newCor=coords[idWorker]
+        newCor[1]+=verticalDes
+        newCor[3]+=verticalDes
+        #alumno=AlumnoSprite(canvas,(coords[0],coords[1]),(coords[0]+20,coords[1]+20))
+        #print("pues si se crea un alumno")
+        alumno=AlumnoSprite(canvas,(newCor[0],newCor[1]),(newCor[0]+20,newCor[1]+20))
+        queries.put(Query(3,alumno=alumno))
+        queries.put(Query(4,canvas=canvas,alumno=alumno.getBodyId()))
+        queries.put(Query(4,canvas=canvas,alumno=alumno.getHeadId()))
+        TrabajadorActivo[idWorker].release()
+        available.put(idWorker)
+        
 if __name__=="__main__":
     for i in range(numWorkers):
         threading.Thread(target=workers,args=[i]).start()
