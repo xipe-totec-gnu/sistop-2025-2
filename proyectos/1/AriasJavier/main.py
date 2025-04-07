@@ -19,45 +19,54 @@ evento_cierre = threading.Event()
 def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     stdscr.clear()
 
+
     # Mostrar título
-    stdscr.addstr(0, 0, "SISTEMA DE GESTIÓN DE TAREAS", curses.A_BOLD)
+    stdscr.addstr(1, 1, "SISTEMA DE GESTIÓN DE TAREAS", curses.A_BOLD)
 
     # Mostrar estado de los trabajos
-    stdscr.addstr(2, 0, "ESTADO DE LOS TRABAJOS:", curses.A_UNDERLINE)
+    stdscr.addstr(3, 1, "ESTADO DE LOS TRABAJOS:", curses.A_UNDERLINE)
     for trabajo in trabajos:
-        y = 3 + trabajo['id']
+        y = 4 + trabajo['id']
         # Contar tareas completadas
         completadas = sum(1 for tarea in trabajo['tareas'] if tarea['estado'] == "completado")
         total = len(trabajo['tareas'])
-        stdscr.addstr(y, 2, f"Trabajo {trabajo['id']}: {completadas}/{total} tareas completadas")
+        stdscr.addstr(y, 3, f"Trabajo {trabajo['id']}: {completadas}/{total} tareas completadas")
 
         # Mostrar detalles de las tareas
         for j, tarea in enumerate(trabajo['tareas']):
             estado_symbol = "✓" if tarea['estado'] == "completado" else "⧖" if tarea['estado'] == "pendiente" else "□"
-            stdscr.addstr(y, 40 + j*8, f"T{tarea['id']}[{estado_symbol}]")
+            estado_color = 1 if tarea['estado'] == "completado" else 2 if tarea['estado'] == "pendiente" else 3
+            stdscr.addstr(y, 40 + j*8, f"T{tarea['id']}[{estado_symbol}]", curses.color_pair(estado_color))
 
     # Mostrar estado de los miembros
-    y_miembros = 4 + trabajos_totales
+    y_miembros = 5 + trabajos_totales
 
-    stdscr.addstr(y_miembros, 0, "ESTADO DE LOS MIEMBROS:", curses.A_UNDERLINE)
+    stdscr.addstr(y_miembros, 1, "ESTADO DE LOS MIEMBROS:", curses.A_UNDERLINE)
     for miembro_id, estado in estado_miembros.items():
         y = y_miembros + 1 + miembro_id
         if estado:
-            stdscr.addstr(y, 2, f"Miembro {miembro_id}: Trabajando en Tarea {estado['id']} del Trabajo {estado['id_trabajo']}")
+            stdscr.addstr(y, 3, f"Miembro {miembro_id}: Trabajando en Tarea {estado['id']} del Trabajo {estado['id_trabajo']}")
         else:
-            stdscr.addstr(y, 2, f"Miembro {miembro_id}: Esperando")
+            stdscr.addstr(y, 3, f"Miembro {miembro_id}: Esperando")
 
-    y_tareas = 6 + trabajos_totales + miembros_totales
+    y_tareas = 7 + trabajos_totales + miembros_totales
     # Mostrar tareas pendientes
-    stdscr.addstr(y_tareas, 0, "TAREAS PENDIENTES:", curses.A_UNDERLINE)
+    stdscr.addstr(y_tareas, 1, "TAREAS PENDIENTES:", curses.A_UNDERLINE)
     for i, tarea in enumerate(tareas_pendientes):
         stdscr.addstr(y_tareas + 1 + i, 2, f"Tarea {tarea['id']} del Trabajo {tarea['id_trabajo']}")
+
+    stdscr.addstr(stdscr.getmaxyx()[0]-1, 1, "Presione q para salir.")
 
     stdscr.refresh()
 
 def pantalla_principal(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(1)
+    curses.use_default_colors()
+
+    curses.init_pair(1, curses.COLOR_GREEN, -1)
+    curses.init_pair(2, curses.COLOR_YELLOW, -1)
+    curses.init_pair(3, curses.COLOR_RED, -1)
 
     while not evento_cierre.is_set():
         try:
