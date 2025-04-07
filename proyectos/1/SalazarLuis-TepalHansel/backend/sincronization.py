@@ -11,7 +11,7 @@ TrabajadorActivo=[threading.Semaphore(0) for _ in range(numWorkers)]
 mutexAtendiendo=[threading.Semaphore(1) for _ in range(numWorkers)]
 mutexAvailable=threading.Semaphore(1)
 available=queue.Queue()
-
+signalBoolean=threading.Semaphore(0)
 
 for i in range(numWorkers):
     available.put(i)
@@ -20,15 +20,14 @@ capacityAlumnos=threading.Semaphore(numWorkers)
 verticalDes=10
 
 class AlumnoSprite:
-    def __init__(self,canvas,leftUpperCorner,rightBottomCorner):
-        #global contador
-        #contador+=1
+    def __init__(self,canvas,leftUpperCorner,rightBottomCorner,id):
         self.canvas=canvas
         self.setImage(canvas,leftUpperCorner,rightBottomCorner)
         self.colors=["red","yellow","blue","green","orange","purple"]
         self.headId=0
         self.bodyId=0
         self.textId=0
+        self.id=id
 
     def setImage(self,canvas,leftUpperCorner,rightBottomCorner):
         self.canvas=canvas
@@ -45,7 +44,6 @@ class AlumnoSprite:
         self.bodyRightBottomCorner=self.rightBottomCorner
 
     def build(self):
-        global contador
         self.headId=self.canvas.create_oval(
             *self.circleLeftUpperCorner,
             *self.circleRightBottomCorner,
@@ -64,7 +62,7 @@ class AlumnoSprite:
         centerY=(self.bodyLeftUpperCorner[1]+self.bodyRightBottomCorner[1])/2
         self.textId=self.canvas.create_text(
             centerX,centerY,
-            text=f"{contador}",
+            text=f"{self.id}",
             font=("Arial",10,"bold")
         )
     def delete(self):
@@ -98,13 +96,7 @@ def workers(id,queries=None,worker=None,canvas=None):
             TrabajadorActivo[id].acquire()
 ####ATENCION
         else:
-            queries.put(Query(1,canvas=canvas,worker=worker))
-            #print(f"Soy el trabajador {id} y no tengo nada que hacer")
-            #canvas.itemconfig(worker,fill="white") #id=1
             TrabajadorSleep[id].acquire()
-            queries.put(Query(2,canvas=canvas,worker=worker))
-            #canvas.itemconfig(worker,fill="red")  #id=2
-            #print(f"Atendiendo {id}")
             TrabajadorActivo[id].acquire()
         
 def alumnos(queries=None,workers=None,canvas=None,coords=None):
@@ -125,17 +117,15 @@ def alumnos(queries=None,workers=None,canvas=None,coords=None):
         available.put(idWorker)
 ####ATENCION
     else:
-        #capacityAlumnos.acquire()
         idWorker=available.get(block=True,timeout=None)
         TrabajadorSleep[idWorker].release()
         with mutexAtendiendo[idWorker]:
-            newCor=coords[idWorker]
+            newCor=coords[idWorker].copy()
         newCor[1]+=verticalDes
         newCor[3]+=verticalDes
-        #alumno=AlumnoSprite(canvas,(coords[0],coords[1]),(coords[0]+20,coords[1]+20))
-        #print("pues si se crea un alumno")
-        alumno=AlumnoSprite(canvas,(newCor[0],newCor[1]),(newCor[0]+20,newCor[1]+20))
+        alumno=AlumnoSprite(canvas,(newCor[0],newCor[1]),(newCor[0]+20,newCor[1]+20),idAlumno)
         queries.put(Query(3,alumno=alumno))
+        time.sleep(0.25)
         queries.put(Query(4,alumno=alumno))
         TrabajadorActivo[idWorker].release()
         available.put(idWorker)

@@ -40,7 +40,7 @@ class TiendaSprite:
             self.canvas.create_oval(
                 newX,newY,
                 newX+self.diameter,newY+self.diameter,
-                fill="white",  # Color de relleno
+                fill="red",  # Color de relleno
                 outline="black",   # Color del borde
                 width=2           # Grosor del borde
             ))
@@ -61,14 +61,15 @@ class TiendaApp:
         # Interfaz gráfica
         self.setup_ui()
         # Inicio de los trabajadores
-        threading.Thread(target=self.inicio,args=[]).start()
+        threading.Thread(target=self.inicio,args=[],daemon=True).start()
         self.hearing()
 
     def inicio(self):
         for i in range(bs.numWorkers):
-            threading.Thread(target=bs.workers, args=[i,self.queries,self.workers[i],self.canvas]).start()
+            threading.Thread(target=bs.workers, args=[i,self.queries,self.workers[i],self.canvas],daemon=True).start()
         while True:
-            threading.Thread(target=bs.alumnos, args=[self.queries,self.workers,self.canvas,self.coords]).start()
+            threading.Thread(target=bs.alumnos, args=[self.queries,self.workers,self.canvas,self.coords],daemon=True).start()
+            time.sleep(random.uniform(0,0.5))
 
 
     def hearing(self):
