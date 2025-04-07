@@ -23,10 +23,12 @@ class AlumnoSprite:
     def __init__(self,canvas,leftUpperCorner,rightBottomCorner):
         #global contador
         #contador+=1
+        self.canvas=canvas
         self.setImage(canvas,leftUpperCorner,rightBottomCorner)
         self.colors=["red","yellow","blue","green","orange","purple"]
         self.headId=0
         self.bodyId=0
+        self.textId=0
 
     def setImage(self,canvas,leftUpperCorner,rightBottomCorner):
         self.canvas=canvas
@@ -65,10 +67,10 @@ class AlumnoSprite:
             text=f"{contador}",
             font=("Arial",10,"bold")
         )
-    def getBodyId(self):
-        return self.bodyId
-    def getHeadId(self):
-        return self.headId
+    def delete(self):
+        self.canvas.delete(self.bodyId)
+        self.canvas.delete(self.headId)
+        self.canvas.delete(self.textId)
         
 class Query:
     def __init__(self,id,**args):
@@ -83,7 +85,8 @@ class Query:
         elif(self.id==3):
             self.args["alumno"].build()
         else:
-            self.args["canvas"].delete(self.args["alumno"])
+            self.args["alumno"].delete()
+
         
 
 def workers(id,queries=None,worker=None,canvas=None):
@@ -133,11 +136,10 @@ def alumnos(queries=None,workers=None,canvas=None,coords=None):
         #print("pues si se crea un alumno")
         alumno=AlumnoSprite(canvas,(newCor[0],newCor[1]),(newCor[0]+20,newCor[1]+20))
         queries.put(Query(3,alumno=alumno))
-        queries.put(Query(4,canvas=canvas,alumno=alumno.getBodyId()))
-        queries.put(Query(4,canvas=canvas,alumno=alumno.getHeadId()))
+        queries.put(Query(4,alumno=alumno))
         TrabajadorActivo[idWorker].release()
         available.put(idWorker)
-        
+
 if __name__=="__main__":
     for i in range(numWorkers):
         threading.Thread(target=workers,args=[i]).start()
