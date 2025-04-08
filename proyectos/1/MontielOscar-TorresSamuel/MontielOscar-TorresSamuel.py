@@ -1,3 +1,23 @@
+"""
+Proyecto 1
+
+Autores:
+- Torres Delgadillo Samuel Mixcoatl
+- Montiel Juárez Oscar Iván
+
+Descripción:
+Este proyecto modela el funcionamiento de un estacionamiento de la Facultad de Ingeniería,
+donde se presentan problemas de concurrencia debido a un sistema de sobrecupo y mala gestión
+de espacios. Se gestionan vehículos que llegan al estacionamiento, los cuales pueden ocupar
+espacios de forma normal o equivocada (ocupando dos espacios). Una grúa se encarga de retirar
+a los vehículos mal estacionados. El sistema utiliza hilos con sincronización basada en semáforos,
+mutex y variables de condición, y presenta una interfaz gráfica en tiempo real utilizando la
+biblioteca Rich. Además, se guarda un historial de eventos en un archivo de texto.
+
+REQUISITO
+instalar rich: pip install rich
+"""
+
 import threading
 import time
 import random
@@ -15,14 +35,32 @@ registroEventos = []
 asignacionVehiculos = {}
 consola = Console(width=120)
 
+stop_event = threading.Event()
+
 def guardarHistorial():
-    while True:
+    """
+    guarda el historial en un txt
+
+    mantiene el historial actualizado de los eventos del 
+    estacionamiento y actualiza el archivo "historial.txt" cada segundo
+    """
+    while not stop_event.is_set():
         with mutexEspacios:
             with open("historial.txt", "w", encoding="utf-8") as f:
                 f.write("\n".join(registroEventos[-50:]))
         time.sleep(1)
 
 def ocuparDosEspacios(idVehiculo):
+    """I
+    intenta ocupar dos espacios consecutivos
+    para un vehículo que se estaciona mal
+
+    Args:
+        idVehiculo (int): identificador del vehículo
+
+    Returns:
+        bool: True si se asignaron dos espacios exitosamente, False sino
+    """
     with condicionEspacio:
         for i in range(1, capacidadFisica):
             espacio1 = f"A{i}"
@@ -36,6 +74,18 @@ def ocuparDosEspacios(idVehiculo):
         return False
 
 def vehiculoLlegada(idVehiculo):
+    """
+    controla la llegada de un vehículo al estacionamiento, le asigna un espacio
+
+    dependiendo de una probabilidad, intenta asignar dos espacios consecutivos 
+    o un solo espacio
+     
+    utiliza mecanismos de sincronización  y espera
+    activamente en caso de no haber espacios disponibles
+
+    Args:
+        idVehiculo (int): Identificador del vehículo.
+    """
     try:
         if random.random() < 0.05:
             if semaforo._value >= 2:
@@ -67,6 +117,16 @@ def vehiculoLlegada(idVehiculo):
         vehiculoSalida(idVehiculo)
 
 def vehiculoSalida(idVehiculo):
+    """
+    libera el espacio asignado a un vehículo y notifica a los hilos en espera
+
+    actualiza el estado de los espacios, libera los permisos del semáforo
+    y utiliza notify_all() para despertar a los hilos que esperan por un espacio
+    (vehículos esperando lugar)
+
+    Args:
+        idVehiculo (int): Identificador del vehículo que está saliendo.
+    """
     with condicionEspacio:
         if idVehiculo in asignacionVehiculos:
             espacio = asignacionVehiculos.pop(idVehiculo)
@@ -80,8 +140,16 @@ def vehiculoSalida(idVehiculo):
             condicionEspacio.notify_all()
 
 class Grua(threading.Thread):
+    """
+    hilo encargado de retirar vehículos mal estacionados
+
+    Revisa periódicamente (cada 7 segundos) el estado del estacionamiento y
+    retira aquellos vehículos que ocupan dos espacios, liberándolos y notificando
+    a los hilos en espera
+
+    """
     def run(self):
-        while True:
+        while not stop_event.is_set():
             with mutexEspacios:
                 mal_estacionados = [idV for idV, esp in asignacionVehiculos.items() if isinstance(esp, tuple)]
                 if mal_estacionados:
@@ -95,8 +163,16 @@ class Grua(threading.Thread):
             time.sleep(7)
 
 def interfazUsuario():
+    """
+    actualiza y muestra la interfaz gráfica en tiempo real usando Rich
+
+    presenta una tabla con el estado actual del estacionamiento, incluyendo
+    la cantidad de espacios libres, ocupados, vehículos estacionados, vehículos
+    en espera y los últimos eventos registrados.
+    """
+
     with Live(console=consola, refresh_per_second=4) as live:
-        while True:
+        while not stop_event.is_set():
             tabla = Table(
                 title="[bold bright_blue]ESTACIONAMIENTO FI PRINCIPAL[/]",
                 show_header=True,
@@ -128,18 +204,27 @@ def interfazUsuario():
             time.sleep(0.3)
 
 def main():
-    Grua(daemon=True).start()
-    threading.Thread(target=interfazUsuario, daemon=True).start()
-    threading.Thread(target=guardarHistorial, daemon=True).start()
-    
-    id_counter = 0
-    while True:
-        try:
+    """
+    función principal que inicia y controla todos los hilos del sistema
+
+    se ejecuta indefinidamente hasta que se interrumpe con Ctrl+C
+    donde se controla la finalización de la simulación de manera
+    correcta y ordenada
+    """
+    try:
+        Grua(daemon=True).start()
+        threading.Thread(target=interfazUsuario, daemon=True).start()
+        threading.Thread(target=guardarHistorial, daemon=True).start()
+        
+        id_counter = 0
+        while not stop_event.is_set():
             threading.Thread(target=vehiculoLlegada, args=(id_counter,), daemon=True).start()
             id_counter += 1
             time.sleep(random.uniform(0.2, 0.4))
-        except KeyboardInterrupt:
-            break
+    except KeyboardInterrupt:
+        stop_event.set()
+        print("Deteniendo la simulacion...")
+        time.sleep(1)  
 
 if __name__ == "__main__":
     main()
