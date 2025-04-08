@@ -104,6 +104,14 @@ En caso de que se desee una salida por terminal únicamente se ejecutaría el ar
 
 ### Sistema Operativo
 
-Probamos nuestro programa en los sistemas operativos linux mint y devian.
+Probamos nuestro programa en los sistemas operativos linux mint y fedora.
 
 ## Ejemplos
+
+![Imagen de Ejecución de la interfaz](img/imagenEjecucion.png)
+
+El programa es ejecutado con el comando proporcionado anteriormente, mostrandonos de inmediato la interfaz realizada en este proyecto con la finalidad de representar de mejor manera la tienda de Don Rata.
+
+![Imagen de Ejecución de la interfaz](img/resultadoEjecucion.png)
+
+Como puede observarse en la imagen el programa simula la tienda de Don Rata, donde los trabajadores son representados con un circulo rojo y los alumnos con un semicirculo rosado y un cuadro que representa su cuerpo. Además de que se añadieron pequeñas animaciones para simular el flujo de alumnos que tiene Don Rata a lo largo de un día. Finalmente tambien incluye un boton con el cual puede detenerse la ejecución del programa en caso de que se desee.
