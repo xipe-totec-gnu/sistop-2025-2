@@ -109,7 +109,7 @@ def vehiculoLlegada(idVehiculo):
                     break
                 condicionEspacio.wait(timeout=1.0)
 
-        time.sleep(random.randint(2, 5))
+        time.sleep(random.randint(3, 7))
 
     except Exception as e:
         registroEventos.append(f"Error carro {idVehiculo}: {str(e)}")
@@ -134,9 +134,11 @@ def vehiculoSalida(idVehiculo):
                 for e in espacio:
                     espacios[e] = False
                 semaforo.release(2)
+                registroEventos.append(f"Carro {idVehiculo} LIBERÓ {espacio[0]} y {espacio[1]}")
             else:
                 espacios[espacio] = False
                 semaforo.release()
+                registroEventos.append(f"Carro {idVehiculo} LIBERÓ {espacio}")
             condicionEspacio.notify_all()
 
 class Grua(threading.Thread):
@@ -167,8 +169,7 @@ def interfazUsuario():
     actualiza y muestra la interfaz gráfica en tiempo real usando Rich
 
     presenta una tabla con el estado actual del estacionamiento, incluyendo
-    la cantidad de espacios libres, ocupados, vehículos estacionados, vehículos
-    en espera y los últimos eventos registrados.
+    la cantidad de espacios libres, ocupados y los últimos eventos registrados.
     """
 
     with Live(console=consola, refresh_per_second=4) as live:
@@ -180,23 +181,18 @@ def interfazUsuario():
                 box=None,
                 expand=True
             )
-            
             tabla.add_column("Libres", justify="center", style="green", width=15)
             tabla.add_column("Ocupados", justify="center", style="red", width=15)
-            tabla.add_column("Estacionados", justify="center", style="yellow", width=15)
-            tabla.add_column("Esperando", justify="center", style="magenta", width=15)
             tabla.add_column("Eventos Recientes", justify="left", min_width=70)
 
             with mutexEspacios:
                 libres = sum(not estado for estado in espacios.values())
-                en_espera = sum(1 for e in registroEventos[-20:] if "esperando" in e.lower())
-                eventos = "\n".join(registroEventos[-5:])
+                ocupados = capacidadFisica - libres
+                eventos = "\n".join(registroEventos[-10:])
                 
             tabla.add_row(
                 str(libres),
-                str(capacidadFisica - libres),
-                str(len(asignacionVehiculos)),
-                str(en_espera),
+                str(ocupados),
                 eventos
             )
             
@@ -220,7 +216,7 @@ def main():
         while not stop_event.is_set():
             threading.Thread(target=vehiculoLlegada, args=(id_counter,), daemon=True).start()
             id_counter += 1
-            time.sleep(random.uniform(0.2, 0.4))
+            time.sleep(random.uniform(0.4, 1))
     except KeyboardInterrupt:
         stop_event.set()
         print("Deteniendo la simulacion...")
