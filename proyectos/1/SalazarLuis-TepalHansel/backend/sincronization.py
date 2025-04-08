@@ -9,6 +9,7 @@ mutexContador=threading.Semaphore(1)
 TrabajadorSleep=[threading.Semaphore(0) for _ in range(numWorkers)]
 TrabajadorActivo=[threading.Semaphore(0) for _ in range(numWorkers)]
 mutexAtendiendo=[threading.Semaphore(1) for _ in range(numWorkers)]
+alumnoRendevous=[threading.Semaphore(0) for _ in range(numWorkers)]
 available=queue.Queue()
 
 for i in range(numWorkers):
@@ -96,7 +97,8 @@ def workers(id,queries=None,worker=None,canvas=None):
         else:
             queries.put(Query(1,canvas=canvas,worker=worker))
             TrabajadorSleep[id].acquire()
-
+            queries.put(Query(2,canvas=canvas,worker=worker))
+            alumnoRendevous[id].release()
             TrabajadorActivo[id].acquire()
         
 def alumnos(queries=None,workers=None,canvas=None,coords=None):
@@ -118,15 +120,15 @@ def alumnos(queries=None,workers=None,canvas=None,coords=None):
 
     else:
         idWorker=available.get(block=True,timeout=None)
-        TrabajadorSleep[idWorker].release()
         with mutexAtendiendo[idWorker]:
             newCor=coords[idWorker].copy()
         newCor[1]+=verticalDes
         newCor[3]+=verticalDes
         alumno=AlumnoSprite(canvas,(newCor[0],newCor[1]),(newCor[0]+20,newCor[1]+20),idAlumno)
         queries.put(Query(3,alumno=alumno))
-        
-        time.sleep(0.25)
+        TrabajadorSleep[idWorker].release()
+        alumnoRendevous[idWorker].acquire()
+        time.sleep(random.uniform(0.01, 0.1))
         queries.put(Query(4,alumno=alumno))
         TrabajadorActivo[idWorker].release()
         available.put(idWorker)

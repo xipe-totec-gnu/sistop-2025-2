@@ -11,9 +11,12 @@ ninguno trabajador esta disponible, lo que obviamente es una situación ilógica
 2. **Espera Activa**: Si no hay estudiantes que atender, es una buena práctica que los hilos trabajadores se bloqueen hasta que llegue un estudiante. De igual forma, si no hay disponibilidad el estudiante debe esperar.
 3. **Inanición**: Al existir muchos estudiantes en la fila y Don Rata solo puede atender a 3 a la vez, algunos estudiantes pueden quedar esperando por mucho tiempo.
 
+## Eventos secuenciales
+
+En nuestra interfaz, existe un solo evento que deseamos que lleve un poco de orden. Este es que el alumno y trabajador esten sincronizados, no nos agrada que un trabajador señalice que esta ocupado, sin antes ver que hay un alumno, es decir, queremos que el alumno se vea primero con el trabajador y que luego este indique que esta ocupado.
 
 ## Mecanismos de sincronización
-Para solucionar evitar los efectos nocivos de la concurrencia se siguió la siguiente lógica de desarrollo:
+Para solucionar evitar los efectos nocivos de la concurrencia se siguió la siguiente lógica de desarrollo utilizando exclusivamente semáforos:
 
 - Se utilizaron semáforos tipo mutex con la finalidad de proteger algunas variables importantes como el id de nuestro estudiante y el acceso a las coordenadas de los trabajadores.
 
@@ -23,9 +26,12 @@ la implementación fue diferente.
 
 - Con el fin de reducir la posibilidad de inanición, se implementó una especie de cola de trabajadores disponibles. De esta forma, los alumnos van tomando al trabajador que esté libre a medida que llegan.
 
+- Se implementó el mecanismo rendezvous para que el trabajador señalice que esta ocupado una vez que 
+  el alumno se muestre en la interfaz gráfica.
+
 ## Lógica de Operación
 
-Las variables de estado compartido son:
+Las variables de estado compartido que no son parte de los semáforos son:
 
 - contador: Sirve como el id global del estudiante
 - available: Esta cola almacena los id's de los trabajadores que esten disponibles
@@ -37,8 +43,9 @@ Las variables de estado compartido son:
 2. Durante este tiempo, se encuentra en la cola de disponibilidad el id de algún trabajador disponible.
 3. Un alumno lo toma de esa cola y lo despierta para que lo atienda.
 4. Se configura la figura del alumno en la posición del trabajador
-5. Se guardan las actualizaciones pertinentes a la UI en la cola de actualizaciones
-6. Cuando termine de atenderlo este vuelve a añadirse a la cola de disponibilidad y permanece así hasta que llegue otro alumno.
+5. Se configura el cambio de señalización del trabajador
+6. Se guardan las actualizaciones pertinentes a la UI en la cola de actualizaciones
+7. Cuando termine de atenderlo este vuelve a añadirse a la cola de disponibilidad y permanece así hasta que llegue otro alumno.
 
 ### Descripción Algorítmica
 Existen 4 tipos de hilos relevantes en nuestro programa
@@ -66,6 +73,7 @@ Existen 4 tipos de hilos relevantes en nuestro programa
   - Desbloquean a cualquier hilo trabajador disponible
   - Configura el disfraz del alumno
   - Manda la actualización a la cola de actualizaciones
+  - Al realizar el pedido se elimina, aunque antes espera un tiempo variable, esto fue con el propósito de que se visualizarán alumnos al mismo tiempo.
   - Coloca el hilo trabajador como disponible al finalizar
 
 

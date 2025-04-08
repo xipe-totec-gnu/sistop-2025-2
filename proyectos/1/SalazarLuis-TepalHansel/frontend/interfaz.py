@@ -49,7 +49,7 @@ class TiendaSprite:
             self.canvas.create_oval(
                 newX,newY,
                 newX+self.diameter,newY+self.diameter,
-                fill="red",  # Color de relleno
+                fill="white",  # Color de relleno
                 outline="black",   # Color del borde
                 width=2           # Grosor del borde
             ))
@@ -155,7 +155,7 @@ class TiendaApp:
             threading.Thread(target=bs.workers, args=[i,self.queries,self.workers[i],self.canvas],daemon=True).start()
         while True:
             threading.Thread(target=bs.alumnos, args=[self.queries,self.workers,self.canvas,self.coords],daemon=True).start()
-            time.sleep(random.uniform(0,0.5))
+            time.sleep(random.uniform(0,0.05))
 
 
     def hearing(self):
@@ -166,7 +166,7 @@ class TiendaApp:
                 task.begin()  # Ejecuta el cambio en la UI (en el hilo principal)
         except queue.Empty:
             pass
-        self.root.after(500, self.hearing)  # Vuelve a revisar en 100ms
+        self.root.after(200, self.hearing)  # Vuelve a revisar en 100ms
 
     
     def setup_ui(self):
