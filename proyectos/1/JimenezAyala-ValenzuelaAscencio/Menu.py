@@ -1,7 +1,7 @@
 import pygame
 import sys
 from Planteamiento import botonAcerca 
-from Champs import inicio 
+from Inicio import inicio 
 
 # Inicializar Pygame
 pygame.init()
@@ -9,8 +9,6 @@ pygame.init()
 # Colores
 BLANCO = (255, 255, 255)
 NEGRO = (0, 0, 0)
-AZUL = (100, 149, 237)
-GRIS = (200, 200, 200)
 MORADO = (255, 111, 20)
 
 # Configuración de pantalla
