@@ -1,0 +1,630 @@
+* Generalidades
+- ¡Bastante bien repartido! De los seis problemas disponibles, eligieron:
+  - El cruce del río :: 6
+  - El servidor Web :: 3
+  - Santa Claus :: 4
+  - El elevador :: 4
+  - Intersección de caminos :: 5
+  - Los alumnos y el asesor :: 2
+  Curiosamente es muy habitual que /el cruce del río/ resulte más
+  /taquillero/. Fuera de ese, se repartieron los problemas con una distribución
+  bastante natural 🙂
+- Si les interesa revisar en la literatura de la materia respecto a estos
+  problemas, no tendrán problemas encontrando más implementaciones; el único que
+  renombré /alevosamente/ es el último: /Los alumnos y el asesor/ es más
+  conocido como el problema del /barbero dormilón/.
+
+** DRY: Don't Repeat Yourself
+
+Varios de ustedes caen en una práctica bastante nociva de la programación:
+Escribir explícitamente para cada uno de los casos, sin abstraer la lógica
+general. Un /mantra/ de la programación es DRY — /Don't Repeat Yourself/,
+/No te repitas a tí mismo/. Si desarrollan código muy parecido en distintas
+opciones:
+#+begin_src python
+  # auto_carriles.py (Ejemplo para carril 'a' y 'b')
+  if carril_org == 'a':
+      mutex_b.acquire()
+      mutex_a.release()
+      # ... (lógica específica para carril a -> b)
+  elif carril_org == 'b':
+      mutex_c.acquire()
+      mutex_b.release()
+      # ... (lógica específica para carril b -> c)
+#+end_src
+Y en algún momento tienen que modificar algo en la lógica, tendrán que
+hacerlo en tantos casos como carriles haya. Y si quieren modificar el
+número de carriles... puede ser +imposible+ muy doloroso adecuar su
+código. Mejor separen configuración de código. Por ejemplo:
+#+begin_src python
+  config = {
+      'a': {'actual': mutex_a, 'siguiente': mutex_b},
+      'b': {'actual': mutex_b, 'siguiente': mutex_c},
+      # ...
+  }
+
+  # (...)
+
+  conf = config[carril_org]
+  conf['siguiente'].acquire()
+  conf['actual'].release()
+  # ... (lógica común)
+#+end_src
+En esta versión, la lógica específica (p.ej. mensajes, tiempos) se
+mantiene, pero la gestión de semáforos se unifica.  ¡Y hasta resulta más
+claro leerlo típicamente! 😃
+
+* El cruce del río
+** Acosta Alan, Rubio Angel
+- Documentación :: [[./AcostaAlan-RubioAngel/AcostaRubio_Tarea01SO.pdf][AcostaRubio_Tarea01SO.pdf]]
+- Archivos :: [[./AcostaAlan-RubioAngel/Tarea01CruceDelRio.py][Tarea01CruceDelRio.py]]
+- Comentarios ::
+  - Buena implementación. Sencilla y "al punto".
+- Calificación :: 10
+
+** Avila Iker, Romero Christian
+- Documentación :: [[./AvilaIker-RomeroChristian/README.md][README.md]], [[./AvilaIker-RomeroChristian/Tarea 1 - Sistemas Operativos.pdf][Tarea 1 - Sistemas Operativos.pdf]]
+- Archivos :: [[./AvilaIker-RomeroChristian/CruceRio.java][CruceRio.java]]
+- Comentarios ::
+  - ¡Casi pierden puntos por considerar casos que no se deben! 😉
+    - En =verificarGrupoValido()= verifican los casos posibles para hacer
+      cruzar la balsa:
+      #+begin_src java
+	private void verificarGrupoValido() throws InterruptedException {
+	    int h = hackersEnBalsa.get(); // Hackers actuales
+	    int s = serfsEnBalsa.get();   // Serfs actuales
+	    
+	    // Caso 1: 4 hackers 
+	    if (h == 4) {
+	        cruzarBalsa(4, 0);
+	    } 
+	    // Caso 2: 4 serfs 
+	    else if (s == 4) {
+	        cruzarBalsa(0, 4);
+	    } 
+	    // Caso 3: 2 hackers + 2 serfs
+	    else if (h >= 2 && s >= 2) {
+	        cruzarBalsa(2, 2);
+	    }
+	    // Caso 4: Grupo inválido pero con 4+ personas (para evitar bloqueo)
+	    else if ((h + s) >= 4 && (h == 1 || s == 1)) {
+	        cruzarBalsa(h, s); // Fuerza el cruce
+	    }
+	    // Si no se cumple ningún caso, espera
+      #+end_src
+    - ¡El caso 4 /rompe las reglas/ que establece el planteamiento!
+    - Con el código como lo enviaron, por el ritmo de llegada de /hackers/ y
+      /serfs/, las balsas salen siempre balanceadas (2 y 2). Modifiqué el ritmo
+      para que el ritmo fuera distinto, y sí, constaté que funcionaba:
+      #+begin_src text
+	(...)
+	Un Hacker se ha subido a la balsa. H=2 S=0
+	Un Serf se ha subido a la balsa. H=2 S=1
+	Un Hacker se ha subido a la balsa. H=3 S=1
+	Un Hacker se ha subido a la balsa. H=4 S=1
+	La balsa ha cruzado el rio con 4 hackers y 0 serfs.
+      #+end_src
+    - Sin embargo... También me encontré con lo siguiente:
+      #+begin_src text
+	Un Hacker se ha subido a la balsa. H=1 S=0
+	Un Hacker se ha subido a la balsa. H=2 S=0
+	Un Serf se ha subido a la balsa. H=2 S=1
+	Un Hacker se ha subido a la balsa. H=3 S=1
+	La balsa ha cruzado el rio con 3 hackers y 1 serfs.
+      #+end_src
+      ¡Horror, horror!
+    - Está muy bien considerar situaciones límite. Pero cuando el planteamiento
+      especifica determinadas condiciones... ¡Hay que cumplirlas!
+  - Cuando hagan entregas con archivos =*.java= en Git, ¡recuerden crear un
+    =.gitignore= que cubra =*.class=!
+- Calificación :: 7
+
+** Dominguez Valentina
+- Documentación :: [[./DominguezValentina/Tarea1.DominguezValentina.txt][Tarea1.DominguezValentina.txt]]
+- Archivos :: [[./DominguezValentina/tar1.c][tar1.c]]
+- Comentarios ::
+  - ¡Excelente que desarrollaras tu código empleando Progvis! Me da mucho gusto
+    haber compartido con ustedes una herramienta que consideren útil y clara.
+    - Tuve que hacer una única modificación para que tu programa funcione: En la
+      línea 18 llamas a =abordar()=, pero esta función requiere de un entero. Lo
+      edité por =abordar(id)=, y funcionó.
+  - Habrás notado que, cuando hay mayor concurrencia (aumentando =num_hackers= o
+    =num_serfs=), es frecuente que Progvis se queje de condiciones de carrera,
+    pues haces comparaciones y modificaciones de =nhacker= y de =nserf=.
+    - Esto ocurre por un ligero error en la lógica: En tus funciones =hacker()=
+      y =serf()=, si no tienes 4 del mismo o 2 y 2, liberas &mutex (líneas 43 y
+      73), /y lo vuelves a liberar/ al salir de la condicional (líneas 47 y
+      77). Creo (aunque se ve /ligeramente puerco/ 🐷 y es importante que
+      nuestra programación siga criterios de elegancia 😉) que podrías llamar a
+      =sema_up()= desde cada una de las cláusulas del =if= y resolverías ese
+      problema.
+  - Me  parece que el problema de /deadlocks/ que reportas se debe a que te
+    faltó incluir la llamada a =abordar(id)= en =hackers()=: Únicamente los
+    /serfs/ tienen la lógica necesaria para iniciar el cruce.
+- Calificación :: 9
+
+** Martinez Luis, Urbano Joseph
+- Documentación :: [[./MartinezLuis-UrbanoJoseph/Tarea-Documentacion.txt][Tarea-Documentacion.txt]]
+- Archivos :: [[./MartinezLuis-UrbanoJoseph/Tarea-SO.py][Tarea-SO.py]]
+- Comentarios ::
+  - ¡Excelente que usen variables de condición! 😃
+  - Pero el programa cae reiteradamente en bloqueo mutuo 🙁
+  - ¿Por qué declaran =num_hackers= y =num_serfs=, y a fin de cuentas únicamente
+    generan hilos para la cantidad de hilos declarados en =num_hackers=?
+  - Me parece que el problema en la implementación es que cada uno de los
+    asistentes se "sube" a la balsa independientemente de su composición, y la
+    balsa simplemente no puede zarpar cuando no está correctamente balanceada
+    - ...y en vez de corregir la situación, se queda en bloqueo mutuo 🙁
+  - *Ojo* Código /muy similar/ (aunque suficientemente distinto) del de Héctor
+    Zambrano.... ¿¿??
+- Calificación :: 7.5
+
+** Membrilla Isaias, Miramon Jocelyn
+- Documentación :: [[./MembrillaIsaias-MiramonJocelyn/MembrillaIsaias_MiramonJocelyn_T1.pdf][MembrillaIsaias_MiramonJocelyn_T1.pdf]], [[./MembrillaIsaias-MiramonJocelyn/programa_crucedelrio/barco.png][barco.png]], [[./MembrillaIsaias-MiramonJocelyn/programa_crucedelrio/clippy.png][clippy.png]], [[./MembrillaIsaias-MiramonJocelyn/programa_crucedelrio/tux.png][tux.png]]
+- Archivos :: [[./MembrillaIsaias-MiramonJocelyn/programa_crucedelrio/Tarea1-Balsa.py][Tarea1-Balsa.py]]
+- Comentarios ::
+  - ¡Excelente! Una implementación con GUI hecho con Pygame 😃
+    - por alguna razón, Pygame decidió dejarme con las ganas de ver el
+      desarrollo 🙁
+      - Alcanza a mostrarme la primera ventana, pero en vez de abordar los
+        diferentes cuartetos, sólo veo:
+	#+begin_src text
+	  Exception in thread Thread-2 (hacker):
+	  Traceback (most recent call last):
+	    File "/usr/lib/python3.13/threading.py", line 1041, in _bootstrap_inner
+	      self.run()
+	      ~~~~~~~~^^
+	    File "/usr/lib/python3.13/threading.py", line 992, in run
+	      self._target(*self._args, **self._kwargs)
+	      ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	    File "/home/gwolf/vcs/sistop-2025-2/tareas/1/MembrillaIsaias-MiramonJocelyn/programa_crucedelrio/Tarea1-Balsa.py", line 48, in hacker
+	      pygame.display.flip()
+	      ~~~~~~~~~~~~~~~~~~~^^
+	  pygame.error: Unable to make EGL context current (call to eglMakeCurrent failed, reporting an error of EGL_BAD_ACCESS)
+	#+end_src
+  - pero reviso la lógica que indican, y se ve completamente sensato: Con esta
+    cola /sui-generis/ donde sólo /bailan/ dos de la misma categoría, se
+    implementa correctamente la solución al problema 😃
+- Calificación :: 10
+
+** Zambrano Hector
+- Documentación :: [[./ZambranoHector/documentacion.txt][documentacion.txt]]
+- Archivos :: [[./ZambranoHector/test_py.py][test_py.py]]
+- Comentarios ::
+  - ¡Bien! ¡Otro valiente que prueba con variables de condición!  ¡Excelente!
+  - *Ojo* Código /muy similar/ (aunque suficientemente distinto) del de Luis
+    Martínez y Joseph Urbano.... ¿¿??
+  - Al igual que el código de Iker y Christian, me genera varios casos en que se
+    suben a la balsa sin cuidar el balance:
+    #+begin_src text
+      No fue posible cumplir con la convivencia de los tripulantes...
+      A la balsa solo consiguieron subirse:
+       - 1 Hackers
+       - 3 Serfs
+      No es posible realizar un viaje en balsa con esta tripulación...
+    #+end_src
+    - De acuerdo, indican que /no es posible realizar un viaje/, pero... ¿Qué
+      ocurre con esos cuatro participantes? ¿Simplemente son descartados? Me
+      parece que no satisface las condiciones planteadas 🙁
+- Calificación :: 7
+
+* El servidor Web
+** Arias Javier
+- Documentación :: [[./AriasJavier/README.md][README.md]]
+- Archivos :: [[./AriasJavier/tarea1-servidorWeb.py][tarea1-servidorWeb.py]]
+- Comentarios ::
+  - Implementación buena y sencilla. ¡Muy bien! 😃
+  - No sólo modelaste la interacción, sino que protegiste correctamente las
+    variables compartidas de su uso concurrente.
+  - Cuesta seguir la impresión... habiendo varios roles, y varias instancias en
+    cada rol, te sugiero por lo menos "indentar" o colorear de forma distintiva
+    las acciones de cada uno de ellos.
+- Calificación :: 9
+
+** Lopez Carlos, Vera Juan
+- Documentación :: [[./LopezCarlos_VeraJuan/LopezCarlos_VeraJuan Problema Servidor Web.txt][LopezCarlos_VeraJuan Problema Servidor Web.txt]]
+- Archivos :: [[./LopezCarlos_VeraJuan/GestorTrabajadores.java][GestorTrabajadores.java]]
+- Comentarios ::
+  - Muy bien por el manejo de estructuras específicas a su entorno de
+    programación como =AtomicInteger=.
+  - Cuando hagan entregas con archivos =*.java= en Git, ¡recuerden crear un
+    =.gitignore= que cubra =*.class=!
+  - Me parece que faltaría modelar a algún agente que /despertara/ al hilo
+    principal (¿al jefe de los trabajadores?); recuerden que éste debe /atender
+    las solicitudes/ (y no meramente gestionarlas y entregarlas a los hilos).
+  - Lo último que indica su programa es que todos los trabajadores quedan “en
+    espera”, no identifican que no hay ya más trabajos por realizar.
+- Calificación :: 7
+
+** Ayala Maria, Portilla Elizabeth
+- Documentación :: [[./AyalaMaria-PortillaElizabeth/README.md][README.md]]
+- Archivos :: [[./AyalaMaria-PortillaElizabeth/Tarea01_ServidorWeb.py][Tarea01_ServidorWeb.py]]
+- Comentarios ::
+  - Cada vez que le dices /librería/ a una /biblioteca/, Dios mata a un gatito
+    😾😾😾. Por favor, ¡piensa en los gatitos! 😿😿😿
+  - Me parece que faltaría modelar a algún agente que /despertara/ al hilo
+   =jefe=; recuerden que éste debe /atender las solicitudes/ (y no meramente
+   gestionarlas y entregarlas a los hilos).
+  - Bonito uso de =queue.Queue()=
+  - Buen uso de los coloridos emojis para dar un vistazo claro del panorama del
+    sistema 😃
+- Calificación :: 8
+
+* Santa Claus
+** Arriaga Emilia
+- Documentación :: [[./ArriagEmilia/tarea1.txt][tarea1.txt]]
+- Archivos :: [[./ArriagEmilia/santa.c][santa.c]], [[./ArriagEmilia/santa2.c][santa2.c]]
+- Comentarios ::
+  - Cuando hagan entregas con archivos C en Git, ¡recuerda crear un
+    =.gitignore= para sus ejecutables!
+  - En ambas implementaciones, me parece curioso que no implementaste a
+    Santa como un hilo “por derecho propio”, sino que renos y elfos
+    imprimen sus líneas de estado.
+    - Esto simplifica un poco el diseño pero también rompe con la idea
+      original del problema, donde Santa es una entidad pasiva que duerme y
+      solo actúa cuando se cumplen ciertas condiciones.
+    - Con esto, elfos y renos no interfieren entre sí... y Santa podría
+      estar al mismo tiempo ayudando a los elfos a arreglar juguetes y
+      repartiendo por todo el mundo. Ya que es tan mágico, ¿por qué no
+      sigue durmiendo su siesta? 😉
+  - En mi revisión, en la implementación #1 los elfos /sí son ayudados/:
+    #+begin_src text
+      El número de elfos que requieren ayuda de Santa son: 1
+      Santa no está disponible....
+      El elfo se pone a armar juguetes....
+      El número de elfos que requieren ayuda de Santa son: 2
+      Santa no está disponible....
+      El elfo se pone a armar juguetes....
+      El número de elfos que requieren ayuda de Santa son: 3
+      Los 3 elfos recibieron ayuda de Santa....
+      El elfo se pone a armar juguetes....
+      (...)
+    #+end_src
+    Lo que llama un poco la atención más adelante es que, dado que no se
+    controla el ritmo máximo de entrada y que la condicional es estricta
+    por igualdad (no se cumple en caso de que =elfosEsperando >=3=), /a
+    veces/ ocurre que hay /más de tres/ elfos... y Santa ya nunca más
+    ayudará:
+    #+begin_src text
+      El número de elfos que requieren ayuda de Santa son: 1
+      Santa no está disponible....
+      El elfo se pone a armar juguetes....
+      El número de elfos que requieren ayuda de Santa son: 2
+      Santa no está disponible....
+      El elfo se pone a armar juguetes....
+      El número de elfos que requieren ayuda de Santa son: 3
+      Santa no está disponible....
+      El número de elfos que requieren ayuda de Santa son: 4
+      El elfo se pone a armar juguetes....
+      El elfo se pone a armar juguetes....
+      El elfo se pone a armar juguetes....
+      Santa no está disponible....
+      El elfo se pone a armar juguetes....
+      El número de elfos que requieren ayuda de Santa son: 5
+      Santa no está disponible....
+    #+end_src
+  - Discúlpame por no dedicarme a tu 2º programa... tengo muchas tareas aún
+    pendientes para revisar 🙁
+- Calificación :: 8
+
+** Rodriguez Alfonso
+- Documentación :: [[./RodriguezAlfonso/tarea1Info.txt][tarea1Info.txt]]
+- Archivos :: [[./RodriguezAlfonso/santaClaus.py][santaClaus.py]]
+- Comentarios ::
+  - ¡Me da gusto que hayas encontrado el problema fácil de resolver! Y sí,
+    estoy de acuerdo, una vez que entiendes la lógica de
+    implementación... no es muy complicado.
+  - ¡Ojo con el acceso concurrente a valores compartidos! tanto
+    =elf_counter= como =reindeer_counter= son modificados y comparados sin
+    verificar que ningún otro hilo lo esté utilizando.
+  - Para facilitar darle seguimiento a las acciones en la bitácora de
+    sucesos que presentas, te sugeriría por lo menos variar la indentación,
+    o prefijar las cadenas con un emoji descriptor...
+  - La lógica de tu resolución es buena.
+- Calificación :: 8.5
+
+** Saldaña Andrea, Salgado Roman
+- Documentación :: [[./SaldañaAndrea-SalgadoRoman/Tarea1_Detalles.txt][Tarea1_Detalles.txt]]
+- Archivos :: [[./SaldañaAndrea-SalgadoRoman/Tarea1_ProblemaSanta.c][Tarea1_ProblemaSanta.c]]
+- Comentarios ::
+  - Veo que escribieron el programa... No en C, ¡sino que en Progvis!
+    Voy a evaluarlo en ese entorno.
+    - Si lo hicieron siguiendo mi ejemplo en clase... ¡claro! en clase no
+      usé C “estándar”. La sintaxis =sema_init()=, =thread_new=, etc. no
+      forma parte de C.
+  - ¡El programa es válido! (vamos, el compilador lo acepta). Sin embargo,
+    al ejecutarlo “salta” una condición de carrera al intentar
+    leer/escribir concurrentemente =Elfos_en_espera= y
+    =renos_que_han_llegado=.
+    - =santa()= también tiene que emplear los mutexes si va a revisar o
+      modificar el número de renos y de elfos: antes de disminuir en 3
+      =Elfos_en_espera=, o antes de verificar el número de
+      =renos_que_han_llegado=, tendría que obtener respectivamente
+      =elfos_esperan= y =contador_renos=
+    - pero... ¿no verificaron ya el número de elfos y el número de elfos en
+      sus respectivas funciones, antes de hacer =sema_up()= a los semáforos
+      respectivos? ¡ =santa()= no tiene por qué /volver a contar/ a los
+      elfos o a los renos!
+  - Bueno, la intención cuenta, pero no es _lo único_ que cuenta 😉 Como
+    sea, ¡buen acercamiento!
+- Calificación :: 7
+
+** Segura Luisa
+- Documentación :: [[./SeguraLuisa/descripcion.txt][descripcion.txt]]
+- Archivos :: [[./SeguraLuisa/Santa.java][Santa.java]]
+- Comentarios ::
+  - Cuando hagan entregas con archivos =*.java= en Git, ¡recuerden crear un
+    =.gitignore= que cubra =*.class=!
+  - Tus elfos están implementados acorde a su comportamiento compulsivo, en
+    un =while (true)=. Los renos, sin embargo, están programados para hacer
+    un único viaje en la vida... y no volver nunca más 😉 ¡Pobres niños del
+    futuro!
+    - Eso no hace que el programa sea incorrecto... sólo me dejó rascándome
+      la cabeza viendo la salida antes de ver el fuente.
+  - ¡Buen empleo de la variable de condición =condicionSanta=!
+- Calificación :: 9
+
+* El elevador
+** Cano Carlos, Cortes Angel
+- Documentación :: [[./CanoCarlos-CortesAngel/Tarea1-Documentación.txt][Tarea1-Documentación.txt]]
+- Archivos :: [[./CanoCarlos-CortesAngel/Tarea01.py][Tarea01.py]]
+- Comentarios ::
+  - ¡Bien! Encontraron una manera sencilla de hacer que la salida del
+    programa sea fácil de seguir, sin ir más allá de un =print= por
+    línea. Mensajes suficientemente completos e informativos. 😃
+  - En general, me parece que la lógica está bien implementada. Hay un par
+    de detalles, sin embargo:
+    - Una /espera activa/, aunque atenuada: El que todos los usuarios se
+      mantengan esperando al elevador, verificando cada segundo si ya
+      llegó, es un gasto de recursos y potencialmente un riesgo. Líneas
+      34–47:
+      #+begin_src python
+	while True:
+	    mutex.acquire()
+	    if piso_actual == piso_origen and pasajeros < CAPACIDAD_ELEVADOR:
+	        pasajeros += 1  # Usuario aborda el elevador
+	        esperando[piso_origen] -= 1  # Reduce el contador de espera en el piso
+	        print(f"⬆ Usuario {id_usuario} subió en piso {piso_origen} (Ocupación: {pasajeros}/{CAPACIDAD_ELEVADOR})")
+	        mutex.release()
+	        break 
+	    mutex.release()
+	    time.sleep(1) 
+
+	# Esperar a que el elevador llegue al piso de destino
+	while piso_actual != piso_destino:
+	    time.sleep(1)
+      #+end_src
+      Aquí típicamente se resuelve haciendo que, a cada piso, el elevador
+      haga =release()= notificando a los pasajeros están a bordo y bajan
+      ahí, y posteriormente haga =release()= a otro semáforo representando
+      una cola distinta para cada piso por el que pasa (señalización).
+  - Su implementación maneja correctamente la sincronización para el acceso
+    a estructuras comunes (=mutex=) y la contabilidad de hilos (=join()= al
+    final), pero no resuelve el problema mismo empleando sincronización.
+- Calificación :: 7
+
+** Jimenez Ayala, Valenzuela Ascencio
+- Documentación :: [[./JimenezAyala-ValenzuelaAscencio/README.md][README.md]]
+- Archivos :: [[./JimenezAyala-ValenzuelaAscencio/elevador.py][elevador.py]]
+- Comentarios ::
+  - ¡Me emocioné viendo la presentación! (que está bonita)... Creí que iban
+    a presentar una simulación gráfica completa.
+    - Pero bueno, el imprimir las líneas con color por actor/acción ayuda a
+      la comprensión. ¡Bien!
+  - ¡Muy bien por emplear variables de condición (=threading.Condition=)
+    para la lógica!
+    - ¡Y muy bonito que emplearan al =BoundedSemaphore=! Yo no lo recordaba
+      siquiera, tuve que entrar a leer para entenderlo 🙂
+- Calificación :: 10
+
+** Salazar Luis, Tepal Hansel
+- Documentación :: [[./SalazarLuis-TepalHansel/README.md][README.md]]
+- Archivos :: [[./SalazarLuis-TepalHansel/problemaAscensor.py][problemaAscensor.py]]
+- Comentarios ::
+  - Me parece bien que sean prudentes y utilicen a =mutexPrint= caa vez que
+    envían un mensaje a pantalla. Sin embargo, cuando el mensaje que mandan
+    no incluye ningún dato que pueda causar problemas (p.ej. línea 116,
+    =print("Ya voy para allá ciudadano promedio")=, esta llamada sólo
+    impone contención innecesaria.
+  - Uso interesante de =pisosTorniquetEntrada= / =pisosTorniquetSalida=. Me
+    parece que puede ser un tanto subóptima — pero me parece que es
+    correcta y original
+- Calificación :: 10
+
+** Montiel Juarez, torres Samuel
+- Documentación :: [[./montielJuarez-torresSamuel/readme.pdf][readme.pdf]]
+- Archivos :: [[./montielJuarez-torresSamuel/tarea1_montielOscar_torresSamuel.py][tarea1_montielOscar_torresSamuel.py]]
+- Comentarios ::
+  - Me gusta que limiten el número de hilos a =os.cpu_count()=. Sin
+    embargo, eso puede llevar a subutilización de recursos, y a una
+    simulación incompleta: Si ejecuto el programa en un equipo de 4 núcleos
+    o menos, nunca habrá 5 pasajeros en el elevador (porque habrá un máximo
+    de 4 hilos).
+  - ¡Bien por cachar =SIGINT= y parar limpiamente! 😃
+  - ¡Bien el manejo de clases, y el que =Elevador= y =Pasajero= hereden de
+    =Thread=!
+  - Muy bien documentado.
+- Calificación :: 10
+
+* Intersección de caminos
+** Calderon Enrique, Ugartechea Luis
+- Documentación :: [[./CalderonEnrique-UgartecheaLuis/README.md][README.md]]
+- Archivos :: [[./CalderonEnrique-UgartecheaLuis/02_Cruce.py][02_Cruce.py]]
+- Comentarios ::
+  - ¡Excelente interfaz! Bonita animación y toda la cosa. 👍👍👍
+  - Interesante implementación de fifoMutex. No se me había ocurrido que
+    podría tener sentido algo así, pero veo que hay varios proyectos que
+    implementan cuestiones por el estilo. ¡Muy bien! Pero... ¿Para qué es
+    que requieren esta estructura? ¿para evitar lo que mencionan de los
+    /filósofos/?
+  - Jajajaj, justo iba a escribir que en una ronda de simulaciones estaba
+    /seguro/ de haber visto dos colisiones. Pero sí, la lógica implementada
+    indica que simplemente /pasaron rozándose/. ¡Espero que sean rozones
+    más respetuosos que el que me rompió el espejo! 😉
+  - ¡¡¡¡¡NOOOOOOOOOO El gatito noooooooooo!!!!! 🙀😾😿🙀😾😿🙀😾😿
+- Calificación :: 10
+
+** Cervantes Leonardo, Sole Arnau
+- Documentación :: [[./CervantesLeonardo-SoleArnau/documentacion.md][documentacion.md]]
+- Archivos :: [[./CervantesLeonardo-SoleArnau/intersecciones.py][intersecciones.py]], [[./CervantesLeonardo-SoleArnau/intersecciones_graficamente.py][intersecciones_graficamente.py]]
+- Comentarios ::
+  - Buena interfaz. Y les faltó un /poquitito/ para que fuera un reporte
+    pseudo-gráfico con actualización. Prueben hacer estos cambios:
+    #+begin_src diff
+      @@ -39,6 +39,7 @@ intersection_squares = [0, 0, 0, 0]
+       Funcion para observar el estado actual de la interseccion
+       """
+       def view_intersection():
+      +    print("\033[s\033[H")
+           print("Observando la interseccion")
+           print("    | | |")
+           print("  __| | |__")
+      @@ -46,7 +47,7 @@ def view_intersection():
+           print("  __ {} {} __".format(intersection_squares[3], intersection_squares[2]))
+           print("    | | |")
+           print("    | | |")
+      -    
+      +    print("\033[u")
+       
+       
+       
+      @@ -152,6 +153,7 @@ def main():
+           threads = []
+           cars = []
+       
+      +    print("\033[2J\033[9;H")
+           # Se crean 'number_of_cars' coches
+           # Cada uno empieza en una direccion y metodo de giro que se selecciona de manera aleatoria
+           # y un identificador entero (de 1 a numero de coches)
+    #+end_src
+    y me platican qué opinan de mi magia negra 😉
+  - Muy bien por evitar bloqueos mutuos estilo cena de los filósofos,
+    limitando a no más de 3 autos en la intersección 👍
+- Calificación :: 101
+
+** Juarez Barvara
+- Documentación :: [[./JuarezBarvara/Tarea1.txt][Tarea1.txt]], [[./JuarezBarvara/Tarea1SO.docx][Tarea1SO.docx]]
+- Archivos :: [[./JuarezBarvara/POOCAMIN.py][POOCAMIN.py]]
+- Comentarios ::
+  - ¿Por qué en las instrucciones me dices que /copie al código de Python a
+    un archivo de texto/? El código de Python _ya es_ un archivo de texto
+    😉 ¡Naturalmente, yo también uso Git!
+  - ¡Ojo! Hay un pequeño truco en este programa, y un par de compañeros lo
+    cacharon correctamente: Si bien hay /cuatro cuadrantes/ permitidos, si
+    llegas a la situación en que /cuatro autos/ están ocupando los /cuatro
+    cuadrantes/, puede presentarse un bloqueo mutuo similar al de la cena
+    de los filósofos.
+  - El reporte de estado es muy mínimo y abstracto. El que enfatices tanto
+    el descriptor =INICIO= / =ENTRADA= / =SALIDA= dificulta darle
+    seguimiento a cada uno de los actores, y no explicitas cuál es el orden
+    de las intersecciones, el punto de origen, o la equivalencia geográfica
+    de cada uno de los recorridos.
+- Calificación :: 8
+
+** Nava David, Tavera David
+- Documentación :: [[./NavaDavid-TaveraDavid/Tarea_Doc.docx][Tarea_Doc.docx]]
+- Archivos :: [[./NavaDavid-TaveraDavid/Intsersec_Caminos.c][Intsersec_Caminos.c]]
+- Comentarios ::
+  - Cuando hagan entregas con archivos C en Git, ¡recuerda crear un
+    =.gitignore= para sus ejecutables!
+  - Me parece que cuando tienen más autos el programa se muere porque se
+    produce un bloqueo mutuo. Veamos un caso que me salió bstante cortito:
+    #+begin_src text
+      $ ./Intsersec_Caminos 
+      Auto 1 llega desde Norte y quiere ir Recto.
+      Auto 1 cruzando la interseccion...
+      Auto 2 llega desde Oeste y quiere ir Izquierda.
+      Auto 4 llega desde Oeste y quiere ir Izquierda.
+      Auto 3 llega desde Norte y quiere ir Recto.
+      Auto 5 llega desde Este y quiere ir Recto.
+      Auto 6 llega desde Sur y quiere ir Recto.
+      Auto 7 llega desde Norte y quiere ir Recto.
+      Auto 8 llega desde Oeste y quiere ir Izquierda.
+      Auto 9 llega desde Sur y quiere ir Recto.
+      Auto 10 llega desde Sur y quiere ir Recto.
+      Auto 1 ha salido de la interseccion.
+      Auto 2 cruzando la interseccion...
+      Auto 2 ha salido de la interseccion.
+    #+end_src
+    Auto 1 y 2 no participaron del bloqueo mutuo.
+    - Auto 3 llega desde Norte (0) ⇒ =q1=0=.
+    - Auto 4 llega desde Oeste (3) ⇒ =q1=3=.
+    - Auto 5 llega desde Este (1) ⇒ =q1=1=.
+    - Auto 6 llega desde Sur (2) ⇒ =q1=2=.
+    - Ninguno de ellos va a la =DERECHA=.
+    - Los cuatro hacen =sem_wait(&cuadrante[q1])= y, como no van a la
+      =DERECHA=, hacen también =sem_wait(&cuadrante[q2])= 💣💀💣💀💣💀
+    - Pueden ver que las primeras dos y última implementaciones de este
+      problema implementaron un /Multiplex/ de 3 para evitar este problema.
+- Calificación :: 8
+
+** Nava Erick, Ramirez Eric
+- Documentación :: [[./NavaErick-RamirezEric/Tarea1SO.pdf][Tarea1SO.pdf]]
+- Archivos :: [[./NavaErick-RamirezEric/auto_carriles.py][auto_carriles.py]], [[./NavaErick-RamirezEric/ctes.py][ctes.py]], [[./NavaErick-RamirezEric/main.py][main.py]]
+- Comentarios ::
+  - Cuando hagan entregas basadas en Git con archivos parciales de Python,
+    el compilador, ¡recuerden crear un =.gitignore= para los archivos
+    =*.pyc= y =__pycache__/=! Estos son el programa compilado a /bytecode/.
+  - Agradezco que ustedes mismos reconozcan la falta de una interfaz
+    “amigable” y más informativa. Se nota que intentaron hacerlo por lo
+    menos estético
+    - El color en los mensajes ayuda bastante a discriminar a cada uno de
+      los actores, y ayuda bastante
+    - Podría ayudar que imprimieran mensajes empleando cadenas de formato a
+      ancho fijo, permitiendo alinear verticalmente los mensajes, e ir
+      siguiendo las “flechitas”.
+- Calificación :: 9
+
+* Los alumnos y el asesor
+** Melendez Anuar
+- Documentación :: [[./MelendezAnuar/MGA_TAREA1.pdf][MGA_TAREA1.pdf]]
+- Archivos :: [[./MelendezAnuar/MelendezAnuar-Asesor.py][MelendezAnuar-Asesor.py]]
+- Comentarios ::
+  - La barrera de entrada no es necesaria. No hace daño, pero no es
+    necesaria. ¿Para qué esperarías tú a que haya otros dos alumnos para
+    que juntos puedan hacerme cada quién sus preguntas personales? 😉
+    - Claro, estoy tomando mi siesta y puede darte vergüenza despertarme tú
+      solito. Pero es mi horario laboral 😉
+    - Aunque le pongas un =time.sleep()=, el profesor está haciendo espera
+      activa. Dentro del =while True=, en vez de verificar si todos
+      asientos están libres (y si sí, dormir una siesta intranquila con
+      sólo un =time.sleep(2)=), podrías hacer un simple
+      =semaforoProfesor.acquire()=
+      - De hecho, ya tienes a =asientos_libres= como un
+        multiplex. Bueno... Esa podría ser la señal para despertar al
+        maestro 😉
+  - ¡Me parece muy interesante que tengas alumnos desesperados, que decidan
+    irse en caso de que las /n/ sillas estén ocupadas! ¡Muy buen uso de
+    =asientos_libres.acquire(blocking=False)= (aunque a mí me parece mucho
+    más limpio /no utilizar esas cosas/ 😉
+  - Muy bueno que implementes a =Profesor= y =Alumno= como clases que
+    heredan de =Thread=!
+  - Pero donde tu implementación sí quedó un poco /a deber/ es... con la
+    interacción: Los =Alumno()= están bien implementados. ¡Tanto que el
+    profesor es redundante!
+    - Su única tarea es estar atento o no
+    - Los alumnos entran, se sientan, enuncian sus preguntas... ¡y se van!
+    - El profesor no espera a que le hagan una pregunta, no la piensa, y no
+      la resuelve
+    - ...Espero que no tengas ese concepto de mi 😢
+- Calificación :: 7
+
+** Talonia Jesus
+- Documentación :: [[./TaloniaJesus/Detalle-TFJ.txt][Detalle-TFJ.txt]]
+- Archivos :: [[./TaloniaJesus/AsesAlum_TFJ.py][AsesAlum_TFJ.py]]
+- Comentarios ::
+  - Tu código genera errores de forma consistente. En la línea 45 haces
+    =while preguntas[num_alum] > 0=, pero nunca agregaste ningún elemento a
+    =preguntas= (lo haces después de lanzar el hilo, línea 74).
+    - Si inviertes las líneas 74 y 75 se corrige el error.
+  - Usa nombres más descriptivos para tus variables. ¿A qué te refieres con
+    =rendA= y =rendP=? Supongo que es /algo/ del alumno y del profesor,
+    pero... ¿Qué?
+    - Falta /interacción expresa/ entre alumno y profesor, y no queda claro
+      que realmente el profesor responda las preguntas (iba a hacerte el
+      mismo comentario final que el que hice a tu compañero Anuar, aunque
+      luego vi que sí tienes esto contemplado
+    - Y entiendo que =rend= se refiere a que es un =rendezvous= 😉
+    - ¡Sería bueno que incluyeras un =print('[Profesor] Una respuesta muy
+      calculada')= o algo por el estilo...
+- Calificación :: 9

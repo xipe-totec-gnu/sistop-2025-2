@@ -1,0 +1,88 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Sistemas Operativos de Tiempo Real
+
+- Tema presentado por :: David Nava y David Tavera
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.17 |  0.3 |               8.35 |  0.7 |    8.60 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 |  4 |  5 | Total |
+|--------------+---+---+---+----+----+-------|
+| Originalidad | 0 | 0 | 2 | 10 | 15 |  8.96 |
+| Nivel        | 0 | 0 | 0 |  8 | 19 |  9.41 |
+| Relevancia   | 0 | 0 | 2 |  2 | 23 |  9.56 |
+| Claridad     | 0 | 0 | 1 | 13 | 13 |  8.89 |
+| Presencia    | 0 | 0 | 3 |  7 | 17 |  9.04 |
+|--------------+---+---+---+----+----+-------|
+|              |   |   |   |    |    |  9.17 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- La exposición estuvo muy completa y hacen gran uso de la presentación
+  solamente como apoyo para complementar la información. Los ejemplos son de
+  gran utilidad para que se expliquen bien los temas explicados. El tema es
+  relevante para la materia ya que ocupan temas como los explicados en clase
+  (MUTEX y semáforos), además de que no ocupan palabras o términos complejos que
+  sean difíciles de comprender.
+- El tema que eligieron mis compañeros sin duda alguna es algo muy interesante,
+  sabemos que un RTOS no es rápido por así decirlo, pero si es predecible, esto
+  nos garantiza que ciertas tareas se ejecuten en tiempo exactos, sin duda
+  alguna los casi 18 minutos de video fueron suficientes para indagar un poco
+  mas al respecto de este tema, una felicitación a mis compañeros por este
+  trabajo.
+- Muy buena presentación, pero los nervios los hacían trabarse
+  constantemente. Tal vez podrían omitir el uso de la cámara web para evitar
+  esto
+- Solo faltó un poco de fluidez al hablar durante la exposición, especialmente
+  al inicio de esta, fuera de eso buen trabajo
+- La exposición es buena, pero en lo personal me hubiera gustado un poco mas de claridad,
+- ninguno
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |            7 |     1.05 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     8.35 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- El material preparado es bueno, pero el ritmo que da el irlo leyendo le resta
+  dinamismo a la presentación
+- Presentan varias fuentes bibliográficas interesantes, pero no mencionan en el
+  texto dónde se empleó cada una de ellas (no se hace un citado expreso para
+  apoyar el punto en que se refieren a los distintos conceptos).
+- Los ejemplos son muy buenos, pero falta un poco el considerar cuál sería el
+  efecto de no contar con un sistema de tiempo real.
+  - Muy correcto que mencionaran en qué áreas es fundamental la planificación RT
+    (medicina), pero mencionaron el /campo/... no las /necesidades específicas/
+    que el RTOS atendería.
+
