@@ -1,118 +1,97 @@
 import threading
-import random
+import queue
 import time
-from queue import Queue
+import random
 
-
-class Laboratorio:  # Inicializa el laboratorio con el número de mesas
-    def __init__(self, num_mesas, sync_type="semaforo"):
-        # Utilizamos semaforo, apagador y barrera. Nuestro semafo controla el acceso al laboratorio.El apagador simula un interruptor 
-        # que controla la entrada y la barrera sincroniza la apertura del laboratorio con las mesas.
-        self.sync_type = sync_type
-        self.jefe_presente = threading.Event() if sync_type == "apagador" else threading.Semaphore(1)
-        self.barrera_mesas = threading.Barrier(num_mesas) if sync_type == "barrera" else None
-        self.num_mesas = num_mesas
-        self.mesas_funcionales = random.randint(1, num_mesas)   # mesas_funcionales se calcula aleatoriamente para simular que algunas mesas pueden estar fuera de servicio.
-        self.mesas = [threading.Semaphore(3) for _ in range(self.mesas_funcionales)]
-        self.entrada_queue = Queue()
+class Laboratorio:
+    def __init__(self, num_mesas):
+        self.total_mesas = num_mesas # Inicializa el laboratorio con el número total de mesas
+        self.mesas_funcionales = random.randint(1, num_mesas) # Mesas disponibles aleatorias
+        self.mesas = {i: [] for i in range(self.mesas_funcionales)}  # Diccionario de mesas con listas de alumnos
+        self.historial_mesas = {i: 0 for i in range(self.mesas_funcionales)} # Historial para registrar cuántos alumnos usaron cada mesa
+        self.max_alumnos_por_mesa = 3
         self.max_espera = 6
-        self.max_alumnos = self.mesas_funcionales * 3
-        self.alumnos_dentro = 0
-        self.ocupacion_mesas = [0] * self.mesas_funcionales
-        self.lock = threading.Lock()
-
-
-   
-    def abrir_laboratorio(self):  # Simula la apertura del laboratorio por parte del jefe.
-        print("Jefe: Abriendo laboratorio...")
-        time.sleep(2)
-        print(f"Jefe: Hay {self.mesas_funcionales} mesas funcionales de {self.num_mesas}.")
-        # "barrera" espera a que todas las mesas estén listas y "apagador" activa el evento para permitir la entrada.
-        if self.sync_type == "barrera":
-            self.barrera_mesas.wait()
-        if self.sync_type == "apagador":
-            self.jefe_presente.set()
-
-
-    def cerrar_laboratorio(self): # Este método simula el cierre temporal del laboratorio.
-        print("Jefe: Me voy a comer, nadie entra ni sale.")
-        # "apagador", desactiva el evento para bloquear la entrada, "semaforo" adquiere el semáforo para bloquear la entrada.
-        if self.sync_type == "apagador":
-            self.jefe_presente.clear()
-        elif self.sync_type == "semaforo":
-            self.jefe_presente.acquire()
-        time.sleep(random.randint(3, 6))
-        print("Jefe: Volví, pueden entrar.")
-        if self.sync_type == "apagador":
-            self.jefe_presente.set()
-        elif self.sync_type == "semaforo":
-            self.jefe_presente.release()
-            
+        self.alumnos_espera = queue.Queue(self.max_espera) # Cola para los alumnos en espera
+        self.jefe_presente = threading.Event()
+        self.jefe_presente.set()  # El jefe inicia presente (estando en el laboratorio)
+        self.lock = threading.Lock() # Bloque para evitar condiciones de carrera
+        self.alumnos_activos = []  # Lista para hacer un seguimiento de los alumnos en el laboratorio 
+        self.jefe_trabajando = True  # Controla si el jefe sigue operando (se ha ido a comer)
     
-    def gestionar_acceso(self): # Este método gestiona la cola de espera de los alumnos cuando el jefe no está.
-        # Los alumnos en la cola son procesados uno por uno.
-        while not self.entrada_queue.empty():
-            alumno = self.entrada_queue.get()
-            print(f"Jefe: Dejando entrar al {alumno}")
-            alumno.start()
-
-    def alumno_llega(self, alumno_id): # Este método simula la llegada de un alumno al laboratorio.
-    # los alumnos esperan en una cola si el jefe no está ("apagador")
-        with self.lock:
-            if self.alumnos_dentro >= self.max_alumnos:
-                print(f"Alumno {alumno_id}: No hay espacio disponible, me voy.")
-                return
-            if self.sync_type == "apagador" and not self.jefe_presente.is_set():
-                if self.entrada_queue.qsize() >= self.max_espera:
-                    print(f"Alumno {alumno_id}: No puedo esperar más, me voy.")
+    def alumno_intenta_entrar(self, nombre): # Método para que un alumno intente entrar al laboratorio
+        while self.jefe_trabajando:
+            if not self.jefe_presente.is_set():
+                if self.alumnos_espera.full():
+                    print(f"{nombre} no puede esperar y se va.")
                     return
-                print(f"Alumno {alumno_id}: Esperando al jefe...")
-                self.entrada_queue.put(threading.Thread(target=self.asignar_mesa, args=(alumno_id,)))
-            elif self.sync_type == "semaforo":
-                if self.jefe_presente.acquire(blocking=False):
-                    self.asignar_mesa(alumno_id)
-                    self.jefe_presente.release()
-                else:
-                    print(f"Alumno {alumno_id}: No puedo entrar, el jefe no está.")
-
+                print(f"{nombre} está esperando en la fila de entrada.") # El alumno se pone en la fila de espera
+                self.alumnos_espera.put(nombre)
+                return
+            else:
+                self.asignar_mesa(nombre) # Si el jefe está presente, intenta asignar una mesa al alumno
+                return
     
-    def asignar_mesa(self, alumno_id): # Este método asigna una mesa a un alumno y simula el tiempo de trabajo.
-        mesa_asignada = random.randint(0, self.mesas_funcionales - 1)
-        # Actualiza las estadísticas de ocupación de las mesas
-        with self.lock:
-            self.ocupacion_mesas[mesa_asignada] += 1
-            self.alumnos_dentro += 1
-        print(f"Alumno {alumno_id} entra y ocupa la mesa {mesa_asignada}.")
-        with self.mesas[mesa_asignada]:
-            tiempo_trabajo = random.randint(2, 5)
-            time.sleep(tiempo_trabajo)
-            print(f"Alumno {alumno_id} terminó en mesa {mesa_asignada}.")
+    def asignar_mesa(self, nombre):
+        with self.lock: # Permite controlar el acceso
+            for mesa, alumnos in self.mesas.items():
+                if len(alumnos) < self.max_alumnos_por_mesa: # Si la mesa tiene espacio
+                    alumnos.append(nombre)
+                    self.historial_mesas[mesa] += 1  # Registrar uso de mesa
+                    self.alumnos_activos.append(nombre)  # Añadir alumno a lista de activos
+                    print(f"{nombre} ha tomado un lugar en la mesa {mesa}.")
+                    threading.Thread(target=self.uso_mesa, args=(nombre, mesa)).start() # Inicia un hilo para simular el uso de la mesa
+                    return
+        print(f"{nombre} no encontró mesa y se va.")  # Si no hay mesas disponibles, el alumno se va
+    
+    def uso_mesa(self, nombre, mesa):
+        tiempo = random.randint(3, 7)
+        time.sleep(tiempo)  # Simula el tiempo de uso de la mesa
+        with self.lock: # Bloquea el acceso a recursos compartidos
+            self.mesas[mesa].remove(nombre)  # Elimina al alumno de la mesa
+            self.alumnos_activos.remove(nombre)  # Eliminar de la lista de activos
+        print(f"{nombre} ha dejado la mesa {mesa} después de {tiempo} minutos.")
+    
+    def jefe_se_va_a_comer(self):
+        while self.jefe_trabajando:
+            time.sleep(random.randint(10, 20))  # Intervalo antes de que el jefe se vaya
+            self.jefe_presente.clear()  # Indica que el jefe no está presente
             with self.lock:
-                self.ocupacion_mesas[mesa_asignada] -= 1
-                self.alumnos_dentro -= 1
-          
-    def resumen_final(self): # Este método imprime un resumen de la ocupación de las mesas.
-        print("\nResumen de ocupación de mesas:")
-        for i, ocupacion in enumerate(self.ocupacion_mesas):
-            print(f"Mesa {i}: {ocupacion} alumnos la usaron en total.")
+                print(f"El jefe se ha ido a comer. Actualmente hay {len(self.alumnos_activos)} alumnos dentro del laboratorio.")
+            time.sleep(random.randint(5, 10))  # Simula el tiempo de comida
+            self.jefe_presente.set() # Indica que el jefe ha regresado
+            print("El jefe ha regresado. Los alumnos en espera pueden entrar.")
+            while not self.alumnos_espera.empty(): # Asigna mesas a los alumnos en espera
+                self.asignar_mesa(self.alumnos_espera.get())
+    
+    def esperar_a_que_terminen(self):
+        while self.alumnos_activos or not self.alumnos_espera.empty():  # Esperar a que todos los alumnos terminen
+            time.sleep(1)
+        self.jefe_trabajando = False  # Finaliza el turno del jefe
+    
+    def mostrar_resultados(self): # Método para mostrar el registro del uso de mesas del dia
+        print("\nResumen del día:")
+        for mesa, cantidad in self.historial_mesas.items(): # Recorre el historial de mesas
+            print(f"Mesa {mesa}: {cantidad} alumnos la usaron en total.")
 
-#Prueba Funcional 
-sync_method = "apagador"  
-n_mesas = 5  # Se puede modificar para probar con más mesas
-lab = Laboratorio(num_mesas=n_mesas, sync_type=sync_method)
-jefe = threading.Thread(target=lab.abrir_laboratorio)
-jefe.start()
-jefe.join()
+# Configuración del laboratorio
+num_mesas = int(input("Ingrese el número total de mesas disponibles en el laboratorio: "))
+laboratorio = Laboratorio(num_mesas) # Crea una instancia del laboratorio
 
-alumnos = [threading.Thread(target=lab.alumno_llega, args=(i,)) for i in range(20)]
-for a in alumnos:
-    a.start()
-    time.sleep(0.5)
+# Muestra cuántas mesas están funcionales
+print(f"Hoy funcionan {laboratorio.mesas_funcionales} mesas de {num_mesas}.") 
+num_alumnos = laboratorio.mesas_funcionales * laboratorio.max_alumnos_por_mesa # Calcula el número de alumnos
 
-time.sleep(5)
-lab.cerrar_laboratorio()
+# Iniciar hilo del jefe que se va a comer en intervalos
+threading.Thread(target=laboratorio.jefe_se_va_a_comer, daemon=True).start()
 
-time.sleep(3)
-lab.gestionar_acceso()
+# Crear alumnos intentando ingresar
+alumnos = [f"Alumno {i+1}" for i in range(num_alumnos + 5)]
+for alumno in alumnos:
+    threading.Thread(target=laboratorio.alumno_intenta_entrar, args=(alumno,)).start()
+    time.sleep(random.uniform(0.5, 2))  # Simula llegada aleatoria
 
-lab.resumen_final()
+# Esperar a que todos los alumnos terminen
+laboratorio.esperar_a_que_terminen()
+
+# Mostrar resultados
+laboratorio.mostrar_resultados() 
