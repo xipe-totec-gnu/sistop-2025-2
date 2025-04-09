@@ -15,17 +15,15 @@ MAX_BRAWNY = EQUIPMENT_NUM * 3
 
 #List of colors for brawny
 BRAWNY_COLORS = [
-    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", 
-    "gray", "cyan", "magenta", "lime", "teal", "indigo", "violet", "gold", 
-    "silver", "maroon", "navy", "olive", "turquoise", "beige", "lavender", 
-    "coral", "peach", "mint", "aqua", "plum", "salmon", "khaki", "orchid"
+    "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown",
+    "gray", "cyan", "magenta"
 ]
 
 # To limit the number of brawny that can train at the same time with the same equipment
 class Equipment:
     def __init__(self, id: int):
         self.id = id # Equipment ID
-        self.training_num = 0 
+        self.training_num = 0
         self.training_num_lock = threading.Semaphore(1)
 
     def __str__(self):
@@ -48,10 +46,8 @@ brawnyInGymLock = threading.Semaphore(1)
 # The training equipment list is generated randomly, representing the equipment the brawny will use
 # The brawny will enter the gym, train with the equipment, and leave the gym
 # The brawny will wait if the gym is full
-# The brawny will also check if the equipment is available (not in use by 3 or more brawnies)
+# The brawny will also check if the equipment is available (not in use by 3 or more brawny)
 # The brawny will leave the gym if all the equipment is full and he has already done 5 exercises
-
-# Simulate a brawny as a thread
 class Brawny(threading.Thread):
     def __init__(self, id: int, gym_gui):
         super().__init__()
@@ -61,7 +57,7 @@ class Brawny(threading.Thread):
         self.training_num_original = self.training_num # Original number of training exercises
         self.training_equipment = [] # Training routine list
         self.color = random.choice(BRAWNY_COLORS)
-        
+
         # Generate a random list of equipment for training
         while len(self.training_equipment) < self.training_num:
             equipment = random.randint(0, EQUIPMENT_NUM-1)
@@ -77,7 +73,7 @@ class Brawny(threading.Thread):
         while True:
             global brawnyInGym
             global brawnyInGymLock
-            
+
             #Try to enter the gym until the brawny can enter and train
             while True:
                 # Check if the gym is full
@@ -87,13 +83,13 @@ class Brawny(threading.Thread):
                     brawnyInGym += 1
                     brawnyInGymLock.release()
 
-                    # Enter the gym and tarining
+                    # Enter the gym and training
+                    # Draw the brawny in the gym
                     self.gym_gui.create_brawny(self.id, 50, 100, self.color)
                     print(f"{self} has entered the gym")
                     self.train()
-                    
-                    # Draw the brawny in the gym
-                    
+
+
                     # Leave the gym, decrement the counter of brawny in the gym
                     brawnyInGymLock.acquire()
                     brawnyInGym -= 1
@@ -215,7 +211,7 @@ class GymGUI:
                 y2 = y1 + rect_height
                 self.canvas.create_rectangle(x1, y1, x2, y2, fill="lightgray", outline="black", width=2)
                 self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"Equipment\n{r * cols + c}", font=("Courier", 12), anchor="center", justify="center")
-        
+
         # entrance tourniquet
         # Draw entrance tourniquet on the left of the canvas
         tourniquet_width = 100
@@ -258,13 +254,13 @@ class GymGUI:
         pos.append(y_top + row * (rect_height + padding))
 
         return pos
-    
+
     def create_brawny(self, brawny_id, x, y, color):
         radius = 20
         brawny = self.canvas.create_oval(
             x - radius, y - radius,
             x + radius, y + radius,
-            fill=color, outline="black", width=2
+            fill=color, outline="black"
         )
         label = self.canvas.create_text(
             x, y,
@@ -272,18 +268,13 @@ class GymGUI:
             font=("Courier", 10, "bold"),
             fill="white"
         )
-        self.brawny_objects[brawny_id] = (brawny, label)
-        
-        # Remove the brawny from the canvas after a short delay
-        self.canvas.after(2000, lambda: self.remove_brawny(brawny_id))
+        self.brawny_objects[brawny_id] = {"brawny": brawny, "label": label, "x_pos": x, "y_pos": y}
 
-    def remove_brawny(self, brawny_id):
-        if brawny_id in self.brawny_objects:
-            brawny, label = self.brawny_objects[brawny_id]
-            self.canvas.delete(brawny)
-            self.canvas.delete(label)
-            del self.brawny_objects[brawny_id]
-        
+        # Update the brawny count label
+        self.brawny_count += 1
+        self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
+        return brawny
+
     def calculate_brawny_path(self, brawny_id, origin_equipment_id, destination_equipment_id):
         rect_width = 100
         rect_height = 100
@@ -312,17 +303,17 @@ class GymGUI:
         path_points.append(destination)
 
         return path_points
-    
+
     def move_brawny(self, brawny_id, path_points, speed=100, on_exit=None):
         # Move the brawny along the path points
 
         # Verify if the brawny exists
         if brawny_id not in self.brawny_objects:
             return
-        
+
         brawny_obj = self.brawny_objects[brawny_id]
         # Get the brawny object and label
-        brawny = brawny_obj["car"]
+        brawny = brawny_obj["brawny"]
         label = brawny_obj["label"]
 
         #Animation
@@ -338,9 +329,9 @@ class GymGUI:
                 self.brawny_count -= 1
                 self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
                 return
-        
+
             #Get path distance
-            start_x, start_y = points[idx]  
+            start_x, start_y = points[idx]
             end_x, end_y = points[idx + 1]
             distance = ((end_x - start_x) ** 2 + (end_y - start_y) ** 2) ** 0.5
             steps = 30
@@ -366,16 +357,16 @@ class GymGUI:
 def spawn_brawnies(gym_gui, num_brawny=10):
     brawnies_count = 0
 
-    def spawn_brawy():
+    def spawn_brawny():
         nonlocal brawnies_count
         if brawnies_count < num_brawny:
             brawny = Brawny(brawnies_count, gym_gui)
             brawny.start()
             brawnies_count += 1
             # Schedule the next spawn
-            gym_gui.root.after(random.randint(1000, 3000), spawn_brawy)
-        
-    gym_gui.root.after(1000, spawn_brawy)
+            gym_gui.root.after(random.randint(1000, 3000), spawn_brawny)
+
+    gym_gui.root.after(1000, spawn_brawny)
 
 def main():
     print("Starting the gym simulation")
