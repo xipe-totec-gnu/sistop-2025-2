@@ -2,10 +2,15 @@
 # Trolebús. Una situación cotidiana con concurrencia y sincronización
 
 _Materia_: Sistemas Operativos
+
 _Semestre_: 2025-2
+
 _Alumnos:_ 
-Membrilla Ramos Isaias Iñaki 
+
+Membrilla Ramos Isaias Iñaki
+
 Miramón Pérez Jocelyn  
+
 _Grupo_: 6
 
 
@@ -54,8 +59,9 @@ Las consecuencias nocivas de la concurrencia en esta situación es que existe un
     - listaAsientos[]
         La lista de asientos una estructura global, ya que cada hilo puede leer para ver la disponibilidad y además escribir en ella (0-libre, 1-ocupado). 
     - estacionCamion 
+      Contador para la estacionCamion
     - color
-        Se utiliza para cambiar en las funciones el color de los pasajeros asociados a cada perfil, es inicializado en cero. 
+        Se utiliza para cambiar en las funciones el color de los pasajeros asociados a cada perfil. 
     - Variables gráficas (xUsuario, yUsuario)
      Se utilizan para dibujar los elemetos de la interfaz gráfica. 
             - hombre : rojo
@@ -74,6 +80,7 @@ Las consecuencias nocivas de la concurrencia en esta situación es que existe un
 ## Descripción del entorno de desarrollo 
 - Lenguaje 
 El lenguaje utilizado es python, para ello debemos garantizar que tenemos la versión 3 instalada, se puede verificar con: 
+
 `python --version`
 
 - Bibliotecas: 
@@ -89,4 +96,5 @@ import time
     El sistema donde hicimos el programa y las pruebas de ejecución fue Windows 10. 
 
 ## Pruebas de ejecución
+![Prueba](/images/prueba1.png)
 
