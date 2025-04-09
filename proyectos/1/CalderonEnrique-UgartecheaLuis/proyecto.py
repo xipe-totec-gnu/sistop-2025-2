@@ -18,6 +18,9 @@ BRAWNY_COLORS = [
     "gray", "cyan", "magenta"
 ]
 
+# Emojis of brawny
+BRAWNY_EMOJIS = [ "💪", "🏋️‍♂️", "🏋️‍♀️", "🤸‍♂️", "🤸‍♀️" ]
+
 # To limit the number of brawny that can train at the same time with the same equipment
 class Equipment:
     def __init__(self, id: int):
@@ -55,7 +58,8 @@ class Brawny(threading.Thread):
         self.training_num = random.randint(6,10)
         self.training_num_original = self.training_num # Original number of training exercises
         self.training_equipment = [] # Training routine list
-        self.color = random.choice(BRAWNY_COLORS)
+        self.color = BRAWNY_COLORS[id % len(BRAWNY_COLORS)] # Color of the brawny
+        self.emoji = BRAWNY_EMOJIS[id % len(BRAWNY_EMOJIS)] # Emoji of the brawny
 
         # Generate a random list of equipment for training
         while len(self.training_equipment) < self.training_num:
@@ -74,14 +78,14 @@ class Brawny(threading.Thread):
 
         # Draw the brawny
         entrance_x, entrance_y = self.gym_gui.entrance_position
-        self.gym_gui.create_brawny(self.id, entrance_x, entrance_y, self.color)
-        print(f"{self} has entered the gym")
+        self.gym_gui.create_brawny(self.id, self.emoji, entrance_x, entrance_y, self.color)
 
         #Try to enter the gym until the brawny can enter and train
         while True:
             # Check if the gym is full
             brawnyInGymLock.acquire()
             if brawnyInGym < MAX_BRAWNY:
+                print(f"{self} has entered the gym")
                 # Enter the gym, increment the counter of brawny in the gym
                 brawnyInGym += 1
                 brawnyInGymLock.release()
@@ -96,7 +100,7 @@ class Brawny(threading.Thread):
                 print(f"{self} has left the gym")
 
                 # Delete the brawny from the gym
-                self.gym_gui.move_brawny(self.id, [-1, -1], delete_brawny=True)
+                self.gym_gui.move_brawny(self.id, [self.gym_gui.get_equipment_position(-1), self.gym_gui.get_equipment_position(-2)], delete_brawny=True)
 
                 break
             else:
@@ -151,7 +155,6 @@ class Brawny(threading.Thread):
                 else:
                     # If the equipment is full, release the lock and try next equipment
                     equipment_list[equipment].training_num_lock.release()
-                    print(f"{self} cannot use {equipment_list[equipment]} because it is full")
 
             # Check if all the equipment are full
             if tn == self.training_num:
@@ -272,7 +275,7 @@ class GymGUI:
 
         return pos
 
-    def create_brawny(self, brawny_id, x, y, color):
+    def create_brawny(self, brawny_id, brawny_emoji, x, y, color):
         radius = 20
         brawny = self.canvas.create_oval(
             x - radius, y - radius,
@@ -281,7 +284,7 @@ class GymGUI:
         )
         label = self.canvas.create_text(
             x, y,
-            text=str(brawny_id),
+            text=str(brawny_id) + "\n" + brawny_emoji,
             font=("Courier", 10, "bold"),
             fill="white"
         )
