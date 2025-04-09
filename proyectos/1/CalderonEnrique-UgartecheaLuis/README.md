@@ -22,7 +22,7 @@ Si no se controla el acceso al gimnasio puede saturarse y no sé podrá dar abas
 
 La idea es controlar el acceso para mejorar la comodidad de los usuarios y evitar conflictos entre ellos.
 
-## Descripción de los mecanismos de sincronización empleados
+## Descripción de la solución
 
 Para modelar y resolver el problema vimos la posibilidad de seguir una idea similar a la del problema de gatos y ratones, esto pues en primer lugar necesitábamos limitar la entrada al gimnasio y después controlar el uso de los equipos. Para esto hicimos uso de variables contador protegidas por mutex. Estos combos contador-mutex, por lo tanto, son variables globales.
 
@@ -34,7 +34,15 @@ El algoritmo de cada hilo es el siguiente:
 
 Los threads interactúan entre si por medio de mutex y variables de condición. Los mutex son utilizados para proteger el acceso a las variables globales que representan el estado del gimnasio y los equipos. Se toma el mutex para verificar las cantidades y se libera tanto si se modificó como si solo se leyó. Esto nos asegura integridad en el acceso a las variables. Se sigue el mismo principio tanto con el acceso al gimnasio en si como con el uso de cada equipo.
 
-## Descripción del entorno de desarrollo, suficiente para reproducir una ejecución exitosa
+Un ejemplo, supongamos un nuevo hilo aparece, en primer lugar intentará tomar el mutex del gimnasio para saber si hay espacio, como hay espacio aumenta dicho contador y libera el mutex. Después tomará el mutex del equipo que le interese, si está libre lo ocupa y libera el mutex. Si no está libre, intentará tomar el mutex del siguiente equipo que le interese. Ya que llega al equipo igualmente aumenta el contador de personas en el equipo y libera el mutex para que el resto pueda acceder a la variable. Al terminar de usar el equipo, toma el mutex del equipo y disminuye el contador de personas en el equipo, liberando el mutex al final.
+
+Durante el desarrollo nos encontramos con varios errores, principalmente con la interfaz gráfica pues llega a volverse algo complejo. En cuestión de sincronización nuestro mayor problema fue pensar en que momento se debían tomar o liberar los mutex, esto pues de encontrarse mal aplicado, podría causar deadlocks. Sin embargo, lo logramos evitar.
+
+Algo a resaltar es que para estresar realmente nuestro programa es necesario generar muchos hilos lo que llega a cargar de manera considerable la máquina que lo ejecuta.
+
+Algo que pudimos observar a lo largo de la experimentación con las variables es que lo que más importa es el tiempo de entrenamiento pues mientras más tiempo pase un hilo en el gimnasio, más tiempo tardará en liberar el espacio, lo que provocará que otros hilos tengan que esperar más tiempo. Así que intentemos ir al gimnasio a entrenar más que a platicar ;).
+
+## Descripción del entorno de desarrollo
 
 Para el desarrollo del proyecto utilizamos la versión 3.13.2 de Python bajo la distribución de GNU/Linux Fedora 41. No utilizamos ninguna biblioteca adicional a las estándar de Python exceptuando el uso de Tkinter para la interfaz gráfica. La última versión de Tkinter.
 
