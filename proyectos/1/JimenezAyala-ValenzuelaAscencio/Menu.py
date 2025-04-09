@@ -6,72 +6,88 @@ from Inicio import inicio
 # Inicializar Pygame
 pygame.init()
 
-# Colores
-BLANCO = (255, 255, 255)
+# --- Colores ---
 NEGRO = (0, 0, 0)
-MORADO = (255, 111, 20)
 
-# Configuración de pantalla
+# --- Configuración de pantalla ---
 ANCHO, ALTO = 800, 500
 pantalla = pygame.display.set_mode((ANCHO, ALTO))
 pygame.display.set_caption("TACOS EL CHAMPION")
 
-# Fuente
+# --- Fuente base para otros elementos (no se usa en los botones con imagen) ---
 fuente = pygame.font.SysFont(None, 30)
 
-# Cargar imagen (reemplaza con tu archivo)
-imagen = pygame.image.load("champsLogo.png")
-imagen = pygame.transform.scale(imagen, (400, 200))
+# --- Cargar logo principal y escalarlo ---
+logo = pygame.image.load("champsLogo.png")
+logo = pygame.transform.scale(logo, (500, 300))
 
-# Estado de la pantalla
-pantalla_actual = "menu"  # Puede ser "menu" o "pantalla2"
+# --- Configuración de botones ---
+BOTON_ANCHO = 150
+BOTON_ALTO = 60
+espaciado = 5  # espacio vertical entre botones
+x_centro = (ANCHO - BOTON_ANCHO) // 2  # Centrar horizontalmente
+inicio_y = 250  # Coordenada Y inicial para el primer botón
 
-# Tamaño de los botones
-boton_ancho = 180
-boton_alto = 50
-
-# Posición de los botones centrados
-botones_menu = {
-    "INICIO": pygame.Rect((ANCHO - boton_ancho) // 2, 250, boton_ancho, boton_alto),
-    "ACERCA DE": pygame.Rect((ANCHO - boton_ancho) // 2, 320, boton_ancho, boton_alto),
-    "SALIR :(": pygame.Rect((ANCHO - boton_ancho) // 2, 390, boton_ancho, boton_alto),
+# --- Cargar imágenes para cada botón en estado normal y hover ---
+# Cada botón se representa como un diccionario con su imagen normal, hover y su rectángulo
+botones = {
+    "INICIO": {
+        "normal": pygame.transform.scale(pygame.image.load("Inicio.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "hover": pygame.transform.scale(pygame.image.load("InicioH.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "rect": pygame.Rect(x_centro, inicio_y, BOTON_ANCHO, BOTON_ALTO)
+    },
+    "ACERCA DE": {
+        "normal": pygame.transform.scale(pygame.image.load("Acerca.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "hover": pygame.transform.scale(pygame.image.load("AcercaH.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "rect": pygame.Rect(x_centro, inicio_y + BOTON_ALTO + espaciado, BOTON_ANCHO, BOTON_ALTO)
+    },
+    "SALIR :(": {
+        "normal": pygame.transform.scale(pygame.image.load("Salir.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "hover": pygame.transform.scale(pygame.image.load("SalirH.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "rect": pygame.Rect(x_centro, inicio_y + 2 * (BOTON_ALTO + espaciado), BOTON_ANCHO, BOTON_ALTO)
+    }
 }
 
-# Bucle principal
+# Estado actual de la pantalla (cambiamos entre 2 pantallas cuando se selecciona la opcion 'INFO')
+pantalla_actual = "menu"
+
+# --- Bucle principal ---
 corriendo = True
 while corriendo:
-    pantalla.fill(NEGRO)
+    pantalla.fill(NEGRO)  # Fondo negro
+    mouse_pos = pygame.mouse.get_pos()  # Obtener posición actual del mouse
 
+    # Manejo de eventos
     for evento in pygame.event.get():
         if evento.type == pygame.QUIT:
             corriendo = False
+
         elif evento.type == pygame.MOUSEBUTTONDOWN:
-            pos = evento.pos
+            # Verificar si se hizo clic en algún botón
+            for nombre, datos in botones.items():
+                if datos["rect"].collidepoint(evento.pos):
+                    if nombre == "INICIO":
+                        inicio(pantalla, fuente, ANCHO, ALTO)
+                        pygame.quit()
+                        sys.exit()
+                    elif nombre == "ACERCA DE":
+                        pantalla_actual = botonAcerca(pantalla, fuente, ANCHO, ALTO)
+                    elif nombre == "SALIR :(":
+                        corriendo = False
 
-            if pantalla_actual == "menu":
-                for nombre, rect in botones_menu.items():
-                    if rect.collidepoint(pos):
-                        if nombre == "INICIO":
-                            inicio(pantalla, fuente, ANCHO, ALTO)
-                            pygame.quit()
-                            sys.exit()
-                        elif nombre == "ACERCA DE":
-                            pantalla_actual = botonAcerca(pantalla, fuente, ANCHO, ALTO)  # Informacion del planteamiento del problema
-                        elif nombre == "SALIR :(": # No quisieron probar y mejor se salen
-                            corriendo = False
-
-    # Dibujar según la pantalla actual (por las modificaciones que hacemos constantemente segun el boton que se aprieta)
+    # Si estamos en el menú principal
     if pantalla_actual == "menu":
-        # Mostrar imagen
-        pantalla.blit(imagen, (ANCHO // 2 - imagen.get_width() // 2, 50))
+        # Mostrar el logo centrado en la parte superior
+        pantalla.blit(logo, (ANCHO // 2 - logo.get_width() // 2, 0))
 
-        # Dibujar botones
-        for nombre, rect in botones_menu.items():
-            pygame.draw.rect(pantalla, MORADO, rect, border_radius=10)
-            texto_boton = fuente.render(nombre, True, BLANCO)
-            pantalla.blit(texto_boton, (rect.x + (rect.width - texto_boton.get_width()) // 2, rect.y + (rect.height - texto_boton.get_height()) // 2))
+        # Dibujar los botones con sus respectivas imágenes (hover o normal)
+        for nombre, datos in botones.items():
+            imagen = datos["hover"] if datos["rect"].collidepoint(mouse_pos) else datos["normal"]
+            pantalla.blit(imagen, datos["rect"].topleft)
 
+    # Actualizar pantalla
     pygame.display.flip()
 
+# Salir correctamente del programa
 pygame.quit()
 sys.exit()

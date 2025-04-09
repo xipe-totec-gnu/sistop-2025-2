@@ -19,9 +19,21 @@ def dividir_texto(texto, fuente, max_ancho):
     return lineas
 
 def botonAcerca(pantalla, fuente, ANCHO, ALTO):
-    boton_volver = pygame.Rect((ANCHO - 100) // 2, ALTO - 80, 100, 40)
 
-    # Tus párrafos separados
+    BOTON_ANCHO = 150
+    BOTON_ALTO = 60
+    x_centro = (ANCHO - BOTON_ANCHO) // 2  # Centrar horizontalmente
+    inicio_y = 420  # Coordenada Y del boton
+
+    boton_volver = {
+    "VOLVER": {
+        "normal": pygame.transform.scale(pygame.image.load("Volver.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "hover": pygame.transform.scale(pygame.image.load("VolverH.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "rect": pygame.Rect(x_centro, inicio_y, BOTON_ANCHO, BOTON_ALTO)
+    }
+    }
+
+    # Texto del planteamiento
     parrafos = [
         "Somos dos estudiantes de la Facultad de Ingeniería y como muchos, "
         "tenemos una tradición sagrada: ir al puesto del champion a comer tacos de canasta."
@@ -55,20 +67,20 @@ def botonAcerca(pantalla, fuente, ANCHO, ALTO):
                 y += fuente.get_linesize()
             y += fuente.get_linesize()  # espacio extra entre párrafos
 
-        # Botón "Volver"
-        pygame.draw.rect(pantalla, (100, 149, 237), boton_volver, border_radius=10)
-        texto_volver = fuente.render("Volver", True, (0, 0, 0))
-        pantalla.blit(texto_volver, (
-            boton_volver.x + (boton_volver.width - texto_volver.get_width()) // 2,
-            boton_volver.y + (boton_volver.height - texto_volver.get_height()) // 2
-        ))
+
+        # Dibujar botón "Volver"
+        mouse_pos = pygame.mouse.get_pos()
+        datos = boton_volver["VOLVER"]
+        imagen = datos["hover"] if datos["rect"].collidepoint(mouse_pos) else datos["normal"]
+        pantalla.blit(imagen, datos["rect"].topleft)
+
 
         # Eventos
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 corriendo = False
             elif evento.type == pygame.MOUSEBUTTONDOWN:
-                if boton_volver.collidepoint(evento.pos):
+                if boton_volver["VOLVER"]["rect"].collidepoint(evento.pos):
                     corriendo = False 
                     return "menu"
 
