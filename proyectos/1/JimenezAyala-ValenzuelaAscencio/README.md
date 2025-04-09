@@ -10,7 +10,7 @@ Cada vez que vamos, el proceso es el mismo… o al menos debería serlo:
 
 Primero, nos acercamos al puesto y le pedimos al champion nuestros tacos favoritos (o su famosa tortichamps, una torta de tacos de canasta). Pero tenemos que esperar a que no haya nadie más pidiendo, porque el champion solo atiende a una persona a la vez.
 
-Si está disponible alguno de sus 4 platos, el champion nos puede servir nuestros tacos para empezar a comer. De otro modo, debemos esperar a que alguien termine.
+Si está disponible alguno de sus 3 platos, el champion nos puede servir nuestros tacos para empezar a comer. De otro modo, debemos esperar a que alguien termine.
 
 Finalmente, hablamos con el champs para pagarle los tacos que consumimos.
 
