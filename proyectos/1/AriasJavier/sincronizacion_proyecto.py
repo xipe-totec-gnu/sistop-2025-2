@@ -2,8 +2,8 @@ import random
 import threading
 import time
 
-trabajos_totales = 6
-miembros_totales = 2
+trabajos_totales = 0
+miembros_totales = 0
 
 trabajos = []
 tareas_pendientes = []
@@ -18,6 +18,12 @@ lock_estado = threading.Lock()
 
 semaf_planificador = threading.Semaphore(0)
 semaf_tareas = threading.Semaphore(0)
+
+def initValores(miembros, trabajos):
+    global miembros_totales, trabajos_totales
+
+    miembros_totales = miembros
+    trabajos_totales = trabajos
 
 def crearTrabajo(id):
 

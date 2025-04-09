@@ -11,14 +11,14 @@ from sincronizacion_proyecto import (
     planificador,
     tareas_pendientes,
     trabajos,
-    trabajos_totales
+    trabajos_totales,
+    initValores
 )
 
 evento_cierre = threading.Event()
 
 def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     stdscr.clear()
-
 
     # Mostrar título
     stdscr.addstr(1, 1, "SISTEMA DE GESTIÓN DE TAREAS", curses.A_BOLD)
@@ -80,7 +80,34 @@ def pantalla_principal(stdscr):
         except:
             break
 
+def configuracion_inicial():
+    while True:
+        try:
+            miembros = int(input("Ingrese el número de miembros del equipo de trabajo (1-9): "))
+            if miembros >= 1 and miembros <= 9:
+                break
+            print("Valor inválido: Ingrese un número entre 1 y 9.")
+        except ValueError:
+            print("Valor inválido: Ingrese un número entre 1 y 9.")
+
+    while True:
+        try:
+            trabajos = int(input("Ingrese el número de trabajos por realizar (1-9): "))
+            if trabajos >= 1 and trabajos <= 9:
+                break
+            print("Valor inválido: Ingrese un número entre 1 y 9.")
+        except ValueError:
+            print("Valor inválido: Ingrese un número entre 1 y 9.")
+
+    return miembros, trabajos
+
 def main(stdscr):
+    global miembros_totales, trabajos_totales
+
+    curses.endwin()
+    miembros_totales, trabajos_totales = configuracion_inicial()
+    initValores(miembros_totales, trabajos_totales)
+
     for i in range(trabajos_totales):
         crearTrabajo(i)
 
