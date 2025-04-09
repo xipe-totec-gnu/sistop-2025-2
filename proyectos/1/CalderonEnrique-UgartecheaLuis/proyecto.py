@@ -179,11 +179,9 @@ class GymGUI:
         self.canvas.pack(fill=tk.BOTH, expand=True)
         self.control_panel = tk.Frame(self.root)
         self.control_panel.pack(fill=tk.X, pady=5)
-        self.status_label = tk.Label(self.control_panel, text="Status: Waiting for brawny to enter the gym", font=("Courier", 14))
-        self.status_label.pack(side=tk.LEFT, padx=10)
         self.brawny_count = 0
         self.brawny_count_label = tk.Label(self.control_panel, text="Brawny in gym: 0", font=("Courier", 14))
-        self.status_label.pack(side=tk.LEFT, padx=10)
+        self.brawny_count_label.pack(side=tk.LEFT, padx=10)
         self.canvas.bind("<Configure>", self.draw_gym)
         self.brawny_objects = {}
 
@@ -350,11 +348,11 @@ class GymGUI:
                     self.canvas.delete(label)
                     # Remove the brawny from the dictionary
                     del self.brawny_objects[brawny_id]
-                #Update the brawny count label
-                self.brawny_count -= 1
-                self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
+                    self.brawny_count -= 1
+                    #Update the brawny count label
+                    self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
                 return
-
+            
             #Get path distance
             start_x, start_y = points[idx]
             end_x, end_y = points[idx + 1]
