@@ -27,8 +27,8 @@ def botonAcerca(pantalla, fuente, ANCHO, ALTO):
 
     boton_volver = {
     "VOLVER": {
-        "normal": pygame.transform.scale(pygame.image.load("Volver.png"), (BOTON_ANCHO, BOTON_ALTO)),
-        "hover": pygame.transform.scale(pygame.image.load("VolverH.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "normal": pygame.transform.scale(pygame.image.load("assets/Volver.png"), (BOTON_ANCHO, BOTON_ALTO)),
+        "hover": pygame.transform.scale(pygame.image.load("assets/VolverH.png"), (BOTON_ANCHO, BOTON_ALTO)),
         "rect": pygame.Rect(x_centro, inicio_y, BOTON_ANCHO, BOTON_ALTO)
     }
     }
