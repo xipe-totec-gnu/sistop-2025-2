@@ -32,8 +32,8 @@ class Cliente(threading.Thread):
         self.max_intentos = 3 # Si hace algo mal, puede volver a intentar comprar máximo 3 veces
 
         # Imagen del cliente
-        num = random.randint(1, 8)
-        path = f"assets/Comiendo{num}.png"
+        num = random.randint(1, 3)
+        path = f"assets/Esperando{num}.png"
         img = pygame.image.load(path).convert_alpha()
         self.image = pygame.transform.scale(img, (180, 180))
 
