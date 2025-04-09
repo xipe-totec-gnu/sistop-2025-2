@@ -3,7 +3,7 @@
 
 #+BEGIN_SRC yaml
 Planteamiento: 2025.03.26
-Entrega: 2025.04.03
+Entrega: 2025.04.08
 #+END_SRC
 
 Los eventos en el mundo en que vivimos se producen de forma

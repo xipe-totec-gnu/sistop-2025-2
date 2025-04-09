@@ -1,0 +1,85 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Virtualización
+
+- Tema presentado por :: Luisa Segura
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   8.94 |  0.3 |                7.9 |  0.7 |    8.21 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 |  4 |  5 | Total |
+|--------------+---+---+---+----+----+-------|
+| Originalidad | 0 | 1 | 2 | 12 | 10 |  8.48 |
+| Nivel        | 0 | 0 | 0 | 13 | 12 |  8.96 |
+| Relevancia   | 0 | 0 | 0 |  7 | 18 |  9.44 |
+| Claridad     | 0 | 0 | 0 |  8 | 17 |  9.36 |
+| Presencia    | 0 | 0 | 5 |  9 | 11 |  8.48 |
+|--------------+---+---+---+----+----+-------|
+|              |   |   |   |    |    |  8.94 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Tu exposición recibió los siguientes comentarios anonimizados por
+parte de tus compañeros:
+
+- Hizo falta kvm/qemu :(
+- Realmente, la forma en explicarlo me gusto. Importante que no leyo solo el
+  texto que incluyo en la presentación, sino era un apoyo. Los ejemplos bien
+  pero me hubiese gustado mas verlo como lo hacia paso a paso que
+  pantallazos. Pero fuera de ello fue buen tema La presentación tenía la
+  información necesario sin saturar de esta misma. La compañera explica cada
+  parte de gran manera que se entiende. El añadido del ejemplo de la
+  virtualización sirve para comprender mejor el tema de forma visual, que
+  complementa toda la información antes mencionada. Las ventajas y desventajas
+  ayudan a conocer mejor sobre el tema y el por qué podría ser una opción.
+- Me gustó que sus dispositivas solo tenían la información adecuada, me hubiera
+  gustado que el ejemplo práctica fuera en tiempo real
+- ninguno
+- Ninguna, muy buena exposición
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |            7 |     1.05 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |           10 |      1.5 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     7.90 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+
+- Buen toque el ponerle musiquita de fondo 😉
+- El detalle de la exposición se mantuvo relativamente a un nivel descriptivo,
+  esto es, al nivel del “qué es” más que del “cómo se implementa”
+- Presentas varias fuentes bibliográficas interesantes, pero no mencionas en el
+  texto dónde se empleó cada una de ellas (no se hace un citado expreso para
+  apoyar el punto en que se refieren a los distintos conceptos).
+- Si bien tu forma de lectura es fluida y agradable, el ritmo de la voz de ir
+  leyendo el texto se vuelve poco dinámico y cuesta mantener la atención de tu
+  público 🙁
+- Habría sido mucho mejor que mostraras el proceso práctico “real”, no copiando
+  los pantallazos de 9to5linux.com 🙁 (¡y no los citaste como parte de tus
+  fuentes, ojo!)
