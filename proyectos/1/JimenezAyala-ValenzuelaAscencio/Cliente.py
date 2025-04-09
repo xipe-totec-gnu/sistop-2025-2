@@ -33,14 +33,16 @@ class Cliente(threading.Thread):
 
         # Imagen del cliente
         num = random.randint(1, 3)
-        path = f"assets/Esperando{num}.png"
-        img = pygame.image.load(path).convert_alpha()
-        self.image = pygame.transform.scale(img, (180, 180))
+        path = f"assets/Esperando{num}.png" # Ubicacion del Asset
+        img = pygame.image.load(path).convert_alpha() # Cargamos
+        self.image = pygame.transform.scale(img, (180, 180)) # Escalamos
 
         self.slot_index = None # Índice de slot en pantalla
-        self.estado = "activo" # Puede ser 'activo' o 'apagado'
+        self.estado = "esperando"  # Estado inicial como 'esperando'
         
+        # Lugares para comer
         self.slots = slots
+        # Bloqueo para el arreglo de Lugares
         self.lock = lock
 
     # Ejecución del hilo
@@ -59,46 +61,83 @@ class Cliente(threading.Thread):
 
             # Paso 1: Pedir
             self.champion.servir_tacos(self.id)
+            self.estado = "esperando"  # El cliente espera por un plato
+            self.actualizar_imagen()  # Actualizamos su imagen
 
             # Paso 2: Comer
             print(f"[Cliente {self.id}] Esperando un plato...")
             self.platos.tomar(self.id)  # Bloquea hasta que consiga plato
 
-
+            self.estado = "comiendo"  # El cliente comienza a comer
+            self.actualizar_imagen() # Actualizamos su imagen
             print(f"[Cliente {self.id}] Comiendo tacos.")
+            
+            # Buscamos si hay un lugar disponible y seleccionamos al azar
             with self.lock:
                 disponibles = [i for i, v in enumerate(self.slots) if v is None]
                 if disponibles:
                     self.slot_index = random.choice(disponibles)
-                    self.slots[self.slot_index] = self
+                    self.slots[self.slot_index] = self # Nos insertamos en el arreglo de lugares
+                num = random.randint(1, 8)
+                path = f"assets/Comiendo{num}.png"
+                img = pygame.image.load(path).convert_alpha() # Cambiamos la imagen
+                self.image = pygame.transform.scale(img, (180, 180))
 
-
-            time.sleep(random.uniform(2, 3))
+            time.sleep(random.uniform(3.5, 6))
 
             with self.lock:
                 if self.slot_index is not None:
                     self.slots[self.slot_index] = None
                     self.slot_index = None
 
-
-            self.platos.devolver() # Devolvemos el plato
+            self.platos.devolver()  # Devolvemos el plato
 
             # Paso 3: Pagar (quizá mal)
-            pago_correcto = random.random() > 0.15 # 85% de probabilidad de pagar la cantidad correcta
+            self.estado = "pagando" # Cambiamos de estado
+            pago_correcto = random.random() > 0.15  # 85% de probabilidad de pagar la cantidad correcta
             pago_aceptado = self.champion.cobrar(self.id, pago_correcto)
+            num = random.randint(1, 8)
+            path = f"assets/Pago{num}.png"
+            img = pygame.image.load(path).convert_alpha()
+            self.image = pygame.transform.scale(img, (180, 180))
 
             # Condicional para el pago
             if pago_aceptado:
                 print(f"[Cliente {self.id}] Completó su visita con éxito. ✅\n")
+                time.sleep(random.uniform(3.5, 6))
+                self.estado = "apagado"  # El cliente termina su visita
+                self.actualizar_imagen() # Actualizamos su imagen
                 return
             else:
-                self.esperarReintento() # Enviar a reintento
+                self.esperarReintento()  # Enviar a reintento
 
         # Si llegamos a la cantidad máxima, el hilo se detiene
         print(f"[Cliente {self.id}] Fue expulsado por intentos fallidos. ❌")
-        self.estado = "apagado"
+        self.estado = "apagado"  # El cliente se apaga tras fallar en los intentos
+        self.actualizar_imagen()
 
+    # Función para esperar el reintento
     def esperarReintento(self):
-        wait_time = random.uniform(0.5, 1.0)
+        wait_time = random.uniform(5, 6)
         print(f"[Cliente {self.id}] Esperando {wait_time:.2f}s para reintentar...\n")
+        num = random.randint(1, 3)
+        path = f"assets/Esperando{num}.png"
+        self.estado = "esperando" # Cambiamos el estado a esperando
+        img = pygame.image.load(path).convert_alpha()
+        self.image = pygame.transform.scale(img, (180, 180)) # Cambiamos la imagen
         time.sleep(wait_time)
+
+    # Función para actualizar la imagen
+    def actualizar_imagen(self):
+        if self.estado == "esperando":
+            num = random.randint(1, 3)
+            path = f"assets/Esperando{num}.png"
+        elif self.estado == "comiendo":
+            num = random.randint(1, 8)
+            path = f"assets/Comiendo{num}.png"
+        elif self.estado == "apagado" or self.estado == "pagando":
+            num = random.randint(1, 3)
+            path = f"assets/Pago{num}.png"
+        
+        img = pygame.image.load(path).convert_alpha()
+        self.image = pygame.transform.scale(img, (180, 180))
