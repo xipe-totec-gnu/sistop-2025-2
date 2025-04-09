@@ -21,8 +21,17 @@ fuente = pygame.font.SysFont(None, 30)
 logo = pygame.image.load("champsLogo.png")
 logo = pygame.transform.scale(logo, (500, 300))
 
+# --- Cargar logo de la UNAM y FI ---
+logo_UNAM = pygame.image.load("UNAM.png")
+logo_FI = pygame.image.load("FI.png")
+
+# Escalado de las imagenes
+logo_UNAM = pygame.transform.scale(logo_UNAM, (100, 100))
+logo_FI = pygame.transform.scale(logo_FI, (100, 100))
+
+
 # --- Configuración de botones ---
-BOTON_ANCHO = 150
+BOTON_ANCHO = 170
 BOTON_ALTO = 60
 espaciado = 5  # espacio vertical entre botones
 x_centro = (ANCHO - BOTON_ANCHO) // 2  # Centrar horizontalmente
@@ -79,6 +88,11 @@ while corriendo:
     if pantalla_actual == "menu":
         # Mostrar el logo centrado en la parte superior
         pantalla.blit(logo, (ANCHO // 2 - logo.get_width() // 2, 0))
+
+        # Dibujar logos en las esquinas inferiores
+        pantalla.blit(logo_UNAM, (10, ALTO - logo_UNAM.get_height() - 10))  # Izquierda inferior
+        pantalla.blit(logo_FI, (ANCHO - logo_FI.get_width() - 10, ALTO - logo_FI.get_height() - 10))  # Derecha inferior
+
 
         # Dibujar los botones con sus respectivas imágenes (hover o normal)
         for nombre, datos in botones.items():
