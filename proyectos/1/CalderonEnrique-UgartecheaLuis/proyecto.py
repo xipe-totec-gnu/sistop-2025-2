@@ -9,7 +9,6 @@ import random
 # Up to 3 brawny can train at the same time with the same equipment.
 # The code uses threading to simulate concurrent training sessions.
 
-
 EQUIPMENT_NUM = 60
 MAX_BRAWNY = EQUIPMENT_NUM * 3
 
@@ -70,63 +69,58 @@ class Brawny(threading.Thread):
         return f"Brawny {self.id}"
 
     def run(self):
+        global brawnyInGym
+        global brawnyInGymLock
+
+        # Draw the brawny
+        entrance_x, entrance_y = self.gym_gui.entrance_position
+        self.gym_gui.create_brawny(self.id, entrance_x, entrance_y, self.color)
+        print(f"{self} has entered the gym")
+
+        #Try to enter the gym until the brawny can enter and train
         while True:
-            global brawnyInGym
-            global brawnyInGymLock
+            # Check if the gym is full
+            brawnyInGymLock.acquire()
+            if brawnyInGym < MAX_BRAWNY:
+                # Enter the gym, increment the counter of brawny in the gym
+                brawnyInGym += 1
+                brawnyInGymLock.release()
 
-            #Try to enter the gym until the brawny can enter and train
-            while True:
-                # Check if the gym is full
+                # Enter the gym and training
+                self.train()
+
+                # Leave the gym, decrement the counter of brawny in the gym
                 brawnyInGymLock.acquire()
-                if brawnyInGym < MAX_BRAWNY:
-                    # Enter the gym, increment the counter of brawny in the gym
-                    brawnyInGym += 1
-                    brawnyInGymLock.release()
+                brawnyInGym -= 1
+                brawnyInGymLock.release()
+                print(f"{self} has left the gym")
 
-                    # Enter the gym and training
-                    # Draw the brawny in the gym
-                    self.gym_gui.create_brawny(self.id, 50, 100, self.color)
-                    print(f"{self} has entered the gym")
-                    self.train()
+                # Delete the brawny from the gym
+                self.gym_gui.move_brawny(self.id, [-1, -1], delete_brawny=True)
 
+                break
+            else:
+                brawnyInGymLock.release()
+                # Wait for a while before checking again
+                print(f"{self} is returning later")
 
-                    # Leave the gym, decrement the counter of brawny in the gym
-                    brawnyInGymLock.acquire()
-                    brawnyInGym -= 1
-                    brawnyInGymLock.release()
-                    print(f"{self} has left the gym")
-                    break
-                else:
-                    brawnyInGymLock.release()
-                    # Wait for a while before checking again
-                    print(f"{self} is returning later")
-                    time.sleep(random.randint(1, 3))
+                # Move to LIDSoL
+                path = [self.gym_gui.get_equipment_position(-1), self.gym_gui.get_equipment_position(-2)]
+                self.gym_gui.move_brawny(self.id, path, delete_brawny=False)
+                # Simulate waiting time
+                time.sleep(3)
+
+                # Move to the entrance
+                path = [self.gym_gui.get_equipment_position(-2), self.gym_gui.get_equipment_position(-1)]
+                self.gym_gui.move_brawny(self.id, path, delete_brawny=False)
 
     def train(self):
         global equipment_list
+        last_equipment = -1
 
         # If the brawny is in the gym, start training until all exercises are done
         while self.training_num > 0:
-            # Get the position of the gym
-            width = self.gym_gui.canvas.winfo_width()
-            height = self.gym_gui.canvas.winfo_height()
-            x_center = width // 2
-            y_center = height // 2
-            cols = 10
-            rows = 6
-            rect_width = 100
-            rect_height = 100
-            padding = 50
             tn = self.training_num
-            #Move the brawny to the gym in the top left corner
-            square_x1 = x_center - (cols * (rect_width + padding) // 2) - (padding // 2)
-            square_y1 = y_center - (rows * (rect_height + padding) // 2) - (padding // 2)
-
-            #Calculate the path to the first equipment
-            path_points = []
-            path_points.append([50, 100])
-            path_points.append([square_x1, square_y1])
-            self.gym_gui.move_brawny(self.id, path_points)
 
             # Search for the equipment
             for equipment in self.training_equipment:
@@ -136,9 +130,14 @@ class Brawny(threading.Thread):
                     equipment_list[equipment].training_num += 1
                     equipment_list[equipment].training_num_lock.release()
 
+                    # Calculate the path to the equipment use the calculate_brawny_path function
+                    path_points = self.gym_gui.calculate_brawny_path(last_equipment, equipment)
+                    # Move the brawny to the equipment
+                    self.gym_gui.move_brawny(self.id, path_points, False)
+
                     # Simulate training time
                     print(f"{self} is using {equipment_list[equipment]}")
-                    time.sleep(1)
+                    time.sleep(3)
 
                     # Release the equipment after training
                     equipment_list[equipment].training_num_lock.acquire()
@@ -147,6 +146,7 @@ class Brawny(threading.Thread):
 
                     # Decrease the number of exercises left
                     self.training_num -= 1
+                    last_equipment = equipment
                     self.training_equipment.remove(equipment)
                 else:
                     # If the equipment is full, release the lock and try next equipment
@@ -163,6 +163,11 @@ class Brawny(threading.Thread):
             print(f"{self} has finished training")
         else:
             print(f"{self} has left the gym without finishing training")
+
+        # If the brawny has finished training, move to the entrance
+        path_points = self.gym_gui.calculate_brawny_path(last_equipment, -1)
+        # Move the brawny to the entrance
+        self.gym_gui.move_brawny(self.id, path_points, True)
 
 class GymGUI:
     def __init__(self, root):
@@ -212,27 +217,41 @@ class GymGUI:
                 self.canvas.create_rectangle(x1, y1, x2, y2, fill="lightgray", outline="black", width=2)
                 self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"Equipment\n{r * cols + c}", font=("Courier", 12), anchor="center", justify="center")
 
-        # entrance tourniquet
+        # Entrance
         # Draw entrance tourniquet on the left of the canvas
-        tourniquet_width = 100
-        tourniquet_height = 125
-        x1 = 10
-        y1 = 30
-        x2 = x1 + tourniquet_width
-        y2 = y1 + tourniquet_height
-        self.canvas.create_rectangle(x1, y1, x2, y2, fill="green", outline="black", width=2)
-        self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="Entrance", font=("Courier", 12), anchor="center", justify="center", fill="white")
+        # Calculate the position of the first equipment on the left
+        x1 = self.x_center - (10 * (rect_width + padding) // 2) - (padding) - rect_width
+        y1 = self.y_center - (6 * (rect_height + padding) // 2)
+        x2 = x1 + rect_width
+        y2 = y1 + rect_height
 
-        #lidsol
-        lidsol_width = 100
-        lidsol_width = 125
-        y1 = height - 80 - lidsol_width
-        x2 = 110
-        y2 = y1 + lidsol_width
+        # Draw the entrance/exit rectangle divided diagonally
+        self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", width=2)
+        self.canvas.create_polygon(x1, y1, x2, y1, x1, y2, fill="green", outline="black")
+        self.canvas.create_polygon(x2, y1, x2, y2, x1, y2, fill="red", outline="black")
+
+        # Add text for Entrance and Exit
+        self.canvas.create_text(x1 + 45, y1 + (rect_height*0.1), text="Entrance", font=("Courier", 12), anchor="center", justify="left", fill="white")
+        self.canvas.create_text(x1 + 75, y1 + (rect_height*0.9), text="Exit", font=("Courier", 12), anchor="center", justify="right", fill="white")
+
+        # Set the entrance position
+        self.entrance_position = [x1 + rect_width * 0.25, y1 + rect_height * 0.5]
+
+        #LIDSoL
+        y1 = self.y_center + (rows * (rect_height + padding) // 2) - rect_height - padding
+        y2 = y1 + rect_height
         self.canvas.create_rectangle(x1, y1, x2, y2, fill="blue", outline="black", width=2)
         self.canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text="LIDSoL", font=("Courier", 12), anchor="center", justify="center", fill="white")
+        self.lidsol_position = [(x1 + x2) / 2, (y1 + y2) / 2]
 
     def get_equipment_position(self, equipment_id):
+        # Its the entrance
+        if equipment_id == -1:
+            return self.entrance_position
+        # Its LIDSoL
+        if equipment_id == -2:
+            return self.lidsol_position
+
         pos = []
         width = self.canvas.winfo_width()
         height = self.canvas.winfo_height()
@@ -275,36 +294,40 @@ class GymGUI:
         self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
         return brawny
 
-    def calculate_brawny_path(self, brawny_id, origin_equipment_id, destination_equipment_id):
+    def calculate_brawny_path(self,origin_equipment_id, destination_equipment_id):
         rect_width = 100
         rect_height = 100
         padding = 50
-        # Calculate the actual brawny position (origin) based on the equipment ID
-        path_points = []
+
+        # Calculate the origin and destiny position based on the equipment ID
         origin = self.get_equipment_position(origin_equipment_id)
-        path_points.append(origin)
+        destination = self.get_equipment_position(destination_equipment_id)
 
         # Calculate the path points
-        # Get to bottom left corner of the rectangle in hallway crossing
-        path_points.append([origin[0] - (rect_width // 2) - (padding // 2), origin[1] - (rect_height // 2) - (padding // 2)])
+        path_points = []
+        path_points.append(origin)
+
+        # Get to a hallway crossing
+        path_points.append([origin[0] + (rect_width // 2) + (padding // 2), origin[1] + (rect_height // 2) + (padding // 2)])
+
         # If it is going left or right
         if origin[0] > destination[0]:
             # Going left
-            path_points.append([destination[0] + (rect_width // 2) + (padding // 2), origin[1] - (rect_height // 2) - (padding // 2)])
+            path_points.append([destination[0] + (rect_width // 2) + (padding // 2), origin[1] + (rect_height // 2) + (padding // 2)])
             # If it is going up or down
-            path_points.append([destination[0] + (rect_width // 2) + (padding // 2), destination[1]])
+            path_points.append([destination[0] + (rect_width // 2) + (padding // 2), destination[1] + (rect_height // 2) + (padding // 2)])
         else:
             # Going right
-            path_points.append([destination[0] - (rect_width // 2) - (padding // 2), origin[1] - (rect_height // 2) - (padding // 2)])
+            path_points.append([destination[0] - (rect_width // 2) - (padding // 2), origin[1] + (rect_height // 2) + (padding // 2)])
             # If it is going up or down
-            path_points.append([destination[0] - (rect_width // 2) - (padding // 2), destination[1]])
+            path_points.append([destination[0] - (rect_width // 2) - (padding // 2), destination[1] + (rect_height // 2) + (padding // 2)])
         # Get to the center of the rectangle
         destination = self.get_equipment_position(destination_equipment_id)
         path_points.append(destination)
 
         return path_points
 
-    def move_brawny(self, brawny_id, path_points, speed=100, on_exit=None):
+    def move_brawny(self, brawny_id, path_points, delete_brawny=True, on_exit=None):
         # Move the brawny along the path points
 
         # Verify if the brawny exists
@@ -318,13 +341,15 @@ class GymGUI:
 
         #Animation
         def animate_paths(points, idx=0):
-            #If we reached the end of the path remove the car
-            if idx < len(points) - 1:
+            #If we reached the end of the path remove the brawny and label
+            if idx >= len(points) - 1:
                 if on_exit:
                     on_exit()
-                self.canvas.delete(brawny)
-                self.canvas.delete(label)
-                del self.brawny_objects[brawny_id]
+                if delete_brawny:
+                    self.canvas.delete(brawny)
+                    self.canvas.delete(label)
+                    # Remove the brawny from the dictionary
+                    del self.brawny_objects[brawny_id]
                 #Update the brawny count label
                 self.brawny_count -= 1
                 self.brawny_count_label.config(text=f"Brawny in gym: {self.brawny_count}")
@@ -333,7 +358,6 @@ class GymGUI:
             #Get path distance
             start_x, start_y = points[idx]
             end_x, end_y = points[idx + 1]
-            distance = ((end_x - start_x) ** 2 + (end_y - start_y) ** 2) ** 0.5
             steps = 30
             dx = (end_x - start_x) / steps
             dy = (end_y - start_y) / steps
@@ -349,7 +373,7 @@ class GymGUI:
                 self.canvas.move(label, dx, dy)
                 self.root.after(10, lambda: move_step(step + 1))
 
-            move_step()
+            move_step(0)
 
         animate_paths(path_points)
 
@@ -364,7 +388,7 @@ def spawn_brawnies(gym_gui, num_brawny=10):
             brawny.start()
             brawnies_count += 1
             # Schedule the next spawn
-            gym_gui.root.after(random.randint(1000, 3000), spawn_brawny)
+            gym_gui.root.after(random.randint(100, 200), spawn_brawny)
 
     gym_gui.root.after(1000, spawn_brawny)
 
@@ -375,7 +399,7 @@ def main():
     gym_gui.draw_gym()  # Draw the gym after the canvas is ready
 
     # Start the brawny threads
-    spawn_brawnies(gym_gui, num_brawny=10)
+    spawn_brawnies(gym_gui, num_brawny=300)
     root.mainloop()
 
 if __name__ == "__main__":
