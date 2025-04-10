@@ -10,18 +10,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;            
 
+/**
+ * Simulación de una cocina compartida donde varios roomies cocinan de forma concurrente.
+ * Cada recurso tiene un acceso sincronizado usando semáforos o locks.
+ */
 public class CocinaCompartida {
 
-    // Recursos compartidos
-    private static final Semaphore estufa = new Semaphore(4); // 4 quemadores
-    private static final Semaphore sarten = new Semaphore(2); // 2 sartenes
-    private static final Semaphore olla = new Semaphore(2); // 2 ollas
+    // Recursos compartidos de la cocina (con acceso limitado o exclusivo)
+    private static final Semaphore estufa = new Semaphore(4);
+    private static final Semaphore sarten = new Semaphore(2);
+    private static final Semaphore olla = new Semaphore(2);
     private static final Lock tostador = new ReentrantLock();
     private static final Lock microondas = new ReentrantLock();
     private static final Lock licuadora = new ReentrantLock();
     private static final Lock lavaplatos = new ReentrantLock();
 
-
+    /**
+     * Representa a un compañero de cuarto que ejecuta una rutina de cocina de forma concurrente.
+     */
     static class Roomie implements Runnable {
         private final String nombre;
         private final Random rand = new Random();
@@ -32,14 +38,19 @@ public class CocinaCompartida {
             this.rutina = generarRutina();
         }
 
+        /**
+         * Genera una rutina aleatoria de cocina para el Roomie.
+         * La rutina siempre incluye:
+         * - preparación (inicio)
+         * - cocinar (obligatorio)
+         * - entre 1 y 3 tareas adicionales aleatorias
+         * - lavar (final obligatorio)
+         */
         private List<String> generarRutina() {
             List<String> acciones = new ArrayList<>();
-
-            // Paso obligatorio
             acciones.add("preparar");
             acciones.add("cocinar");
 
-            // Extras aleatorios
             List<String> extras = new ArrayList<>(Arrays.asList("microondas", "licuadora", "tostar"));
             Collections.shuffle(extras);
             int numExtras = rand.nextInt(3) + 1;
@@ -48,145 +59,166 @@ public class CocinaCompartida {
                 acciones.add(extras.get(i));
             }
 
-            // Paso final obligatorio
             acciones.add("lavar");
-
             return acciones;
         }
 
         @Override
         public void run() {
-            try {
-                
+            try {    
                 for (String accion : rutina) {
-                    Thread.sleep(rand.nextInt(2000) + 1000);
+                    Thread.sleep(rand.nextInt(2000) + 1000); // Simula espera entre pasos
                     switch (accion) {
                         case "preparar":
-                        prepararIngredientes();
-                        break;
+                            prepararIngredientes();
+                            break;
                         case "cocinar":
-                        cocinar();
-                        break;
+                            cocinar();
+                            break;
                         case "microondas":
-                        usarMicroondas();
-                        break;
+                            usarMicroondas();
+                            break;
                         case "licuadora":
-                        usarLicuadora();
-                        break;
+                            usarLicuadora();
+                            break;
                         case "tostar":
-                        usarTostador();
-                        break;
+                            usarTostador();
+                            break;
                         case "lavar":
-                        lavarUtensilios();
-                        break;
+                            lavarUtensilios();
+                            break;
                     }
                 }
-                logEvento("comiendo",this.nombre,"comer");
+                logEvento("comiendo", this.nombre, "comer");
             } catch (InterruptedException e) {
-                System.out.println("Fue interrumpido.");
+                System.out.println(this.nombre + " fue interrumpido.");
             }
         }
 
+        /**
+         * Simula la preparación de ingredientes sin sincronización.
+         */
         private void prepararIngredientes() throws InterruptedException {
             int preparacion = rand.nextInt(3000) + 1000;
-            logEvento("activo",this.nombre,"preparar");
+            logEvento("activo", this.nombre, "preparar");
             Thread.sleep(preparacion);
         }
-
+        
+        /**
+         * Simula la acción de cocinar usando olla o sartén, ambos requieren estufa.
+         */
         private void cocinar() throws InterruptedException {
             int traste = rand.nextInt(2);
             int coccion = rand.nextInt(7000) + 3000;
-            switch (traste){
+            switch (traste) {
                 case 0: {
                     int olla_gorda = rand.nextInt(5000) + 1000;
-                    logEvento("esperando",this.nombre,"cocinar-olla");
+                    logEvento("esperando", this.nombre, "cocinar-olla");
                     olla.acquire();
                     estufa.acquire(2);
                     try {
-                        logEvento("activo",this.nombre,"cocinar-olla");
+                        logEvento("activo", this.nombre, "cocinar-olla");
                         Thread.sleep(coccion + olla_gorda);
                     } finally {
                         olla.release();
                         estufa.release(2);
-                        logEvento("terminado",this.nombre,"cocinar-olla");
+                        logEvento("terminado", this.nombre, "cocinar-olla");
                     }
                     break;
                 }
                 case 1: {
-                    logEvento("esperando",this.nombre,"cocinar-sarten");
+                    logEvento("esperando", this.nombre, "cocinar-sarten");
                     sarten.acquire();
                     estufa.acquire();
                     try {
-                        logEvento("activo",this.nombre,"cocinar-sarten");
+                        logEvento("activo", this.nombre, "cocinar-sarten");
                         Thread.sleep(coccion);
                     } finally {
                         sarten.release();
                         estufa.release();
-                        logEvento("terminado",this.nombre,"cocinar-sarten");
+                        logEvento("terminado", this.nombre, "cocinar-sarten");
                     }
                     break;
                 }
             }
         }
 
+        /**
+         * Simula el uso exclusivo del microondas.
+         */
         private void usarMicroondas() throws InterruptedException {
-            logEvento("esperando",this.nombre,"microondas");
-            microondas.lock();
             int microondeando = rand.nextInt(4000) + 2000;
+            logEvento("esperando", this.nombre, "microondas");
+            microondas.lock();
             try {
-                logEvento("activo",this.nombre,"microondas");
+                logEvento("activo", this.nombre, "microondas");
                 Thread.sleep(microondeando);
             } finally {
                 microondas.unlock();
-                logEvento("terminado",this.nombre,"microondas");
+                logEvento("terminado", this.nombre, "microondas");
             }
         }
 
+        /**
+         * Simula el uso exclusivo de la licuadora.
+         */
         private void usarLicuadora() throws InterruptedException {
-            logEvento("esperando",this.nombre,"licuadora");
-            licuadora.lock();
             int licuando = rand.nextInt(3000) + 1500;
+            logEvento("esperando", this.nombre, "licuadora");
+            licuadora.lock();
             try {
-                logEvento("activo",this.nombre,"licuadora");
+                logEvento("activo", this.nombre, "licuadora");
                 Thread.sleep(licuando);
             } finally {
                 licuadora.unlock();
-                logEvento("terminado",this.nombre,"licuadora");
+                logEvento("terminado", this.nombre, "licuadora");
             }
         }
 
+        /**
+         * Simula el uso exclusivo del tostador.
+         */
         private void usarTostador() throws InterruptedException {
-            logEvento("esperando",this.nombre,"tostar");
-            tostador.lock();
             int tostando = rand.nextInt(4000) + 2000;
+            logEvento("esperando", this.nombre, "tostar");
+            tostador.lock();
             try {
-                logEvento("activo",this.nombre,"tostar");
+                logEvento("activo", this.nombre, "tostar");
                 Thread.sleep(tostando);
             } finally {
                 tostador.unlock();
-                logEvento("terminado",this.nombre,"tostar");
+                logEvento("terminado", this.nombre, "tostar");
             }
         }
 
+        /**
+         * Simula el uso del lavaplatos al final de la rutina.
+         */
         private void lavarUtensilios() throws InterruptedException {
-            logEvento("esperando",this.nombre,"lavar");
-            lavaplatos.lock();
             int lavando = rand.nextInt(6000) + 4000;
+            logEvento("esperando", this.nombre, "lavar");
+            lavaplatos.lock();
             try {
-                logEvento("activo",this.nombre,"lavar");
+                logEvento("activo", this.nombre, "lavar");
                 Thread.sleep(lavando);
             } finally {
                 lavaplatos.unlock();
-                logEvento("terminado",this.nombre,"lavar");
+                logEvento("terminado", this.nombre, "lavar");
             }
         }
 
+        /**
+         * Registra un evento de la rutina con un estado y acción específica.
+         */
         private void logEvento(String estado, String nombre, String accion) {
             System.out.println(estado + ";" + nombre + ";" + accion);
         }
 
     }
 
+    /**
+     * Método principal que lanza la simulación con varios roomies ejecutándose de forma concurrente.
+     */
     public static void main(String[] args) {
         String[] nombres = {"Santan", "Roy", "Moi", "Yayo", "Paco", "Mau"};
         ExecutorService executor = Executors.newFixedThreadPool(nombres.length);
@@ -204,7 +236,5 @@ public class CocinaCompartida {
 
     }
 }
-
-
 
 
