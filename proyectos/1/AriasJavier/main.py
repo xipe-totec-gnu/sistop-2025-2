@@ -32,11 +32,14 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
         total = len(trabajo['tareas'])
         stdscr.addstr(y, 3, f"Trabajo {trabajo['id']}: {completadas}/{total} tareas completadas")
 
+        x_offset = 0
+
         # Mostrar detalles de las tareas
         for j, tarea in enumerate(trabajo['tareas']):
             estado_symbol = "✓" if tarea['estado'] == "completado" else "⧖" if tarea['estado'] == "pendiente" else "□"
             estado_color = 1 if tarea['estado'] == "completado" else 2 if tarea['estado'] == "pendiente" else 3
-            stdscr.addstr(y, 40 + j*8, f"T{tarea['id']}[{estado_symbol}]", curses.color_pair(estado_color))
+            stdscr.addstr(y, 40 + 22 * j, f"{tarea['nombre']}[{estado_symbol}]", curses.color_pair(estado_color))
+            x_offset += len(tarea['nombre']) + 6
 
     # Mostrar estado de los miembros
     y_miembros = 5 + trabajos_totales
@@ -45,12 +48,13 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     for miembro_id, estado in estado_miembros.items():
         y = y_miembros + 1 + miembro_id
         if estado:
-            stdscr.addstr(y, 3, f"Miembro {miembro_id}: Trabajando en Tarea {estado['id']} del Trabajo {estado['id_trabajo']}")
+            stdscr.addstr(y, 3, f"Miembro {miembro_id}: Trabajando en {estado['nombre']} del Trabajo {estado['id_trabajo']}")
         else:
             stdscr.addstr(y, 3, f"Miembro {miembro_id}: Esperando")
 
-    y_tareas = 7 + trabajos_totales + miembros_totales
     # Mostrar tareas pendientes
+    y_tareas = 7 + trabajos_totales + miembros_totales
+
     stdscr.addstr(y_tareas, 1, "TAREAS PENDIENTES:", curses.A_UNDERLINE)
     for i, tarea in enumerate(tareas_pendientes):
         stdscr.addstr(y_tareas + 1 + i, 2, f"Tarea {tarea['id']} del Trabajo {tarea['id_trabajo']}")
@@ -60,10 +64,12 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
     stdscr.refresh()
 
 def pantalla_principal(stdscr):
+    #Configracion inicial de curses
     curses.curs_set(0)
     stdscr.nodelay(1)
     curses.use_default_colors()
 
+    #Inicialiizacion de los colores
     curses.init_pair(1, curses.COLOR_GREEN, -1)
     curses.init_pair(2, curses.COLOR_YELLOW, -1)
     curses.init_pair(3, curses.COLOR_RED, -1)
