@@ -1,18 +1,26 @@
-import java.util.concurrent.*;              // Para ExecutorService, Executors, Semaphore
-import java.util.concurrent.locks.*;        // Para Lock y ReentrantLock
-import java.util.*;                         // Para Random, List, etc.
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.Random; 
+import java.util.List;
+import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;            
 
 public class CocinaCompartida {
 
     // Recursos compartidos
     private static final Semaphore estufa = new Semaphore(4); // 4 quemadores
-    private static final Lock sarten = new ReentrantLock();
+    private static final Semaphore sarten = new Semaphore(2); // 2 sartenes
+    private static final Semaphore olla = new Semaphore(2); // 2 ollas gordas jajaja
+    private static final Lock tostador = new ReentrantLock();
     private static final Lock microondas = new ReentrantLock();
     private static final Lock licuadora = new ReentrantLock();
     private static final Lock lavaplatos = new ReentrantLock();
 
-    // Log centralizado
-    private static final List<String> logDeCocina = Collections.synchronizedList(new ArrayList<>());
 
     static class Roomie implements Runnable {
         private final String nombre;
@@ -32,9 +40,9 @@ public class CocinaCompartida {
             acciones.add("cocinar");
 
             // Extras aleatorios
-            List<String> extras = new ArrayList<>(Arrays.asList("microondas", "licuadora"));
+            List<String> extras = new ArrayList<>(Arrays.asList("microondas", "licuadora", "tostar"));
             Collections.shuffle(extras);
-            int numExtras = rand.nextInt(2) + 1; // 1 o 2
+            int numExtras = rand.nextInt(3) + 1; // 1 o 2
 
             for (int i = 0; i < numExtras; i++) {
                 acciones.add(extras.get(i));
@@ -54,20 +62,23 @@ public class CocinaCompartida {
                     Thread.sleep(rand.nextInt(2000) + 1000);
                     switch (accion) {
                         case "preparar":
-                            prepararIngredientes();
-                            break;
+                        prepararIngredientes();
+                        break;
                         case "cocinar":
-                            cocinar();
-                            break;
+                        cocinar();
+                        break;
                         case "microondas":
-                            usarMicroondas();
-                            break;
+                        usarMicroondas();
+                        break;
                         case "licuadora":
-                            usarLicuadora();
-                            break;
+                        usarLicuadora();
+                        break;
+                        case "tostar":
+                        usarTostador();
+                        break;
                         case "lavar":
-                            lavarUtensilios();
-                            break;
+                        lavarUtensilios();
+                        break;
                     }
                 }
                 log("Terminó toda la rutina.\n");
@@ -77,33 +88,63 @@ public class CocinaCompartida {
         }
 
         private void prepararIngredientes() throws InterruptedException {
+            int preparacion = rand.nextInt(3000) + 1000;
             log("está preparando ingredientes...");
-            Thread.sleep(rand.nextInt(1000) + 500);
+            Thread.sleep(preparacion);
         }
 
         private void cocinar() throws InterruptedException {
-            log("quiere usar la estufa y el sartén.");
+            int traste = rand.nextInt(2);
+            int coccion = rand.nextInt(7000)+ 3000;
+            switch (traste){
+                case 0: {
+                    int olla_gorda = rand.nextInt(5000)+ 1000;
+                    log("quiere usar la estufa y una olla gorda.");
 
-            estufa.acquire();
-            log("obtuvo un quemador de la estufa.");
+                    olla.acquire();
+                    log("obtuvo una olla gorda.");
 
-            sarten.lock();
-            try {
-                log("está cocinando con el sartén...");
-                Thread.sleep(rand.nextInt(1000) + 1000);
-            } finally {
-                sarten.unlock();
-                estufa.release();
-                log("liberó la estufa y el sartén.");
+                    estufa.acquire(2);
+                    log("obtuvo un quemador y tapó otro de la estufa.");
+
+                    try {
+                        log("está cocinando con la olla...");
+                        Thread.sleep(coccion + olla_gorda);
+                    } finally {
+                        olla.release();
+                        estufa.release(2);
+                        log("liberó la estufa y la olla.");
+                    }
+                    break;
+                }
+                case 1: {
+                    log("quiere usar la estufa y el sartén.");
+
+                    sarten.acquire();
+                    log("obtuvo un sartén.");
+
+                    estufa.acquire();
+                    log("obtuvo un quemador de la estufa.");
+                    try {
+                        log("está cocinando con el sartén...");
+                        Thread.sleep(coccion);
+                    } finally {
+                        sarten.release();
+                        estufa.release();
+                        log("liberó la estufa y el sartén.");
+                    }
+                    break;
+                }
             }
         }
 
         private void usarMicroondas() throws InterruptedException {
             log("quiere usar el microondas.");
             microondas.lock();
+            int microondeando = rand.nextInt(4000)+ 2000;
             try {
                 log("está usando el microondas...");
-                Thread.sleep(rand.nextInt(1000) + 500);
+                Thread.sleep(microondeando);
             } finally {
                 microondas.unlock();
                 log("terminó con el microondas.");
@@ -113,21 +154,36 @@ public class CocinaCompartida {
         private void usarLicuadora() throws InterruptedException {
             log("quiere usar la licuadora.");
             licuadora.lock();
+            int licuando = rand.nextInt(3000) + 1500;
             try {
                 log("está usando la licuadora...");
-                Thread.sleep(rand.nextInt(1000) + 500);
+                Thread.sleep(licuando);
             } finally {
                 licuadora.unlock();
                 log("terminó con la licuadora.");
             }
         }
 
+        private void usarTostador() throws InterruptedException {
+            log("quiere usar el tostador");
+            tostador.lock();
+            int tostando = rand.nextInt(4000) + 2000;
+            try {
+                log("está usando el tostador...");
+                Thread.sleep(tostando);
+            } finally {
+                tostador.unlock();
+                log("terminó con el tostador.");
+            }
+        }
+
         private void lavarUtensilios() throws InterruptedException {
             log("quiere usar el lavaplatos.");
             lavaplatos.lock();
+            int lavando = rand.nextInt(6000) + 4000;
             try {
                 log("está lavando los utensilios...");
-                Thread.sleep(rand.nextInt(1000) + 500);
+                Thread.sleep(lavando);
             } finally {
                 lavaplatos.unlock();
                 log("terminó de lavar los utensilios.");
@@ -136,13 +192,12 @@ public class CocinaCompartida {
 
         private void log(String mensaje) {
             String entrada = "[" + nombre + "] " + mensaje;
-            logDeCocina.add(entrada);
             System.out.println(entrada);
         }
     }
 
     public static void main(String[] args) {
-        String[] nombres = {"Santan", "Roy", "Moi"};
+        String[] nombres = {"Santan", "Roy", "Moi","Yayo","Paco","Mau"};
         ExecutorService executor = Executors.newFixedThreadPool(nombres.length);
 
         for (String nombre : nombres) {
@@ -156,12 +211,9 @@ public class CocinaCompartida {
             System.out.println("La cocina fue interrumpida.");
         }
 
-        System.out.println("\n=== LOG FINAL DE LA COCINA ===");
-        for (String linea : logDeCocina) {
-            System.out.println(linea);
-        }
     }
 }
+
 
 
 
