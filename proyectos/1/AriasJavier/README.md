@@ -59,4 +59,4 @@ Sólo es necesario indicar el número de miembros del equipo (hilos) y el númer
 
 ## Ejecución
 
-![Captura 1](/public/captura1.png)
+![Captura 1](public/captura1.png)
