@@ -10,12 +10,10 @@ miembros_totales = 0
 trabajos = []
 tareas_pendientes = []
 tareas_completadas = []
-
-# Variables para el estado actual de los miembros
 estado_miembros = {}
-lock_estado = threading.Lock()
 
 # Semaforos y mutex para la sincronización de los hilos
+mutex_estado = threading.Semaphore(1)
 mutex_tareas_pendientes= threading.Semaphore(1)
 mutex_tareas_completadas= threading.Semaphore(1)
 
@@ -105,8 +103,9 @@ def planificador():
 
 def miembro(id):
     # Inicializar estado del miembro
-    with lock_estado:
-        estado_miembros[id] = None
+    mutex_estado.acquire()
+    estado_miembros[id] = None
+    mutex_estado.release()
 
     while True:
 
@@ -118,16 +117,18 @@ def miembro(id):
         mutex_tareas_pendientes.release()
 
         # Actualizar estado del miembro
-        with lock_estado:
-            estado_miembros[id] = tarea
+        mutex_estado.acquire()
+        estado_miembros[id] = tarea
+        mutex_estado.release()
 
         # Realizando la tarea
         time.sleep(tarea['duracion'])
         tarea['estado'] = "completado"
 
         # Limpiar estado del miembro
-        with lock_estado:
-            estado_miembros[id] = None
+        mutex_estado.acquire()
+        estado_miembros[id] = None
+        mutex_estado.release()
 
         # Agregar la tarea a la lista de tareas completadas
         mutex_tareas_completadas.acquire()

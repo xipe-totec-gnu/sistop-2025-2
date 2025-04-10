@@ -32,14 +32,11 @@ def actualizar_pantalla(stdscr, trabajos, estado_miembros):
         total = len(trabajo['tareas'])
         stdscr.addstr(y, 3, f"Trabajo {trabajo['id']}: {completadas}/{total} tareas completadas")
 
-        x_offset = 0
-
         # Mostrar detalles de las tareas
         for j, tarea in enumerate(trabajo['tareas']):
             estado_symbol = "✓" if tarea['estado'] == "completado" else "⧖" if tarea['estado'] == "pendiente" else "□"
             estado_color = 1 if tarea['estado'] == "completado" else 2 if tarea['estado'] == "pendiente" else 3
             stdscr.addstr(y, 40 + 22 * j, f"{tarea['nombre']}[{estado_symbol}]", curses.color_pair(estado_color))
-            x_offset += len(tarea['nombre']) + 6
 
     # Mostrar estado de los miembros
     y_miembros = 5 + trabajos_totales
