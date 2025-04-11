@@ -4,16 +4,23 @@ import subprocess
 import threading
 from collections import defaultdict
 
+# Acciones posibles dentro de la cocina
 acciones = ["preparar", "cocinar-olla", "cocinar-sarten", "microondas", "licuadora", "tostar", "lavar", "comer"]
 
-# Diccionarios para la GUI
+# Diccionarios para almacenar las referencias a los Listbox de la GUI
 esperando_labels = {}
 activo_labels = {}
+
+# Estado actual de cada roomie (accion y si está esperando o activo)
 estado_roomies = defaultdict(lambda: {"accion": None, "estado": None})
 
 proceso_java = None
 
 def crear_columna(master, accion, color):
+    """
+    Crea una columna en la GUI para una acción específica,
+    con dos listbox: uno para los que esperan y otro para los activos.
+    """
     frame = tk.Frame(master, bg=color, padx=10, pady=10)
     frame.grid_columnconfigure(0, weight=1)
 
@@ -37,6 +44,10 @@ def crear_columna(master, accion, color):
     return frame
 
 def actualizar_gui(evento, nombre, accion):
+    """
+    Actualiza los listbox y el estado del roomie según el evento recibido.
+    Borra su estado anterior antes de agregarlo al nuevo.
+    """
     estado_prev = estado_roomies[nombre]
     if estado_prev["accion"]:
         if estado_prev["estado"] == "esperando":
@@ -47,7 +58,7 @@ def actualizar_gui(evento, nombre, accion):
             activo_labels[estado_prev["accion"]].delete(
                 *[i for i, val in enumerate(activo_labels[estado_prev["accion"]].get(0, tk.END)) if val == nombre]
             )
-
+    # Insertar el nombre en la lista adecuada según el nuevo evento
     if evento == "esperando":
         esperando_labels[accion].insert(tk.END, nombre)
     elif evento == "activo":
@@ -58,6 +69,10 @@ def actualizar_gui(evento, nombre, accion):
     estado_roomies[nombre] = {"accion": accion, "estado": evento}
 
 def escuchar_java():
+    """
+    Lanza el proceso Java y escucha su salida en tiempo real.
+    Cada línea que recibe representa un cambio de estado de un roomie.
+    """
     global proceso_java
     proceso_java = subprocess.Popen(
         ["java", "-cp", ".", "CocinaCompartida"],
@@ -74,14 +89,20 @@ def escuchar_java():
             estado, nombre, accion = linea.split(";", 2)
             ventana.after(0, actualizar_gui, estado, nombre, accion)
 
-    # Cuando termina el proceso Java, reactivamos el botón de iniciar
+    # Cuando el proceso Java termina, se reactiva el botón de iniciar
     ventana.after(0, lambda: boton_iniciar.config(state="normal"))
 
 def iniciar_simulador():
+    """
+    Inicia la simulación creando un hilo que corre el proceso Java.
+    """
     boton_iniciar.config(state="disabled")  # Desactiva botón
     threading.Thread(target=escuchar_java, daemon=True).start()
 
 def reiniciar_simulador():
+    """
+    Detiene el proceso Java si está corriendo y reinicia el estado de la GUI.
+    """
     global proceso_java, estado_roomies
 
     if proceso_java:
@@ -98,7 +119,7 @@ def reiniciar_simulador():
     # Reactivar el botón de iniciar
     boton_iniciar.config(state="normal")
 
-# Colores por acción
+# Colores usados para diferenciar cada tipo de acción
 colores = {
     "preparar": "#f2f2f2",
     "cocinar-olla": "#f28e8e",
@@ -110,7 +131,7 @@ colores = {
     "comer": "#ffffc1"
 }
 
-# Crear ventana
+# Configuración general de la ventana principal
 ventana = tk.Tk()
 ventana.title("Simulador de Cocina Compartida")
 ventana.geometry("1600x550")
@@ -118,12 +139,14 @@ ventana.geometry("1600x550")
 contenedor = tk.Frame(ventana)
 contenedor.pack(fill="both", expand=True)
 
+# Crear una columna por cada acción en la interfaz
 for i, accion in enumerate(acciones):
     frame = crear_columna(contenedor, accion, colores[accion])
     frame.grid(row=0, column=i, sticky="nsew", padx=5, pady=5)
     contenedor.grid_columnconfigure(i, weight=1)
 
-# Botones
+
+# Botones para iniciar o reiniciar la simulación
 frame_botones = tk.Frame(ventana)
 frame_botones.pack(pady=10)
 
@@ -134,7 +157,4 @@ boton_reiniciar = tk.Button(frame_botones, text="🔄 Reiniciar", command=reinic
 boton_reiniciar.grid(row=0, column=1, padx=10)
 
 ventana.mainloop()
-
-
-
 

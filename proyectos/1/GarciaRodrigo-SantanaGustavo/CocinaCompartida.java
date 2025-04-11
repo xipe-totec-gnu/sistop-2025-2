@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;            
 
-/**
- * Simulación de una cocina compartida donde varios roomies cocinan de forma concurrente.
- * Cada recurso tiene un acceso sincronizado usando semáforos o locks.
- */
+
 public class CocinaCompartida {
 
     // Recursos compartidos de la cocina (con acceso limitado o exclusivo)
