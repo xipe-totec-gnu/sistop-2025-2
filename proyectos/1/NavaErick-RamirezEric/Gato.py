@@ -18,17 +18,6 @@ class TipoGato(Enum):
     INVASOR = "invasor"
     
 class Gato(threading.Thread): #Herencia de threading.Thread Para la independencia de cada gato
-    """
-    Constructor de la clase Gato.
-    Args:            
-        nombre (str):
-       tipo (str):
-    Atributos:
-        nombre (str):
-        tipo (str):
-        estado (EstadoGato):
-        porciones (int):
-    """
     def __init__(self, nombre, tipo,platos, cola_gatos):
         threading.Thread.__init__(self) #llama a la clase para que garantice el ser un hilo
         self.nombre = nombre #Por que cada gato tiene un nombre
@@ -36,9 +25,7 @@ class Gato(threading.Thread): #Herencia de threading.Thread Para la independenci
         self.estado = EstadoGato.SATISFECHO #Define el estado que tendra el gato 
         self.platos=platos
         self.cola_gatos=cola_gatos   
-    """
-    Método principal que se ejecuta al iniciar el hilo del gato.
-    """
+
     def run(self):
         #cilo para que se repita esta acción
         while True:
@@ -46,13 +33,9 @@ class Gato(threading.Thread): #Herencia de threading.Thread Para la independenci
             self.comer() #llamado a comer
             
 
-    #funcion para que el gato coma
+   #funcion para que el gato coma
     """
-Permite que un gato consuma una porción de comida del plato, dependiendo de su tipo.
-
-Args:
-    gato (Gato): Objeto de tipo Gato
-
+P.
     - Si el gato es de tipo MACHO, consume 2 porciones de comida si hay al menos 2 disponibles.
     - Si el gato es de tipo HEMBRA, consume 1 porción de comida si hay al menos 1 disponible.
     - Si el tipo del gato no es reconocido, se vacía el plato (comida_disponible = 0).
@@ -63,20 +46,20 @@ Args:
 """
             
     def comer(self):
-            platos_aleatorios = self.platos.copy()
-            random.shuffle(platos_aleatorios)
-            ya_comio = False
-            for plato in platos_aleatorios:
-                acquired = False
-                try:
-                    if plato.semaforo.acquire(blocking=False):
-                        acquired = True
-                        with plato.lock:
-                            if plato.comida_disponible > 0:
-                                self.estado = EstadoGato.COMIENDO
-                                sleep(random.randint(2, 5))
-                                self.estado = EstadoGato.SATISFECHO
-                                if self.tipo == TipoGato.MACHO:                 
+            platos_aleatorios = self.platos.copy() #copia lista del plato para que no sea tan lineal
+            random.shuffle(platos_aleatorios)       #mexcla la copia de la lista
+            ya_comio = False                        #banderita para saber si ya comio
+            for plato in platos_aleatorios:         #recorre los platos que etabn en la lista
+                acquired = False                    #bandera para la adquisicion del semaforo       
+                try:                                #bloque try and finally, intenta hacer que el gato coma, si no puede se ira a la cola
+                    if plato.semaforo.acquire(blocking=False): #condicion para acceder al control del semaforo
+                        acquired = True             #la andera pasara a true
+                        with plato.lock:            #bloquea el platopara evitar concurrencias
+                            if plato.comida_disponible > 0:     #evalua que haya comida en el plato
+                                self.estado = EstadoGato.COMIENDO #actualiza el estado del gatito
+                                sleep(random.randint(2, 5))   #simulaciondel tiempo en que come
+                                self.estado = EstadoGato.SATISFECHO     #afirma que el gato ya ha comido
+                                if self.tipo == TipoGato.MACHO:         ##condiciones puestas al principio de este metodo        
                                     if plato.comida_disponible >= 2:
                                         plato.comida_disponible -= 2      
                                         print(f"{self.nombre} ha comido")       
@@ -86,21 +69,21 @@ Args:
                                         plato.comida_disponible -= 1
                                         print(f"{self.nombre} ha comido")
                                         print(f"Plato {plato.num} con {plato.comida_disponible} porciones")                          
-                                else:
+                                else:               #el gato invasor va a arrasar
                                     platos_aleatorios[0].comida_disponible = 0                    
                                     platos_aleatorios[1].comida_disponible = 0
                                     print(f"{self.nombre} ha comido")
                                         
-                                ya_comio = True
+                                ya_comio = True # si comio un gato, la bandera indicara que ya comio
                             else:
-                                self.estado = EstadoGato.HAMBRIENTO
-                finally:
+                                self.estado = EstadoGato.HAMBRIENTO #si no ha comido significara que el gato sigue con hambre
+                finally:            
                     if acquired:
                         plato.semaforo.release()
                     if ya_comio:
                         break
 
-            if not ya_comio:
+            if not ya_comio: #si no ha comido
                 
                 print(f"{self.nombre} no encontró plato disponible o con comida. Pasa la cola")
                 self.estado = EstadoGato.HAMBRIENTO
