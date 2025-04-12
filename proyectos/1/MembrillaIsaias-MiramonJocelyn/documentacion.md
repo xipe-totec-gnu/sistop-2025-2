@@ -1,10 +1,6 @@
 
 # Trolebús. Una situación cotidiana con concurrencia y sincronización
 
-_Materia_: Sistemas Operativos
-
-_Semestre_: 2025-2
-
 _Alumnos:_ 
 
 Membrilla Ramos Isaias Iñaki
@@ -56,13 +52,13 @@ Las consecuencias nocivas de la concurrencia en esta situación es que existe un
  
 **Lógica de operación** 
 - Global
-    - listaAsientos[]
+    - listaAsientos[]:
         La lista de asientos una estructura global, ya que cada hilo puede leer para ver la disponibilidad y además escribir en ella (0-libre, 1-ocupado). 
-    - estacionCamion 
-      Contador para la estacionCamion
-    - color
+    - estacionCamion:
+     Esta variable ndica en qué estación se encuentran, y es leída por los hilos. 
+    - color: 
         Se utiliza para cambiar en las funciones el color de los pasajeros asociados a cada perfil. 
-    - Variables gráficas (xUsuario, yUsuario)
+    - Variables gráficas: (xUsuario, yUsuario)
      Se utilizan para dibujar los elemetos de la interfaz gráfica. 
             - hombre : rojo
             - mujer : azul 
@@ -75,7 +71,7 @@ Las consecuencias nocivas de la concurrencia en esta situación es que existe un
     - Hilo principal. El hilo principal se encarga del apartado gráfico y libera los mutex que indican en qué parada se encuentra
 
 - Descripción de la interacción entre los hilos
-    La interacción entre hilos  pasajeros es con un mutex para indicar si puede modificar la lista de asientos La interacción entre hilos pasajeros y el hilo main es que el hilo main le indica al hilo pasajero si se encuentra en su parada utilizando un agente. 
+La interacción entre hilos  pasajeros es con un mutex para indicar si puede modificar la lista de asientos, además interacción entre hilos pasajeros y el hilo main es que el hilo main le indica al hilo pasajero si se encuentra en su parada utilizando una barrera.
 
 ## Descripción del entorno de desarrollo 
 - Lenguaje 
@@ -85,6 +81,7 @@ El lenguaje utilizado es python, para ello debemos garantizar que tenemos la ver
 
 - Bibliotecas: 
 Las bibliotecas utilizadas son estándar, por lo que, no necesitamos instalar nada más, estas fueron: 
+
 ``` python
 from tkinter import * 
 from tkinter import messagebox 
@@ -92,7 +89,8 @@ import threading
 import time 
 ```
 
-- Sistema operativo 
+- Sistema operativo. 
+
     El sistema donde hicimos el programa y las pruebas de ejecución fue Windows 10. 
 
 ## Pruebas de ejecución
