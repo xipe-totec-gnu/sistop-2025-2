@@ -17,6 +17,7 @@ import threading
 import time
 import random
 import string
+import copy
 from collections import deque
 
 
@@ -39,6 +40,11 @@ queue_size = threading.Semaphore(0)
 mutex_queue = threading.Semaphore(1)
 
 
+# Lista de eventos para que participantes esperen a que solucion sea juzgada antes de volver a subir
+waiting_for_solution = [threading.Event(), threading.Event(), threading.Event()]
+
+# Bandera para observar que problemas fueron aceptados
+accepted = [0, 0, 0]
 
 
 
@@ -55,22 +61,28 @@ possible_veredicts = ['AC (Accepted)', 'WA (Wrong Answer)', 'TLE (Time Limit Exc
 
 
 
-
-
 def participant(participant_num, problems_not_solved):
-  while True:
-    time.sleep(random.uniform(1, 3))
+  # Mientras haya problemas por resolver
+  while len(problems_not_solved) > 0:
+    time.sleep(random.uniform(0, 1))
     # El equipo escoge uno de los problemas que no ha resuelto e intenta subir una solucion a este
-    num_of_problems_not_solved = len(problems_not_solved)
-    problem_to_submit = problems_not_solved[random.randint(0, num_of_problems_not_solved - 1)]
-    # Se inserta la solucion a la cola de problemas a ser juzgados
+    problem_to_submit = random.choice(problems_not_solved)
     print(f"Participant number {participant_num} has submitted a solution to {problem_to_submit}")
     mutex_queue.acquire()
+    # Se inserta la solucion a la cola de problemas a ser juzgados
     problem_queue.append((participant_num, problem_to_submit))
     mutex_queue.release()
     # Se aumenta en uno el semaforo que cuenta numero de elementos en la cola
     queue_size.release()
+    # Se espera a conocer respuesta del juez
+    event_wait = waiting_for_solution[participant_num].wait()
+    # Si el problema fue aceptado se elimina de la lista de problemas a solucionar
+    if accepted[participant_num]:
+      problems_not_solved.remove(problem_to_submit)
+    # Se reinicia la bandera
+    accepted[participant_num] = 0
 
+  print(f"Participant {participant_num} has solved all the problems");
 
 
 # Devuelve un veredicto aleatorio de la lista de veredictos
@@ -87,13 +99,15 @@ def validator(validator_num):
     participant_num, problem_to_judge = problem_queue.popleft()
     mutex_queue.release()
     print(f"Judging solution to problem {problem_to_judge} by participant {participant_num}")
-    time.sleep(random.uniform(1, 3))
+    time.sleep(random.uniform(0, 1))
     # Se obtiene veredicto aleatorio
     veredict_obtained = veredict()
     if veredict_obtained == possible_veredicts[0]:
       print(f"  Participant {participant_num} has solved problem {problem_to_judge}.")
+      accepted[participant_num] = 1
     else:
       print(f"  Participant {participant_num} sumbitted incorrect solution to problem {problem_to_judge}. Veredict obtained {veredict_obtained}")
+    waiting_for_solution[participant_num].set()
 
 
 
@@ -101,7 +115,6 @@ def validator(validator_num):
 def main():
   threads = []
   
-  problems = PROBLEM_LIST
 
   for i in range(number_of_validators):
     t = threading.Thread(target=validator, args=(i + 1, ))
@@ -109,7 +122,7 @@ def main():
     t.start()
 
   for i in range(number_of_participants):
-    t = threading.Thread(target=participant, args=(i + 1, problems))
+    t = threading.Thread(target=participant, args=(i + 1, copy.copy(PROBLEM_LIST)))
     threads.append(t)
     t.start()
 
