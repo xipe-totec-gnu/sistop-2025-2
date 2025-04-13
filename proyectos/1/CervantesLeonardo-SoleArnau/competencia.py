@@ -65,15 +65,28 @@ problem_color_emojis = problem_color_emojis[:NUMBER_OF_PROBLEMS]
 # Diccionario para almacenar que letra esta asignada a que color
 color_dict = dict(zip(problem_list, problem_color_emojis))
 
+# Almacenamiento de wa por problema por participante
+wa_per_problem = {problem: [0] * NUMBER_OF_PARTICIPANTS for problem in problem_list}
+
+# Almacenamiento del momento en el que el equipo obtuvo accepted por cada problema
+accepted_per_problem = {problem: [0] * NUMBER_OF_PARTICIPANTS for problem in problem_list}
+
+# Reloj de inicio del concurso
+start_time = time.time()
+
 # Posibles veredictos a solucion de un problema
-possible_veredicts = ['AC (Accepted)', 'WA (Wrong Answer)', 'TLE (Time Limit Excedeed)', 'RTE (Runtime Error)', 'Presentation Error']
+possible_veredicts = [
+  'AC (Accepted)', 'WA (Wrong Answer)', 
+  'TLE (Time Limit Excedeed)', 
+  'RTE (Runtime Error)', 
+  'Presentation Error'
+]
 
 
 
 def ask_to_print(problem_num, participant_num):
-  # aqui se va a recibir el numero de pregunta de problema pero se van a responder hasta que se junten 2 preguntas
-  # Se espera a que se junten 2 preguntas
-  # Si se tarda demasiado significa que ya termino el contests
+  # Manejo de impresion de archivos
+  # Se necesita que la barrera se llene para imprimir
   try: 
     barrier_printers.wait(timeout=5)
     # Se reinicia la barrera
@@ -125,6 +138,9 @@ def participant(participant_num, problems_not_solved):
       # Si el problema fue aceptado se elimina de la lista de problemas a solucionar
       if accepted[participant_num]:
         problems_not_solved.remove(problem_to_submit)
+        accepted_per_problem[problem_to_submit][participant_num] = time.time() - start_time
+      else:
+        wa_per_problem[problem_to_submit][participant_num] += 1
       # Se reinicia la bandera
       accepted[participant_num] = 0
       # Se reinicia evento
@@ -164,11 +180,39 @@ def thread_stopper():
   contest_finished.set()
   print("¡¡¡¡¡¡¡¡¡CONTEST IS FINISHED!!!!!!!!! \n Solutions currently being judged will be judged and results will be shown on the scoreboard.")
 
+def print_scoreboard():
+  # Se genera el scoreboard ordenando primero por problemas y luego por penalty
+  scoreboard = []
+  for i in range(NUMBER_OF_PARTICIPANTS):
+    penalty = 0
+    solved = 0
+    for problem in problem_list:
+      if accepted_per_problem[problem][i] > 0:
+        solved += 1
+        penalty += accepted_per_problem[problem][i]
+        penalty += wa_per_problem[problem][i] * 20
+    scoreboard.append((solved, penalty, i ))
+  scoreboard.sort(key=lambda x: (-x[0], x[1]))
+  print("\n\nScoreboard:")
+  print("Participant\tSolved\tPenalty")
+  for solved, penalty, i in scoreboard:
+    print(f"{i + 1}\t\t{solved}\t{penalty}")
+  # Se imprime el scoreboard
+  print("\n\nProblems solved by each participant:")
+  for i in range(NUMBER_OF_PARTICIPANTS):
+    print(f"Participant {i + 1}: ", end="")
+    for problem in problem_list:
+      if accepted_per_problem[problem][i] > 0:
+        print(f"{problem} ", end="")
+    print()
+
 
 def main():
   threads_validators = []
   threads_participants = []
   
+  global start_time
+  start_time = time.time()
 
   for i in range(NUMBER_OF_VALIDATORS):
     t = threading.Thread(target=validator, args=(i, ))
@@ -191,7 +235,7 @@ def main():
   for t in threads_participants:
     t.join()
 
-
+  print_scoreboard()
 
 
 main()

@@ -18,4 +18,26 @@ En este proyecto modelaremos el sistema de envío, impresión de documentos y ac
 ## Descripción de la solución
 
 Para resolver el problema, utilizaremos los siguientes mecanismos de sincronización:
-- 
+
+### Sistema de envío y retroalimentación 
+- Para tener los problemas que se tiene que evaluar se utiliza una cola de soluciones, la cual es protegida por un mutex.
+
+### Sistema de impresión de documentos
+- Para permitir que las personas que reparten las impresiones las repartan hasta que se haya juntado un número mínimo de impresiones, utilizamos una barrera.
+
+### Sistema de aclaraciones
+- Para permitir que los participantes envien sus preguntas y reciban respuestas de los jueces, utilizamos un mutex para proteger el acceso al sistema de aclaraciones. Esto permite que solo un juez pueda responder una pregunta a la vez.
+
+### Descripción del entorno de desarrollo
+
+Empleamos el lenguaje Python 3, en su versión 3.13.2.
+
+EL programa fue probado en dos sistemas operativos distintos.
+- Fedora Linux 41, se usó para desarrollo y pruebas.
+- Mac OS 15.3.2 (M2), se usó para desarrollo y pruebas.
+
+## Ejecución
+- Para ejecutar el programa, se debe correr el archivo `competencia.py` en la terminal.
+```bash
+python competencia.py
+```
