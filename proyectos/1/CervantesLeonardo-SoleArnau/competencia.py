@@ -21,17 +21,13 @@ import copy
 from collections import deque
 
 
-# El numero de equipos participantes en la competencia de programacion
-number_of_participants = 3
-
-# El numero de validadores de soluciones del juez
-number_of_validators = 3 
-
-# El numero de problemas del concurso 
-number_of_problems = 9
-
-# El numero de impresoras
-number_of_printers = 2
+# ================= CONSTANTES GLOBALES ================= #
+NUMBER_OF_PARTICIPANTS = 3  # Numero equipos
+NUMBER_OF_VALIDATORS = 2    # Numero validadores
+NUMBER_OF_PRINTERS = 2      # Numero impresoras
+NUMBER_OF_PROBLEMS = 9      # Numero de problemas
+CONTEST_DURATION = 3        # Duracion del concurso en segundos
+# ======================================================= #
 
 # Cola de problemas a ser juzgados
 problem_queue = deque()
@@ -43,83 +39,98 @@ queue_size = threading.Semaphore(0)
 mutex_queue = threading.Semaphore(1)
 
 # Barrera para que los participantes esperen a que se junten 3 archivos antes de imprimir
-barrier_printers = threading.Barrier(number_of_printers)
+barrier_printers = threading.Barrier(NUMBER_OF_PRINTERS)
 
 # Mutex para responder clarificaciones
 mutex_clarification = threading.Semaphore(1)
 
 # Lista de eventos para que participantes esperen a que solucion sea juzgada antes de volver a subir
-waiting_for_solution = [threading.Event() for _ in range(number_of_participants+1)]
+waiting_for_solution = [threading.Event() for i in range(NUMBER_OF_PARTICIPANTS)]
 
 # Bandera para observar que problemas fueron aceptados
-accepted = [0] * (number_of_participants+1)
+accepted = [0] * NUMBER_OF_PARTICIPANTS
 
+# Evento global para conocer si ya se termino el concurso
+contest_finished = threading.Event()
 
 
 # A la lista de problemas se agregan las letras correspondiente a cada uno de los problemas
-PROBLEM_LIST = list(string.ascii_uppercase[:number_of_problems])
+problem_list = list(string.ascii_uppercase[:NUMBER_OF_PROBLEMS])
 
 # El color del globo de cada uno de los problemas de la lista 
-PROBLEM_COLOR_EMOJIS = ["🔴", "🟠", "🟡", "🟢", "🔵", "🟣", "⚫", "⚪", "🟤"]
-random.shuffle(PROBLEM_COLOR_EMOJIS)
-PROBLEM_COLOR_EMOJIS = PROBLEM_COLOR_EMOJIS[:number_of_problems]
+problem_color_emojis = ["🔴", "🟠", "🟡", "🟢", "🔵", "🟣", "⚫", "⚪", "🟤"]
+random.shuffle(problem_color_emojis)
+problem_color_emojis = problem_color_emojis[:NUMBER_OF_PROBLEMS]
+
+# Diccionario para almacenar que letra esta asignada a que color
+color_dict = dict(zip(problem_list, problem_color_emojis))
 
 # Posibles veredictos a solucion de un problema
 possible_veredicts = ['AC (Accepted)', 'WA (Wrong Answer)', 'TLE (Time Limit Excedeed)', 'RTE (Runtime Error)', 'Presentation Error']
 
-def ask_to_print(problem_num):
-  # aqui se va a recibir el numero de pregunta de problema pero se van a responder hasta que se junten 3 preguntas
-  # Se espera a que se junten 3 preguntas
-  barrier_printers.wait()
-  # Se responde la pregunta
-  print(f"Question {problem_num} has been answered")
-  # Se reinicia la barrera
-  barrier_printers.reset()
+
+
+def ask_to_print(problem_num, participant_num):
+  # aqui se va a recibir el numero de pregunta de problema pero se van a responder hasta que se junten 2 preguntas
+  # Se espera a que se junten 2 preguntas
+  # Si se tarda demasiado significa que ya termino el contests
+  try: 
+    barrier_printers.wait(timeout=5)
+    # Se reinicia la barrera
+    barrier_printers.reset()
+    print(f" 📄 Participant {participant_num + 1} has received printed file about problem {problem_num}")
+  except threading.BrokenBarrierError:
+    print(f"Contest has finished so print for problem {problem_num}, ordered by {participant_num + 1} has not taken place.")
+
 
 
 def participant(participant_num, problems_not_solved):
   # Mientras haya problemas por resolver
-  while len(problems_not_solved) > 0:
+  while len(problems_not_solved) > 0 and not contest_finished.is_set():
     time.sleep(random.uniform(0, 1))
     # El equipo escoge uno de los problemas que no ha resuelto e intenta subir una solucion a este
     problem_to_submit = random.choice(problems_not_solved)
-    # De manera aleatoria se decide si se va a a mandar una pregunta de aclaracion
-    if random.choice([True, False]):
-      print(f"Participant {participant_num} has a question about problem {problem_to_submit}")
+    random_decision = random.uniform(0, 1)
+
+    # Cuando equipo tiene una pregunta
+    if random_decision > 0.75:
+      print(f"❓ Participant {participant_num + 1} has a question about problem {problem_to_submit}")
       # Se manda una pregunta de aclaracion
       mutex_clarification.acquire()
       # Se duerme un poco para simular el tiempo que tarda en responder la pregunta
       time.sleep(random.uniform(0, 1))
       # Se responde la pregunta
-      print(f"Participant {participant_num} has received answer to question about problem {problem_to_submit}")
+      print(f"Participant {participant_num + 1} has received answer to question about problem {problem_to_submit}")
       mutex_clarification.release()
-    # De manera aleatoria se decide si se va a a mandar a imprimir problema
-    if random.choice([True, False]):
-      print(f"Participant {participant_num} wants to print code for problem {problem_to_submit}")
-      # Se manda a imprimir un archivo
-      ask_to_print(problem_to_submit)
+
+    # Cuando mandan a imprimir
+    elif random_decision > 0.5:
+      print(f" 🖨️ Participant {participant_num} wants to print code for problem {problem_to_submit}")
+      # Se manda a imprimir un archivo como nuevo hilo
+      t1 = threading.Thread(target=ask_to_print, args=(problem_to_submit, participant_num))
+      t1.start()
       # Cuando se sale de la funcion ya se respondio la pregunta
-      print(f"Participant {participant_num} has received printed file about problem {problem_to_submit}")
-    # Se duerme un poco para simular el tiempo que tarda en subir la solucion
-    time.sleep(random.uniform(0, 1))
-    # Se sube la solucion al problema
-    print(f"Participant number {participant_num} has submitted a solution to {problem_to_submit}")
-    mutex_queue.acquire()
-    # Se inserta la solucion a la cola de problemas a ser juzgados
-    problem_queue.append((participant_num, problem_to_submit))
-    mutex_queue.release()
-    # Se aumenta en uno el semaforo que cuenta numero de elementos en la cola
-    queue_size.release()
-    # Se espera a conocer respuesta del juez
-    event_wait = waiting_for_solution[participant_num].wait()
-    # Si el problema fue aceptado se elimina de la lista de problemas a solucionar
-    if accepted[participant_num]:
-      problems_not_solved.remove(problem_to_submit)
-    # Se reinicia la bandera
-    accepted[participant_num] = 0
-
-  print(f"Participant {participant_num} has solved all the problems");
-
+    
+    # Cuando el equipo sube una solucion a un problema
+    else:
+      print(f"Participant number {participant_num + 1} has submitted a solution to {problem_to_submit}")
+      mutex_queue.acquire()
+      # Se inserta la solucion a la cola de problemas a ser juzgados
+      problem_queue.append((participant_num, problem_to_submit))
+      mutex_queue.release()
+      # Se aumenta en uno el semaforo que cuenta numero de elementos en la cola
+      queue_size.release()
+      # Se espera a conocer respuesta del juez
+      waiting_for_solution[participant_num].wait()
+      # Si el problema fue aceptado se elimina de la lista de problemas a solucionar
+      if accepted[participant_num]:
+        problems_not_solved.remove(problem_to_submit)
+      # Se reinicia la bandera
+      accepted[participant_num] = 0
+      # Se reinicia evento
+      waiting_for_solution[participant_num].clear()
+  if len(problems_not_solved) == 0: 
+    print(f"   🎈 Participant {participant_num + 1} has solved all the problems")
 
 # Devuelve un veredicto aleatorio de la lista de veredictos
 def veredict():
@@ -129,43 +140,57 @@ def veredict():
 
 def validator(validator_num):
   while True:
-    queue_size.acquire()
+    if queue_size.acquire(timeout=5) == False:
+      break
     mutex_queue.acquire()
     # Se identifica problema a juzgar y se juzga (siguiendo el orden de la cola)
     participant_num, problem_to_judge = problem_queue.popleft()
     mutex_queue.release()
-    print(f"Judging solution to problem {problem_to_judge} by participant {participant_num}")
+    print(f" ⏳Judging solution to problem {problem_to_judge} by participant {participant_num + 1}")
     time.sleep(random.uniform(0, 1))
     # Se obtiene veredicto aleatorio
     veredict_obtained = veredict()
     if veredict_obtained == possible_veredicts[0]:
-      print(f"  Participant {participant_num} has solved problem {problem_to_judge}.")
+      print(f" {color_dict[problem_to_judge]} {validator_num} Participant {participant_num + 1} has solved problem {problem_to_judge}.")
       accepted[participant_num] = 1
     else:
-      print(f"  Participant {participant_num} sumbitted incorrect solution to problem {problem_to_judge}. Veredict obtained {veredict_obtained}")
+      print(f" ❌ Participant {participant_num + 1} sumbitted incorrect solution to problem {problem_to_judge}. Veredict obtained {veredict_obtained}")
     waiting_for_solution[participant_num].set()
 
 
 
 
+def thread_stopper():
+  contest_finished.set()
+  print("¡¡¡¡¡¡¡¡¡CONTEST IS FINISHED!!!!!!!!! \n Solutions currently being judged will be judged and results will be shown on the scoreboard.")
+
+
 def main():
-  threads = []
+  threads_validators = []
+  threads_participants = []
   
 
-  for i in range(number_of_validators):
-    t = threading.Thread(target=validator, args=(i + 1, ))
-    threads.append(t)
+  for i in range(NUMBER_OF_VALIDATORS):
+    t = threading.Thread(target=validator, args=(i, ))
+    threads_validators.append(t)
     t.start()
 
-  for i in range(number_of_participants):
-    t = threading.Thread(target=participant, args=(i + 1, copy.copy(PROBLEM_LIST)))
-    threads.append(t)
+  for i in range(NUMBER_OF_PARTICIPANTS):
+    t = threading.Thread(target=participant, args=(i, copy.copy(problem_list)))
+    threads_participants.append(t)
     t.start()
+
+  timer = threading.Timer(CONTEST_DURATION, thread_stopper)
+  timer.start()
 
 
   # Se espera a que finalicen 
-  for t in threads:
+  for t in threads_validators:
     t.join()
+
+  for t in threads_participants:
+    t.join()
+
 
 
 
