@@ -1,0 +1,31 @@
+Situación de la vida real que elegimos:
+
+En nuestro caso, ambos somos estudiantes que rentamos un departamento cerca de la universidad, no en el mismo departamento, y notamos la problematica en el uso de los quemadores de la parrilla al momento de cocinar, esto debido a que ciertos lugares, como la cocina, son compartidos con otros roomies, haciendo que en cierto momento del día nos veamos en la necesidad de cocinar simultaneamente, cabe mencionar que cada uno comparte la cocina con 5, 6 incluyendonos, roomies y la estufa contiene 4 quemadores, es así como este problema puede generar conflictos cuando más de una persona intenta usarlos al mismo tiempo. La simulación coordina a las personas para evitar problemas y garantizar un uso eficiente de la cocina. (Cabe mencionar que afortunadamente nosotros y nuestros roomies nos llevamos bien y no tenemos problemas jaja, por ahora).
+
+Consecuencias nocivas de la concurrencia que puedo mencionar: 
+
+Sin mecanismos de sincronización adecuados, pueden surgir varios problemas en este tipo de situaciones:
+
+Bloqueos y esperas indefinidas: Es decir, si dos personas intentamos usar el mismo quemador al mismo tiempo, si o si uno debe esperar. Sin control adecuado, podría surgir una espera mutua.
+
+Inconsistencias en los recursos: Si una persona comienza a cocinar sin verificar la disponibilidad del quemador, podría intentar realizar una acción imposible.
+
+Ineficiencia en la ejecución: Sin orden ni coordinación, algunos procesos podrían demorarse más de lo necesario, desperdiciando tiempo y recursos.
+
+Eventos concurrentes a controlar: 
+
+El acceso al uso de los quemadores debe ser regulado para evitar conflictos.
+
+Cada persona sigue pasos en su receta o lo que desee cocinar, pero algunos requieren exclusividad (como cocinar en el sarten), mientras que otros pueden ejecutarse en paralelo (como picar algún vegetal por ejemplo).
+
+Se debe garantizar que cada persona espere correctamente cuando no haya recursos disponibles.
+
+Eventos concurrentes sin ordenamiento estricto: 
+
+Tareas como picar ingredientes o mezclar algún aderezo puede realizarse sin importar quién las haga primero.
+
+Si dos personas terminan de cocinar al mismo tiempo, el orden en que sirvan su comida no es relevante, ya que no afecta el uso de la cocina. 
+
+El tiempo que cada persona tarda en completar su receta puede variar sin afectar a los demás.
+
+Espero que le haya gustado el planteamiento que tuvimos y los puntos a tratar. 
