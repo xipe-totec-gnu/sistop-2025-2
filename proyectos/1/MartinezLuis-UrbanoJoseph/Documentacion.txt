@@ -1,0 +1,43 @@
+Descripción de los mecanismos de sincronización empleado:
+
+En mi caso solo use dos principales los cuales son el semaforó y mutex. 
+threading.Semaphore nos permite controlar el acceso  los quemadores, permitiendo que un numero limitado de roomies lo utilicen.
+threading.Lock nos permite actualizar la interfaz grafica y que estas sean seguras cuando multiples hilos intentan modificarla al mismo tiempo.
+
+Logica de operación:
+
+Inicio: Se inicializa la interfaz grafica y la cocina del departamento con un numero determinado de quemadores disponibles.
+
+Ejecución: (No se si estoy bien en esta parte profesor, tuve un poco de problema con la lógica que aplique)
+
+1. Cada persona intenta cocinar usando sus metodo o recetas.
+2. Si la receta del roomie requiere usar un quemador, el roomie debe esperar si no hay quemadores disponibles.
+3. Cuando el roomie consigue el quemador, lo usa durante un tiempo especifico para después liberarlo.
+4. Después de cocinar, sirve su comida y finaliza. 
+
+Finalización: Todos los hilos terminan su ejecución. 
+
+Descripción de la interacción entre ellos:
+
+Acceso controlado a las sartenes: Mediante el semáforo, los roomies "compiten" por usar un quemador, esperando si no hay disponible.
+
+Actualización de la interfaz gráfica: Los hilos modifican los estados de los roomies en la interfaz gráfica de forma concurrente, con protección mediante el Lock.
+
+Ejecución independiente: Cada Roomie sigue su receta o forma de cocinar de forma independiente, es decir, no afecta el tiempo o los pasos usados, pero deben si o si, sincronizarse para usar los quemadores.
+
+Descripción del entorno de desarrollo, suficiente para reproducir una ejecución exitosa:
+
+¿Qué lenguaje emplean? 
+Utilizamos el lenguaje de programacion Python
+
+¿Qué versión?
+Python 3.13.0
+
+¿Qué bibliotecas más allá de las estándar del lenguaje?
+Ninguna, utilice solamente 5 bibliotecas.
+
+¿Bajo qué sistema operativo / distribución lo desarrollaron y/o probaron?
+El compañero Joseph utilizó Windows 11 y lo probó en el mismo, por parte del compañero Luis, utilizó el sistema Linux y lo probó en el.
+
+Ejemplos o pantallazos de una ejecución exitosa
+
