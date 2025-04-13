@@ -41,6 +41,7 @@ python competencia.py
 Para resolver el problema, utilizaremos los siguientes mecanismos de sincronización:
 
 ### Sistema de envío y retroalimentación 
+<<<<<<< HEAD
 - Para tener los problemas que se tiene que evaluar se utiliza una cola de soluciones, la cual es protegida por un mutex (tanto al momento de la insercion como de los pops). De igual manera, tendremos un semaforo que nos indicara cuantos elementos hay en la cola en ese momento, de manera similar a como lo hariamos en el problema de productores y consumidores. Cuando se envia una solucion a evaluar se aumenta en semaforo en uno y cuando un validador toma una solucion para evaluarla se disminuye en uno. 
 \
 \
@@ -63,3 +64,26 @@ Cada uno de los participantes tomara decisiones (enviar solucion, hacer pregunta
 ![Fin](pantallazo1.png)
 ![Fin](pantallazo2.png)
 
+=======
+- Para tener los problemas que se tiene que evaluar se utiliza una cola de soluciones, la cual es protegida por un mutex.
+
+### Sistema de impresión de documentos
+- Para permitir que las personas que reparten las impresiones las repartan hasta que se haya juntado un número mínimo de impresiones, utilizamos una barrera.
+
+### Sistema de aclaraciones
+- Para permitir que los participantes envien sus preguntas y reciban respuestas de los jueces, utilizamos un mutex para proteger el acceso al sistema de aclaraciones. Esto permite que solo un juez pueda responder una pregunta a la vez.
+
+### Descripción del entorno de desarrollo
+
+Empleamos el lenguaje Python 3, en su versión 3.13.2.
+
+EL programa fue probado en dos sistemas operativos distintos.
+- Fedora Linux 41, se usó para desarrollo y pruebas.
+- Mac OS 15.3.2 (M2), se usó para desarrollo y pruebas.
+
+## Ejecución
+- Para ejecutar el programa, se debe correr el archivo `competencia.py` en la terminal.
+```bash
+python competencia.py
+```
+>>>>>>> 6b2be264a0954b588f1a9716a187327ffa788f37

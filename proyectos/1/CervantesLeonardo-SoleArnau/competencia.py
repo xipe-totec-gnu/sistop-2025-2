@@ -237,5 +237,4 @@ def main():
 
   print_scoreboard()
 
-
 main()
