@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainMenuController {
-    @FXML
-    Button simButton, helpButton;
 
     @FXML
     protected void onClickSimButton(ActionEvent event) throws IOException {

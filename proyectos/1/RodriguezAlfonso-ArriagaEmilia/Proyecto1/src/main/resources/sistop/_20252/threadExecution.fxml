@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black; -fx-border-width: 10; -fx-border-color: lime;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black; -fx-border-width: 10; -fx-border-color: lime;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="9.0" layoutY="9.0" prefHeight="445.0" prefWidth="383.0" style="-fx-border-color: magenta; -fx-border-width: 10;">
+         <children>
+            <HBox layoutX="9.0" layoutY="114.0" prefHeight="315.0" prefWidth="364.0" />
+            <Label text="Mesa 1" textFill="MAGENTA">
+               <font>
+                  <Font name="Consolas Bold" size="33.0" />
+               </font>
+               <padding>
+                  <Insets left="15.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="firstTable" layoutX="19.0" layoutY="52.0" text="Sample text" textFill="MAGENTA">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="388.0" layoutY="10.0" prefHeight="443.0" prefWidth="351.0" style="-fx-border-width: 10; -fx-border-color: blue;">
+         <children>
+            <HBox layoutX="9.0" layoutY="106.0" prefHeight="318.0" prefWidth="334.0" />
+            <Label text="Mesa 2" textFill="BLUE">
+               <font>
+                  <Font name="Consolas Bold" size="34.0" />
+               </font>
+               <padding>
+                  <Insets left="15.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label fx:id="secondTable" layoutX="19.0" layoutY="53.0" text="Sample text" textFill="BLUE">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="732.0" layoutY="10.0" prefHeight="447.0" prefWidth="340.0" style="-fx-border-color: yellow; -fx-border-width: 10;">
+         <children>
+            <HBox layoutX="8.0" layoutY="112.0" prefHeight="325.0" prefWidth="326.0" />
+            <Label text="Mesa 3" textFill="YELLOW">
+               <font>
+                  <Font name="Consolas Bold" size="33.0" />
+               </font>
+               <padding>
+                  <Insets left="15.0" top="10.0" />
+               </padding>
+            </Label>
+            <Label layoutX="19.0" layoutY="52.0" text="Sample text" textFill="YELLOW">
+               <font>
+                  <Font name="Consolas" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="11.0" layoutY="451.0" prefHeight="259.0" prefWidth="546.0" style="-fx-border-color: red; -fx-border-width: 10};">
+         <children>
+            <Label layoutX="18.0" layoutY="14.0" prefHeight="45.0" prefWidth="137.0" text="Cubículo 1" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="556.0" layoutY="451.0" prefHeight="260.0" prefWidth="515.0" style="-fx-border-color: red; -fx-border-width: 10;">
+         <children>
+            <Label layoutX="19.0" layoutY="17.0" text="Cubículo 2" textFill="RED">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>
