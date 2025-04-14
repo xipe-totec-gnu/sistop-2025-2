@@ -15,7 +15,7 @@ public class MainMenuController {
 
     @FXML
     protected void onClickSimButton(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ProjectStart.class.getResource("projectStart.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjectStart.class.getResource("threadExecution.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Simulación de la Santuaria.");

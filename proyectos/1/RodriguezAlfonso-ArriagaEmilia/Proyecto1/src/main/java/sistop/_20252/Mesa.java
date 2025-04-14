@@ -1,16 +1,30 @@
 package sistop._20252;
 
-public class Mesa {
-    boolean estaOcupado = false;
-    int lugaresDisponibles = 3;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.atomic.AtomicInteger;
 
-    public synchronized void usar(String nombre, boolean prioridad) {
-        if (!estaOcupado && lugaresDisponibles > 0) {
-            System.out.println(nombre + " (prioridad: " + prioridad + ") está usando la mesa.");
-            lugaresDisponibles--;
-            estaOcupado = true;
-        } else {
-            System.out.println(nombre + " (prioridad: " + prioridad + ") no pudo usar la mesa.");
+class Mesa {
+    private final Semaphore semaforo = new Semaphore(3);
+    private final int id;
+
+    public Mesa(int id) {
+        this.id = id;
+    }
+
+    public void usar(String nombre, boolean prioridad) {
+        try {
+            System.out.println(nombre + " quiere entrar a la mesa " + id + ". Prioridad: " + prioridad);
+            semaforo.acquire();
+            System.out.println(nombre + " está usando la mesa " + id + ".");
+            Thread.sleep(1000);
+            System.out.println(nombre + " ha salido de la mesa " + id + ".");
+            semaforo.release();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
