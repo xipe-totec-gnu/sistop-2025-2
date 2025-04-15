@@ -22,4 +22,14 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    protected void onClickHelpButton(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjectStart.class.getResource("instructions.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Simulación de la Santuaria.");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
