@@ -5,6 +5,10 @@ import javafx.scene.image.ImageView;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
+//El hilo persona hereda de Runnable, para el override de la función run se encerró en un ciclo while(true) con el fin de que los hilos siguieran accediendo a los recursos, así mismo se colocó una variable que nos permite hacer que los hilos dejen de acceder a los recursos disponibles por cierto periodo de tiempo.
+
+
+
 class Persona implements Runnable {
     private final String nombre;
     private final Random random = new Random();

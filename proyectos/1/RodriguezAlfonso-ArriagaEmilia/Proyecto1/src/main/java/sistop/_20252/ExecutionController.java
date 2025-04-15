@@ -1,3 +1,5 @@
+// Autores: Emilia Macarena y Alfonso D'Hernán
+
 package sistop._20252;
 
 import javafx.application.Platform;
