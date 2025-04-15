@@ -1,3 +1,5 @@
+// Autores: Emilia Macarena y Alfonso D'Hernán
+
 package sistop._20252;
 
 import javafx.application.Platform;
@@ -7,6 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.concurrent.Semaphore;
+
+// Comenzamos por definir cada clase que será recurso compartido y por cada lugar (3 en caso de la mesa) se creará un semáforo, con la intencion de implementar un apagador.
+
 
 class Mesa {
     private final Semaphore semaforo = new Semaphore(3);
