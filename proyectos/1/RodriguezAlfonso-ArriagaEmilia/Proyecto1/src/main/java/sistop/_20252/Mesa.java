@@ -32,10 +32,12 @@ class Mesa {
 
     public void usar(String nombre, boolean prioridad, Persona person) {
         try {
+            //El estado del semáforo  cambia respecto a quién ingresa a su recurso.
             Platform.runLater(() -> tableInfo.setText(nombre + " quiere entrar a la mesa " + id + ". Prioridad: " + prioridad));
             semaforo.acquire();
             findAvailable(person);
             Platform.runLater(() -> tableInfo.setText(nombre + " está usando la mesa " + id + "."));
+            //Se duerme para simular el uso.
             Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
             Platform.runLater(() -> tableInfo.setText(nombre + " ha salido de la mesa " + id + "."));
             semaforo.release();
