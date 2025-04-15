@@ -36,7 +36,7 @@ class Persona implements Runnable {
             if (!seguir) {
                 System.out.println(nombre + " ha decidido irse por ahora.");
                 try {
-                    Thread.sleep(10000);
+                    Thread.sleep(OptionsController.absence);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

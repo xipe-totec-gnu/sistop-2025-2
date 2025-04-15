@@ -2,6 +2,7 @@ package sistop._20252;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -12,24 +13,26 @@ class Mesa {
     private final int id;
     private ImageView seat1, seat2, seat3;
     private final String tableColour;
+    private Label tableInfo;
 
 
-    public Mesa(int id, String tableColour, ImageView seat1, ImageView seat2, ImageView seat3) {
+    public Mesa(int id, String tableColour, ImageView seat1, ImageView seat2, ImageView seat3, Label tableInfo) {
         this.id = id;
         this.seat1 = seat1;
         this.seat2 = seat2;
         this.seat3 = seat3;
         this.tableColour = tableColour;
+        this.tableInfo = tableInfo;
     }
 
     public void usar(String nombre, boolean prioridad, Persona person) {
         try {
-            System.out.println(nombre + " quiere entrar a la mesa " + id + ". Prioridad: " + prioridad);
+            Platform.runLater(() -> tableInfo.setText(nombre + " quiere entrar a la mesa " + id + ". Prioridad: " + prioridad));
             semaforo.acquire();
             findAvailable(person);
-            System.out.println(nombre + " está usando la mesa " + id + ".");
-            Thread.sleep(1000);
-            System.out.println(nombre + " ha salido de la mesa " + id + ".");
+            Platform.runLater(() -> tableInfo.setText(nombre + " está usando la mesa " + id + "."));
+            Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
+            Platform.runLater(() -> tableInfo.setText(nombre + " ha salido de la mesa " + id + "."));
             semaforo.release();
             releaseSeat(person);
         } catch (InterruptedException e) {

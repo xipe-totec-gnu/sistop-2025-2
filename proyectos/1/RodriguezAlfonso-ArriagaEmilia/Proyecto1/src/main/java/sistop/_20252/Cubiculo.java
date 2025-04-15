@@ -1,5 +1,6 @@
 package sistop._20252;
 import javafx.application.Platform;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -13,27 +14,32 @@ class Cubiculo {
     private final CyclicBarrier barrier;
     private final AtomicInteger prioridadesEsperando = new AtomicInteger(0);
     private ImageView seat1, seat2;
+    private Label cubicleInfo;
 
-    public Cubiculo(int id, ImageView seat1, ImageView seat2) {
+    public Cubiculo(int id, ImageView seat1, ImageView seat2, Label cubicleInfo) {
         this.id = id;
         this.barrier = new CyclicBarrier(2, () -> {
-            System.out.println("La puerta del cubículo " + id + " se abre. Está completamente ocupado.");
+            Platform.runLater(() -> cubicleInfo.setText("La puerta del cubículo " + id + " se abre. Está completamente ocupado."));
         });
         this.seat1 = seat1;
         this.seat2 = seat2;
+        this.cubicleInfo = cubicleInfo;
     }
 
     public void usar(String nombre, boolean prioridad, Persona person) {
         try {
-            System.out.println(nombre + " quiere entrar al cubículo " + id + ". Prioridad: " + prioridad);
+            Platform.runLater(() -> cubicleInfo.setText(nombre + " quiere entrar al cubículo " + id + ". Prioridad: " + prioridad));
 
             if (prioridad) {
                 prioridadesEsperando.incrementAndGet();
             }
 
+            if(!prioridad && prioridadesEsperando.get() > 0){
+                Platform.runLater(() -> cubicleInfo.setText(nombre + " espera porque hay personas con prioridad en el cubículo " + id));
+            }
+
             while (!prioridad && prioridadesEsperando.get() > 0) {
-                System.out.println(nombre + " espera porque hay personas con prioridad en el cubículo " + id);
-                Thread.sleep(3000);
+                Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
             }
 
             semaforo.acquire();
@@ -43,11 +49,11 @@ class Cubiculo {
                 prioridadesEsperando.decrementAndGet();
             }
 
-            System.out.println(nombre + " está usando el cubículo " + id + ".");
+            Platform.runLater(() -> cubicleInfo.setText(nombre + " está usando el cubículo " + id + "."));
             barrier.await();
 
-            Thread.sleep(3000);
-            System.out.println(nombre + " ha salido del cubículo " + id + ".");
+            Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
+            Platform.runLater(() -> cubicleInfo.setText(nombre + " ha salido del cubículo " + id + "."));
             semaforo.release();
             releaseSeat(person);
         } catch (Exception e) {
