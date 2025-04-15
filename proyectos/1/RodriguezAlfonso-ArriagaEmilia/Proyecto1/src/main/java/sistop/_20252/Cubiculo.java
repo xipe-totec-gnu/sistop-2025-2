@@ -59,7 +59,7 @@ class Cubiculo {
 
             Platform.runLater(() -> cubicleInfo.setText(nombre + " está usando el cubículo " + id + "."));
             barrier.await();
-
+//Se ponen a dormir para simular un uso.
             Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
             Platform.runLater(() -> cubicleInfo.setText(nombre + " ha salido del cubículo " + id + "."));
             semaforo.release();
