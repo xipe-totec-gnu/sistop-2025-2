@@ -1,4 +1,3 @@
-// Autora - Emilia Macarena
 package sistop._20252;
 
 import javafx.scene.image.ImageView;

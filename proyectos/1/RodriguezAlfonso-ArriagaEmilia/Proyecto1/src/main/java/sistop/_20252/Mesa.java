@@ -14,15 +14,13 @@ import java.util.concurrent.Semaphore;
 
 
 class Mesa {
-    // Definimos el semáforo que permitirá acceso a la concurrencia.
     private final Semaphore semaforo = new Semaphore(3);
     private final int id;
-    // Definimos los elementos visuales que le competen a nuestra mesa.
     private ImageView seat1, seat2, seat3;
     private final String tableColour;
     private Label tableInfo;
 
-    // Constructor de cada mesa.
+
     public Mesa(int id, String tableColour, ImageView seat1, ImageView seat2, ImageView seat3, Label tableInfo) {
         this.id = id;
         this.seat1 = seat1;
@@ -36,12 +34,14 @@ class Mesa {
     public void usar(String nombre, boolean prioridad, Persona person) {
         try {
             // Según sea necesario, iremos adquiriendo y soltando los asientos.
+            //El estado del semáforo  cambia respecto a quién ingresa a su recurso.
             Platform.runLater(() -> tableInfo.setText(nombre + " quiere entrar a la mesa " + id + ". Prioridad: " + prioridad));
             semaforo.acquire();
             // Encontramos una silla disponible para quien se quiere sentar.
             findAvailable(person);
             Platform.runLater(() -> tableInfo.setText(nombre + " está usando la mesa " + id + "."));
             // Esperamos a que se use la mesa.
+            //Se duerme para simular el uso.
             Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
             Platform.runLater(() -> tableInfo.setText(nombre + " ha salido de la mesa " + id + "."));
             // Quitamos el semáforo.
