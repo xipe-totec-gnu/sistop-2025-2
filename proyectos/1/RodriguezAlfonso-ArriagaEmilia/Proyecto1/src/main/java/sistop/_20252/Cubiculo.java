@@ -1,3 +1,5 @@
+// Autores: Emilia Macarena y Alfonso D'Hernán
+
 package sistop._20252;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -8,6 +10,9 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.atomic.AtomicInteger;
 
+// Comenzamos por definir cada clase que será recurso compartido y por cada lugar (2 en caso del cubículo) se creará un semáforo, con la intencion de implementar un apagador.
+
+
 class Cubiculo {
     private final Semaphore semaforo = new Semaphore(2);
     private final int id;
@@ -17,6 +22,8 @@ class Cubiculo {
     private Label cubicleInfo;
 
     public Cubiculo(int id, ImageView seat1, ImageView seat2, Label cubicleInfo) {
+         //Para poder reflejar que al llenarse el cubículo se debe de mantener la puerta de éste abierta, se implementó una barrera que se abrirá en el momento en que 2 hilos accedan al mismo recurso (el cubículo).
+
         this.id = id;
         this.barrier = new CyclicBarrier(2, () -> {
             Platform.runLater(() -> cubicleInfo.setText("La puerta del cubículo " + id + " se abre. Está completamente ocupado."));
@@ -29,6 +36,7 @@ class Cubiculo {
     public void usar(String nombre, boolean prioridad, Persona person) {
         try {
             Platform.runLater(() -> cubicleInfo.setText(nombre + " quiere entrar al cubículo " + id + ". Prioridad: " + prioridad));
+//Para poder respetar la prioridad existente dentro de los cubículos se manejaron diversos condicionales y con ayuda de Atomic Integer, donde en caso de sea true y esté en espera de un cubículo, entrará primero.
 
             if (prioridad) {
                 prioridadesEsperando.incrementAndGet();
