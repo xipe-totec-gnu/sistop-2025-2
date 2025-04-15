@@ -40,7 +40,7 @@
                   <Font name="Century Gothic Bold" size="22.0" />
                </font>
             </Button>
-            <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="74.0" prefWidth="285.0" style="-fx-background-color: lime;" text="AYUDA // INSTRUCCIONES">
+            <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="74.0" prefWidth="285.0" style="-fx-background-color: lime;" text="AYUDA // INSTRUCCIONES" onAction="#onClickHelpButton">
                <VBox.margin>
                   <Insets top="25.0" />
                </VBox.margin>

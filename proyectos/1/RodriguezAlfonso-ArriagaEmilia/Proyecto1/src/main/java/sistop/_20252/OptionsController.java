@@ -20,18 +20,26 @@ public class OptionsController {
     static int startThreadsInt, absence, maxTime, minTime;
 
     @FXML
+    // Cuando el usuario haya (o no) introducido sus datos,
+    // asignamos valores para la ejecución.
     protected void onClickExecButton(ActionEvent event) throws IOException {
+        // try catch en caso de que el usuario ponga una entrada incorrecta.
         try{
+            // si el texto no está vacio, verificamos si el valor es
+            // mayor a 12. Si es verdadero, se deja en 12. Si no,
+            // el valor es dejado como está en el texto.
             if(!startThreads.getText().isEmpty()){
                 if(Integer.parseInt(startThreads.getText()) > 12){
                     startThreadsInt = 12;
                 }else{
                     startThreadsInt = Integer.parseInt(startThreads.getText());
                 }
+            // Se deja un valor por default si no se introduce nada.
             }else{
                 startThreadsInt = 10;
             }
 
+            // La misma lógica es aplicable para los demás campos.
             if(!absenceField.getText().isEmpty()){
                 absence = Integer.parseInt(absenceField.getText());
             }else{
@@ -57,6 +65,7 @@ public class OptionsController {
             minWaitTime.clear();
         }
 
+        // Una vez cargados los valores, pasamos a la ejecución del programa.
         FXMLLoader fxmlLoader = new FXMLLoader(ProjectStart.class.getResource("threadExecution.fxml"));
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Scene scene = new Scene(fxmlLoader.load());

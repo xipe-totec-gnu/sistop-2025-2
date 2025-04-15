@@ -44,15 +44,19 @@ class Mesa {
             // Esperamos a que se use la mesa.
             Thread.sleep(ExecutionController.randomizer.nextInt(OptionsController.minTime, OptionsController.maxTime));
             Platform.runLater(() -> tableInfo.setText(nombre + " ha salido de la mesa " + id + "."));
+            // Quitamos el semáforo.
             semaforo.release();
+            // Liberamos el asiento.
             releaseSeat(person);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
+    // Función que encuentra un asiento disponible para cierta persona.
     public void findAvailable(Persona person){
         Platform.runLater(() -> {
+            // Va asiento por asiento cersiorándose de que haya un asiento disponible.
             if(getSeat1().getImage() == null){
                 getSeat1().setImage(new Image(getClass().getResource("/images/" + this.tableColour + "_LIGHT.png").toExternalForm()));
                 person.setCurrentSeat(getSeat1());
@@ -67,11 +71,14 @@ class Mesa {
 
     }
 
+    // Suelta el asiento para indicar que ya se desocupó.
     public void releaseSeat(Persona person){
         Platform.runLater(() -> {
             person.getCurrentSeat().setImage(null);
         });
     }
+
+    // Getters y setters.
 
     public ImageView getSeat1() {
         return seat1;

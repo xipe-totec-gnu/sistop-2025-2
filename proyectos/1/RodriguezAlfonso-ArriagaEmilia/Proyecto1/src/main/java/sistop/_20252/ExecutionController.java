@@ -16,13 +16,19 @@ import java.io.IOException;
 import java.util.Random;
 
 public class ExecutionController {
+    // Definimos un objeto Random para aleatorizar los
+    // tiempos de espera.
     static Random randomizer = new Random();
 
+    // Definimos los elementos que nos ayudarán a identificar a las
+    // mesas y a los cubículos.
     public static final String[] tableColours = {"PINK", "BLUE", "YELLOW"};
     public static Mesa[] mesas;
     public static Cubiculo[] cubiculos;
     public static final int cantidadPersonas = OptionsController.startThreadsInt;
 
+    // Definimos todos los elementos visuales que vamos a utilizar
+    // dentro de la ejecución.
     @FXML
     public ImageView t1S1, t1S2, t1S3, t2S1, t2S2, t2S3, t3S1, t3S2, t3S3;
     @FXML
@@ -98,12 +104,13 @@ public class ExecutionController {
             // persona (hilo) a generar tiene texto, se genera el nuevo hilo.
             if(!threadNameField.getText().isEmpty()){
                 nombre = threadNameField.getText();
-                // Ponemos un valor aleatorio
+                // Ponemos un valor aleatorio.
                 boolean quiereCubiculo = new Random().nextBoolean();
                 Object recurso = quiereCubiculo ? cubiculos[randomizer.nextInt(2)] : mesas[randomizer.nextInt(3)]; // Se asigna alguno para arrancar
 
                 Thread persona = new Thread(new Persona(nombre, recurso));
                 persona.start();
+                // Limpiamos el campo para permitir nuevas entradas de nombres.
                 threadNameField.clear();
             }
         });

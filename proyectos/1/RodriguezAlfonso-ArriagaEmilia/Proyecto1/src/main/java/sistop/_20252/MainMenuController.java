@@ -27,4 +27,16 @@ public class MainMenuController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    protected void onClickHelpButton(ActionEvent event) throws IOException {
+        // Conseguimos los recursos necesarios para poder cargar la próxima escena
+        // a ejecutar.
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjectStart.class.getResource("instructions.fxml"));
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Simulación de la Santuaria.");
+        stage.setScene(scene);
+        stage.show();
+    }
 }
