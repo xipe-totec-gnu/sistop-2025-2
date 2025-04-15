@@ -11,9 +11,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class OptionsController {
+    // Definimos los elementos visuales que le permitirán al usuario
+    // decidir las variables de cambio.
     @FXML
     TextField startThreads, absenceField, maxWaitTime, minWaitTime;
 
+    // Definimos las variables que serán cambiadas para nuestra ejecución.
     static int startThreadsInt, absence, maxTime, minTime;
 
     @FXML

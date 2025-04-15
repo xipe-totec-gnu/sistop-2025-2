@@ -46,11 +46,14 @@ public class ExecutionController {
         mesas = new Mesa[3];
         cubiculos = new Cubiculo[2];
 
+        // Definimos arreglos de información para poder inicializarlos de forma
+        // más fácil en su respectiva instancia.
         ImageView[][] tableSeats = {{t1S1, t1S2, t1S3},{t2S1, t2S2, t2S3},{t3S1, t3S2, t3S3}};
         ImageView[][] cubicleSeats = {{c1S1, c1S2},{c2S1, c2S2}};
         Label[] cubicleInfo = {firstCubicle, secondCubicle};
         Label[] tableInfo = {firstTable, secondTable, thirdTable};
 
+        // Definimos todas las instancias necesitadas para el programa.
         for (int i = 0; i < mesas.length; i++) {
             mesas[i] = new Mesa(i + 1, tableColours[i], tableSeats[i][0], tableSeats[i][1], tableSeats[i][2], tableInfo[i]);
         }
@@ -64,6 +67,14 @@ public class ExecutionController {
         };
 
         Platform.runLater(() -> {
+            // Ponemos un sleep para permitir que la información no pegue demasiado rápido.
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            // Generamos una cierta cantidad de personas, y las inicializamos
+            // de manera que tengan un recurso aleatorio qué acceder.
             for (int i = 0; i < cantidadPersonas; i++) {
                 String nombre = nombresFemeninos[i % nombresFemeninos.length];
                 boolean quiereCubiculo = new Random().nextBoolean();
@@ -76,14 +87,18 @@ public class ExecutionController {
         });
     }
 
+    // Función que nos permitirá crear un nuevo hilo, de así ser deseado.
     @FXML
     public void createNewThread(ActionEvent event){
         Platform.runLater(() -> {
             String nombre;
+            // Si el campo de texto en el que se pone el nombre de la nueva
+            // persona (hilo) a generar tiene texto, se genera el nuevo hilo.
             if(!threadNameField.getText().isEmpty()){
                 nombre = threadNameField.getText();
+                // Ponemos un valor aleatorio
                 boolean quiereCubiculo = new Random().nextBoolean();
-                Object recurso = quiereCubiculo ? cubiculos[randomizer.nextInt(3)] : mesas[randomizer.nextInt(3)]; // Se asigna alguno para arrancar
+                Object recurso = quiereCubiculo ? cubiculos[randomizer.nextInt(2)] : mesas[randomizer.nextInt(3)]; // Se asigna alguno para arrancar
 
                 Thread persona = new Thread(new Persona(nombre, recurso));
                 persona.start();

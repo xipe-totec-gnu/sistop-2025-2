@@ -29,7 +29,7 @@
             </Label>
             <Label fx:id="firstTable" layoutX="19.0" layoutY="52.0" text="Sample text" textFill="MAGENTA">
                <font>
-                  <Font name="Consolas" size="15.0" />
+                  <Font name="Consolas" size="11.0" />
                </font>
             </Label>
          </children>
@@ -52,7 +52,7 @@
             </Label>
             <Label fx:id="secondTable" layoutX="19.0" layoutY="53.0" text="Sample text" textFill="BLUE">
                <font>
-                  <Font name="Consolas" size="15.0" />
+                  <Font name="Consolas" size="11.0" />
                </font>
             </Label>
          </children>
@@ -75,7 +75,7 @@
             </Label>
             <Label fx:id="thirdTable" layoutX="19.0" layoutY="52.0" text="Sample text" textFill="YELLOW">
                <font>
-                  <Font name="Consolas" size="15.0" />
+                  <Font name="Consolas" size="11.0" />
                </font>
             </Label>
          </children>
@@ -89,7 +89,7 @@
             </Label>
             <Label fx:id="firstCubicle" layoutX="14.0" layoutY="50.0" text="Sample text" textFill="RED">
                <font>
-                  <Font name="Consolas" size="15.0" />
+                  <Font name="Consolas" size="11.0" />
                </font>
             </Label>
             <HBox layoutX="11.0" layoutY="68.0" prefHeight="185.0" prefWidth="437.0">
@@ -109,7 +109,7 @@
             </Label>
             <Label fx:id="secondCubicle" layoutX="14.0" layoutY="46.0" text="Sample text" textFill="RED">
                <font>
-                  <Font name="Consolas" size="15.0" />
+                  <Font name="Consolas" size="11.0" />
                </font>
             </Label>
             <HBox layoutX="10.0" layoutY="64.0" prefHeight="189.0" prefWidth="433.0">
