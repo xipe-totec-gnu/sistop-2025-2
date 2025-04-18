@@ -1,0 +1,11 @@
+Situación a modelar:
+
+En la Facultad de Ingeniería existe un espacio llamado "La Santuaria" que es exclusivamente para mujeres y disidencias sexo-genéricas, donde se puede ir a realizar cuestiones académicas (tareas, estudiar, exposiciones). Existen 3 mesas con 2 lugares por cada una, así mismo existen 2 cubículos personales donde pueden haber máximo 2 personas por cubículo y si está lleno se debe mantener la puerta abierta. Existe una prioridad: en caso de que la persona tenga que tomar una clase en línea o una sesión de salud mental dentro del cubículo, se le cederá.
+
+¿Dónde pueden verse las consecuencias nocivas de la concurrencia? 
+
+Si hay personas ocupando los 2 lugares disponibles por mesa, deberán esperar a que se encuentre en desuso. Para los cubículos, mientras hayan 2 personas no pueden entrar más y se mantiene la puerta abierta; si hay una persona con situación de prioridad se le deberá de ceder el cubículo.
+
+¿Hay eventos concurrentes para los cuales el ordenamiento relativo no resulta importante?
+
+No los hay.

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" style="-fx-background-color: black; -fx-border-width: 10; -fx-border-color: lime;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistop._20252.MainMenuController">
+   <children>
+      <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="700.0" prefWidth="1061.0" spacing="10.0">
+         <children>
+            <Label text="Proyecto 1 de Concurrencia" textFill="LIME">
+               <font>
+                  <Font name="Consolas Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label text="Hecho por:" textFill="LIME">
+               <font>
+                  <Font name="Consolas Bold" size="35.0" />
+               </font>
+            </Label>
+            <Label text="Alfonso Rodríguez" textFill="LIME">
+               <font>
+                  <Font name="Consolas Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label text="Emilia Macarena" textFill="LIME">
+               <font>
+                  <Font name="Consolas Bold" size="37.0" />
+               </font>
+            </Label>
+            <Button fx:id="simButton" mnemonicParsing="false" prefHeight="74.0" prefWidth="285.0" style="-fx-background-color: lime;" text="INICIAR SIMULACIÓN" onAction="#onClickSimButton">
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Century Gothic Bold" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="helpButton" mnemonicParsing="false" prefHeight="74.0" prefWidth="285.0" style="-fx-background-color: lime;" text="AYUDA // INSTRUCCIONES" onAction="#onClickHelpButton">
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Century Gothic Bold" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</Pane>
