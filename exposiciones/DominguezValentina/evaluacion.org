@@ -1,0 +1,91 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Desduplicación
+
+- Tema presentado por :: Valentina Domínguez
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   8.77 |  0.3 |               8.65 |  0.7 |    8.69 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 5 | 8 |  9.23 |
+| Nivel        | 0 | 0 | 1 | 4 | 8 |  9.08 |
+| Relevancia   | 0 | 0 | 1 | 3 | 9 |  9.23 |
+| Claridad     | 0 | 0 | 2 | 6 | 5 |  8.46 |
+| Presencia    | 0 | 2 | 2 | 4 | 5 |  7.85 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  8.77 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- El documento elaborado por Domínguez Zavala Valentina asi como el video
+  considero que es muy completo y bien estructurado. Aborda el tema de
+  manera clara y detallada, cubriendo aspectos fundamentales como su
+  definición, importancia, funcionamiento (a nivel de archivo y bloque),
+  implementación (in line y out line), y la combinación con técnicas de
+  compresión. Además, incluye ejemplos concretos de sistemas de archivos
+  como BTRFS, NTFS y ZFS, siento que esto fue una clave importante para
+  entender aun mejor la expisicion. Un 10 a la presentacion del tema de
+  exposicion.
+- Desarrollar un poco más las definiciones de los distintos conceptos
+  mencionados.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     8.65 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+
+- La dicción durante la presentación es buena, pero se nota que estás
+  presentando material que vas leyendo, porque no es un léxico /natural/, y
+  tienes que estar re-explicando frecuentemente lo que acabas de decir.
+- ¡Ojo con la diferencia entre /memoria/ y /almacenamiento/! Muchas veces
+  haces referencia a ambos como sinónimos. Hasta donde entiendo, en
+  general, la desduplicación se aplica al almacenamiento a largo plazo (en
+  SSDs, discos, unidades en red...), y no en la memoria principal del
+  sistema.
+- No es que los videos o imágenes no se beneficien de la compresión. ¡Se
+  benefician muchísimo! Sin embargo, prácticamente todos los formatos de
+  uso habitual /ya implementan compresión/
+  - El algoritmo de compresión es, de hecho, la principal diferencia entre
+    los diferentes formatos existentes. Cada tipo de imagen (o video) se
+    comprimirá mejor con el algoritmo adecuado.
+- ZFS No es un sistema de archivos nativo de Linux, y de hecho, muchos
+  linuxeros nos negamos a emplearlo por un asunto de licenciamiento. Su
+  código fue desarrollado por Sun Microsystems para su sistema operativo
+  Solaris, y una vez que éste fue adquirido por Oracle en 2010 se
+  liberó... pero de forma que resultara /difícil/ incorporarlo a Linux. Lo
+  usaron primero en FreeBSD... y hoy en día ya se soporta en varias
+  distribuciones de Linux, pero haciendo algunas /maromas legales/ bastante curiosas.

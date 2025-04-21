@@ -1,0 +1,94 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Manejo de recursos en la NES
+
+- Tema presentado por :: Alfonso Rodríguez y Emilia Macarena Arriaga
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                    9.4 |  0.3 |               9.25 |  0.7 |    9.30 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 |  5 | Total |
+|--------------+---+---+---+---+----+-------|
+| Originalidad | 0 | 0 | 0 | 4 |  8 |  9.33 |
+| Nivel        | 0 | 0 | 0 | 2 | 10 |  9.67 |
+| Relevancia   | 0 | 0 | 1 | 1 | 10 |  9.50 |
+| Claridad     | 0 | 0 | 2 | 1 |  9 |  9.17 |
+| Presencia    | 0 | 0 | 1 | 2 |  9 |  9.33 |
+|--------------+---+---+---+---+----+-------|
+|              |   |   |   |   |    |  9.40 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- Es una exposición que llama la atención desde el principio, el tema
+  visual es increíble, se agradece que se hayan tomado el tiempo de
+  preparar un material tan elaborado. Además lo acompaña un buen contenido
+  donde se ve que se empaparon de información, adicional tiene un gran
+  ritmo, ¡felicidades! ^^
+- Como alumno de una carrera donde muy probablemente a la mayoria le gusten
+  los videojuegos, siento que este tema fue muy interesante, apesar de no
+  haber tenido la oportunidad de crecer en la era de la NES, el echo de
+  poder saber un poco mas del manejo de recursos en la consola NES fue
+  interesante. Lo unico que podria decir seria la fatla de diagramas para
+  visualziar flujos como PPU y OAM, o profundizar mas en como juegos de la
+  epoca solucionaron estos problemas, pero encantando con el trabajo de mis
+  compañeros.
+- Dar más ejemplos visuales.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |           10 |      1.5 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     9.25 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+
+- ¡Muy buena exposición! Se ve que el tema les apasiona, que saben al
+  respecto, y que hicieron un trabajo de selección/filtrado para decidir
+  a qué profundidad presentar cada parte
+- Es valioso que presenten una imágen de ustedes como ponentes, y me parece
+  muy bueno que lo hagan con suficiente tamaño para poder reconocer sus
+  expresiones.
+  - Sin embargo, ocurrió muchas veces que su imagen quedaba encima de texto
+    de la presentación
+  - Dado que presentan párrafos y no /balazos de datos/, eso hace imposible
+    para el público leer la exposición que hacen
+  - Veo que utilizaron OBS. Para futuras exposiciones, les sugiero
+    presentar la exposición fuera de centro (como lo hago con las clases),
+    y que la cámara no se sobreponga (o se sobreponga al mínimo) con el
+    contenido en pantalla.
+- Excelente incluir imágenes “vivas” del videojuego en cuestión; ¡ojo! el
+  efecto del /flickering/ en la línea de vida se oculta cuando lo presentan
+  por la imagen de cámara 🙁
+  - Me pareció que el “sprite” constantemente cambiando de tamaño es un
+    lindo toque, pero... distrae un poquito demasiado. Pero bueno, ese creo
+    que es meramente mi punto de vista, no una apreciación objetiva 😉
+

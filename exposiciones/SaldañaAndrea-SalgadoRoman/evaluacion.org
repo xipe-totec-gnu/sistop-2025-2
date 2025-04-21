@@ -1,0 +1,87 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Pacman: El Motor de Gestión de Software en Arch Linux
+
+- Tema presentado por :: Andrea Saldaña y Emiliano Salgado
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.27 |  0.3 |                9.1 |  0.7 |    9.15 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 |  5 | Total |
+|--------------+---+---+---+---+----+-------|
+| Originalidad | 0 | 0 | 1 | 1 | 10 |  9.50 |
+| Nivel        | 0 | 0 | 0 | 3 |  9 |  9.50 |
+| Relevancia   | 0 | 0 | 2 | 0 | 10 |  9.33 |
+| Claridad     | 0 | 0 | 1 | 2 |  9 |  9.33 |
+| Presencia    | 0 | 0 | 2 | 4 |  6 |  8.67 |
+|--------------+---+---+---+---+----+-------|
+|              |   |   |   |   |    |  9.27 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- La exposicion por parte de mis compañeros fue excelente, fue un tema que
+  desperto cierta curiosidad por el tema, quien antes habia escuchado
+  "Pacman, el motor de gestion de software en arch linux? Considero que su
+  presentacion pudo tener mejoras visuales, pero dentro de lo que cabe
+  siento que fue un tema interesante asi como su documento realizado.
+- Redactar un poco mejor los conceptos antecedentes para que no tomen tanta
+  parte del video.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |            4 |      0.6 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |           10 |      1.5 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     9.10 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Hacia 4:35 mencionan que, a diferencia de =dnf= (RedHat y derivados) y
+  =apt= (Debian y derivados), =pacman= no tiene interfaz gráfica y se
+  maneja exclusivamente desde terminal. Bueno... ¡adivinen qué! 😉 Tanto
+  =apt= como =dnf= (ambos escritos en C++) son también herramientas de
+  línea de comando.
+- Muy buena presentación. Tanto la parte en que van siguiendo [[./Presentación_Pacman_ArchLinux.pdf][la
+  presentación]] como en el uso interactivo.
+- Me llama la atención la última parte: cuando hacen la prueba comparativa
+  del tiempo que toma la instalación en tres entornos diferentes, ¿qué es
+  lo que miden? ① ¿Únicamente la instalación de un paquete binario? ② ¿La
+  descarga de un paquete binario y sus dependencias? ③ ¿La actualización de
+  las listas de paquetes, seguida de la descarga de un paquete binario y
+  sus dependencias? ④ ¿La compilación de un =PKGBUILD=?
+  - Me gusta el planteamiento que hacen, pero para presentar un
+    experimento, hay que presentar y comunicar las condiciones base 😉
+  - Acepto con gusto la comparación que indican respecto a Windows...
+  - Con todo, hice la prueba en mi sistema Debian, con =apt=. Para ③, me
+    tomó un minuto y cuarto (1:15.413); para ② únicamente 25
+    segundos.
+    - Claro, no puedo decir «¡Ajá! ¡Es porque =apt= es superior!», sólo
+      que... las condiciones de mi experimento seguramente fueron distintas
+      a las suyas 😉
