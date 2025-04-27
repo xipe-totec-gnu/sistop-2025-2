@@ -6,6 +6,8 @@ Planteamiento: 2025.03.26
 Entrega: 2025.04.08
 #+END_SRC
 
+*¡Ya están listas las [[./calificaciones.org][calificaciones del proyecto]]!*
+
 Los eventos en el mundo en que vivimos se producen de forma
 masivamente paralela, por lo cual, la concurrencia puede presentarse
 en muchos casos, en ámbitos no necesariamente constreñidos al cómputo.

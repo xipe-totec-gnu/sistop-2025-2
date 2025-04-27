@@ -1,0 +1,1196 @@
+** Acosta Alan, Rubio Angel
+- Título :: Estación de recarga de tarjetas de transporte
+- Documentación :: [[./AcostaAlan-RubioAngel/AcostaRubio_Proyecto01SO.pdf][AcostaRubio_Proyecto01SO.pdf]]
+- Archivos :: [[./AcostaAlan-RubioAngel/UnProblemaDelMetro.py][UnProblemaDelMetro.py]]
+- Interfaz :: Bitácora presentando eventos a terminal (codificando por color)
+- Comentarios ::
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |      1.5 |
+| Documentación expresa  |       7.5 |        |     0.50 |
+| Entorno y dependencias |         5 |        |     0.33 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.93 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Arias Javier
+- Título :: Trabajo en equipo con los compañeros
+- Documentación :: [[./AriasJavier/README.md][README.md]], [[./AriasJavier/public/captura1.png][captura1.png]]
+- Archivos :: [[./AriasJavier/main.py][main.py]], [[./AriasJavier/sincronizacion_proyecto.py][sincronizacion_proyecto.py]]
+- Interfaz :: Presentación tabular y por categoría del estado global del
+  sistema, indicando estados concluidos, en proceso y pendientes con color.
+- Comentarios ::
+  - ¡Bonito planteamiento e implementación!
+  - Creo que varios de los aspectos de tu código podrían resultar resueltos
+    de forma más sencilla si en vez de una función =crearTrabajo(id)= que
+    entregue estructuras “rígidas” hubieras implementado a los trabajos
+    (incluyendo la variación por tipos y demás) mediante programación
+    orientada a objetos
+    - Incluso más por la inclusión expresa desde =main()=
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.84 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.61 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Avila Iker, Romero Christian
+- Título :: Servidor de videojuego cooperativo
+- Documentación :: [[./AvilaIker-RomeroChristian/Proyecto 1 - Sistemas Operativos.docx.pdf][Proyecto 1 - Sistemas Operativos.docx.pdf]], [[./AvilaIker-RomeroChristian/Proyecto 1 - Sistemas Operativos.pdf][Proyecto 1 - Sistemas Operativos.pdf]], [[./AvilaIker-RomeroChristian/README.md][README.md]]
+- Archivos :: [[./AvilaIker-RomeroChristian/Proyecto1SistemasOperativos.exe][Proyecto1SistemasOperativos.exe]], [[./AvilaIker-RomeroChristian/main.py][main.py]]
+- Interfaz :: Interfaz TkInter mostrando colas activas, estado del servidor, y
+  bitácora de historial
+- Comentarios ::
+  - ¡Ojo! Enviaron dos versiones de la documentación... Y [[./AvilaIker-RomeroChristian/Proyecto 1 - Sistemas Operativos.docx.pdf][la primera]] está
+    incompleta. ¡Qué suerte que soy cuidadoso al calificar! 😉
+    - ¡Ah! Y, claro, enviaron también [[./AvilaIker-RomeroChristian/README.md][un README vacío]].
+  - Me incluyeron además un archivo [[./AvilaIker-RomeroChristian/Proyecto1SistemasOperativos.exe][compilado al formato ejecutable de
+    Windows]]. Siendo que el desarrollo es en Python, y que dicen haber
+    desarrollado en Fedora... ¿Qué será eso que enviaron? 🤔
+  - Buen uso de primitivas que no les enseñé. ¡Muy bien! 😃
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.61 |
+| Historial en Git       |         7 |        |     0.47 |
+| Directorio de proyecto |         7 |        |     0.47 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.63 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Ayala Maria, Portilla Elizabeth
+- Título :: Simulación de laboratorio
+- Documentación :: [[./AyalaMaria-PortillaElizabeth/README.md][README.md]], [[./AyalaMaria-PortillaElizabeth/img/VentanaCorriendoSimulacion.png][VentanaCorriendoSimulacion.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaDeInicio.png][VentanaDeInicio.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaDeInicioNumeroValido.png][VentanaDeInicioNumeroValido.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaDondeSeMuestraTodoLoRealizado.png][VentanaDondeSeMuestraTodoLoRealizado.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaDondeSeMuestraTodoLoRealizado2.png][VentanaDondeSeMuestraTodoLoRealizado2.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaFinalDeReporte.png][VentanaFinalDeReporte.png]], [[./AyalaMaria-PortillaElizabeth/img/VentanaInicioNoCeros.png][VentanaInicioNoCeros.png]], [[./AyalaMaria-PortillaElizabeth/img/VistaPreviaAntesDeSimulacion.png][VistaPreviaAntesDeSimulacion.png]]
+- Archivos :: [[./AyalaMaria-PortillaElizabeth/Proyecto1Programa.py][Proyecto1Programa.py]]
+- Interfaz :: Interfaz Tk presentando la lista de events y estado global del
+  laboratorio
+- Comentarios ::
+  - Eviten este estilo excesivo de comentarios:
+    #+begin_src python
+      def uso_mesa(self, nombre, mesa):
+          tiempo = random.randint(6, 12)
+          time.sleep(tiempo) # Simula el tiempo de uso de la mesa
+          with self.lock: # Bloquea el acceso a recursos compartidos
+              self.mesas[mesa].remove(nombre) # Elimina al alumno de la mesa
+              self.alumnos_activos.remove(nombre) # Eliminar de la lista de activos
+    #+end_src
+    Busquen escribir código que se /auto-describa/ correctamente. Si la
+    intención de /una línea de código/ no puede entenderse
+    claramente... OK, piensen en comentarla. Pero ponerle un comentario
+    /prácticamente a cada línea/ es excesivo
+    - Recuerden que un lenguaje de programación es una /herramienta de
+      comunicación entre personas/, que tiene la particularidad de que
+      puede causar también el efecto que describe por parte de un sistema
+      de cómputo 😉
+  - Las demoras que programan para el ritmo de llegada y el tiempo de uso
+    de las mesas hace que rara vez se utilicen más que las primeras dos
+    mesas. Podrían hacer que el ritmo de llegada o el tiempo de permanencia
+    sean mayores entre más mesas hay, para que la simulación sea más
+    “interesante”
+  - Es un bonito planteamiento, y una buena implementación 😃
+  - Me gustó que implementaran una serie de clases con división funcional
+    entre ventana de inicio, GUI del laboratorio, y lógica del
+    laboratorio. Pero creo que tendría sentido que los actores que se
+    implementan como hilos (alumnos y jefe de laboratorio) fueran objetos
+    por derecho propio, y no /aspectos/ implementados por el laboratorio.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.84 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.61 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Calderon Enrique, Ugartechea Luis
+- Título :: El gimnasio de la Alberca
+- Documentación :: [[./CalderonEnrique-UgartecheaLuis/README.md][README.md]], [[./CalderonEnrique-UgartecheaLuis/img/image1.png][image1.png]], [[./CalderonEnrique-UgartecheaLuis/img/image2.png][image2.png]]
+- Archivos :: [[./CalderonEnrique-UgartecheaLuis/proyecto.py][proyecto.py]]
+- Interfaz :: Visualización en TkInter; bitácora a terminal.
+- Comentarios ::
+  - Nadie quiere ir al LIDSoL 🙁 Me parece que el ritmo de llegada/salida
+    presenta un equilibrio que no les hace pensar en soluciones alternas
+    que ejerciten la mente más que el cuerpo 😢
+  - Hay un evento que causa errores... me parece que ocurre cuando un
+    /brawny/ sale del gimnasio, hay un punto en que se sigue accediendo a
+    su objeto, pero ya fue liberado:
+    #+begin_src text
+      Exception in Tkinter callback
+      Traceback (most recent call last):
+        File "/usr/lib/python3.13/tkinter/__init__.py", line 2071, in __call__
+          return self.func(*args)
+                 ~~~~~~~~~^^^^^^^
+        File "/usr/lib/python3.13/tkinter/__init__.py", line 865, in callit
+          func(*args)
+          ~~~~^^^^^^^
+        File "/home/gwolf/vcs/sistop-2025-2/proyectos/1/CalderonEnrique-UgartecheaLuis/proyecto.py", line 371, in <lambda>
+          self.root.after(10, lambda: animate_paths(points, idx + 1))
+                                      ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+        File "/home/gwolf/vcs/sistop-2025-2/proyectos/1/CalderonEnrique-UgartecheaLuis/proyecto.py", line 353, in animate_paths
+          del self.brawny_objects[brawny_id]
+              ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+      KeyError: 2
+    #+end_src
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.86 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Cano Carlos, Cortes Angel
+- Título :: Casa compartida con consumo eléctrico máximo
+- Documentación :: [[./CanoCarlos-CortesAngel/Documentacion_Proyecto1.txt][Documentacion_Proyecto1.txt]], [[./CanoCarlos-CortesAngel/Planteamiento solución.txt][Planteamiento solución.txt]], [[./CanoCarlos-CortesAngel/Proyecto1SO-Detalles.docx][Proyecto1SO-Detalles.docx]]
+- Archivos :: [[./CanoCarlos-CortesAngel/ProyectoSOInterfaz_CanoCarlos_CortesAngel.py][ProyectoSOInterfaz_CanoCarlos_CortesAngel.py]], [[./CanoCarlos-CortesAngel/ProyectoSO_CanoCarlos_CortesAngel.py][ProyectoSO_CanoCarlos_CortesAngel.py]]
+- Interfaz :: Dos versiones, una con TkInter y otra sólo reportando eventos a bitácora
+- Comentarios ::
+  - Hacen dos implementaciones diferentes. Yo tengo que elegir una sóla de
+    ellas; eligo la que tiene la interfaz gráfica.
+    - Y revisando mejor la historia en Git... ¡Están usando un sistema de
+      control de versiones! ¿Qué sentido tiene enviar dos archivos con
+      nombres diferentes? Si uno /construye sobre/ el otro, debería tener
+      /el mismo/ nombre de archivo (esto es, representar la evolución del
+      proyecto)
+  - Me parece ingenioso el uso de un /multiplex/ para modelar el consumo
+    máximo.
+    - Me queda la duda de si esto no podría llevar a un bloqueo mutuo: si
+      en un momento dado cuatro /roomies/ decidieran comenzar a utilizar
+      los electrodomésticos más /tragones/ (estufa, lavadora, secadora y
+      televisión), tendríamos una demanda de consumo total de
+      8+7+6+5=26.
+    - Si el planificador del SO permite que avancen de forma que se asignen
+      6 /unidades/ de la estufa, 6 de la lavadora, 5 de la secadora, y 3 de
+      la televisión, ninguno de ellos tendría suficiente para continuar
+    - Esto podría resolverse con un mutex =mut_sem_consumo= que /rodeara/ a
+      =adquirir_consumo()=, de forma que no pudiera ser interrumpido por un
+      operación rival a la mitad del ciclo =for= de adquisición de consumo
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.84 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |       7.5 |        |     0.50 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.19 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Cervantes Leonardo, Sole Arnau
+- Título :: El concurso de programación competitiva ICPC
+- Documentación :: [[./CervantesLeonardo-SoleArnau/documentacion.md][documentacion.md]], [[./CervantesLeonardo-SoleArnau/pantallazo1.png][pantallazo1.png]], [[./CervantesLeonardo-SoleArnau/pantallazo2.png][pantallazo2.png]]
+- Archivos :: [[./CervantesLeonardo-SoleArnau/competencia.py][competencia.py]]
+- Interfaz :: Bitácora de eventos a terminal, seguido por la impresión de
+  estadísticas globales
+- Comentarios ::
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.69 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Dominguez Valentina
+- Título :: Proyecciones de lucha
+- Documentación :: [[./DominguezValentina/DominguezValentina_Proyecto1.pdf][DominguezValentina_Proyecto1.pdf]], [[./DominguezValentina/logo.ico][logo.ico]], [[./DominguezValentina/lucha.png][lucha.png]], [[./DominguezValentina/lucha1.png][lucha1.png]], [[./DominguezValentina/luchaa.png][luchaa.png]], [[./DominguezValentina/luchaam.png][luchaam.png]], [[./DominguezValentina/lucham.png][lucham.png]], [[./DominguezValentina/luchan.png][luchan.png]], [[./DominguezValentina/luchav.png][luchav.png]]
+- Archivos :: [[./DominguezValentina/Proyecto1_SO.py][Proyecto1_SO.py]]
+- Interfaz :: Ventana TkInter con representación del estado; bitácora a terminal
+- Comentarios ::
+  - Curioso... Me parece que el archivo =logo.ico= que incluyes en el
+    proyecto tiene algún problema con el formato. Al llamar a tu código, me
+    indica:
+    #+begin_src text
+      $ python3 Proyecto1_SO.py 
+      Traceback (most recent call last):
+        File "/home/gwolf/vcs/sistop-2025-2/proyectos/1/DominguezValentina/Proyecto1_SO.py", line 94, in <module>
+          raiz.iconbitmap("logo.ico")
+          ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+        File "/usr/lib/python3.13/tkinter/__init__.py", line 2272, in wm_iconbitmap
+          return self.tk.call('wm', 'iconbitmap', self._w, bitmap)
+                 ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      _tkinter.TclError: bitmap "logo.ico" not defined
+    #+end_src
+    - Pero basta con comentar la línea =raiz.iconbitmap("logo.ico")= y
+      funciona correctamente 😕
+  - El uso de sincronización que hacs es mínimo: Únicamente un semáforo
+    empleado como mutex 🙁
+
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.17 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     7.93 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Garcia Rodrigo, Santana Gustavo
+- Título :: La convivencia entre roomies
+- Documentación :: [[./GarciaRodrigo-SantanaGustavo/Documentacion.pdf][Documentacion.pdf]]
+- Archivos :: [[./GarciaRodrigo-SantanaGustavo/CocinaCompartida.java][CocinaCompartida.java]], [[./GarciaRodrigo-SantanaGustavo/interfazCocinaCompartida.py][interfazCocinaCompartida.py]]
+- Interfaz :: Bitácora de eventos a terminal; interfaz TkInter que toma esa
+  salida y presenta una representación visual
+- Comentarios ::
+  - ¡Qué interesante (y poco habitual) estrategia de resolver el problema
+    en dos lenguajes distintos! 😮
+  - Ya que se aventaron el paso de hacer una implementación en la que
+    tuvieron que declarar una jerarquía de objetos, ¿no creen que sería
+    sensato hacer que cada uno de los electrodomésticos fuera una clase
+    independiente, encargándose de forma automática (probablement con
+    =synchronized=) de su sincronización?
+    - En vez de implementar a cada una de las funciones como un método de
+      =Roomie=
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.44 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Jimenez Ayala, Valenzuela Ascencio
+- Título :: Tacos el Champion
+- Documentación :: [[./JimenezAyala-ValenzuelaAscencio/README.md][README.md]], [[./JimenezAyala-ValenzuelaAscencio/assets/Acerca.png][Acerca.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/AcercaH.png][AcercaH.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo1.png][Comiendo1.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo2.png][Comiendo2.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo3.png][Comiendo3.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo4.png][Comiendo4.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo5.png][Comiendo5.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo6.png][Comiendo6.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo7.png][Comiendo7.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Comiendo8.png][Comiendo8.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Esperando1.png][Esperando1.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Esperando2.png][Esperando2.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Esperando3.png][Esperando3.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/FI.png][FI.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Inicio.png][Inicio.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/InicioH.png][InicioH.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago1.png][Pago1.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago2.png][Pago2.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago3.png][Pago3.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago4.png][Pago4.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago5.png][Pago5.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago6.png][Pago6.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago7.png][Pago7.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Pago8.png][Pago8.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Salir.png][Salir.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/SalirH.png][SalirH.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/UNAM.png][UNAM.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/Volver.png][Volver.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/VolverH.png][VolverH.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/champsLogo.png][champsLogo.png]], [[./JimenezAyala-ValenzuelaAscencio/assets/fondoChamps.png][fondoChamps.png]], [[./JimenezAyala-ValenzuelaAscencio/media/ejecucion.png][ejecucion.png]], [[./JimenezAyala-ValenzuelaAscencio/media/fin.png][fin.png]], [[./JimenezAyala-ValenzuelaAscencio/media/informacion.png][informacion.png]], [[./JimenezAyala-ValenzuelaAscencio/media/menuprincipal.png][menuprincipal.png]]
+- Archivos :: [[./JimenezAyala-ValenzuelaAscencio/Champion.py][Champion.py]], [[./JimenezAyala-ValenzuelaAscencio/Cliente.py][Cliente.py]], [[./JimenezAyala-ValenzuelaAscencio/Inicio.py][Inicio.py]], [[./JimenezAyala-ValenzuelaAscencio/Menu.py][Menu.py]], [[./JimenezAyala-ValenzuelaAscencio/Planteamiento.py][Planteamiento.py]], [[./JimenezAyala-ValenzuelaAscencio/Platos.py][Platos.py]]
+- Interfaz :: Descripción gráfica del estado (y descripción del proyecto) con
+  PyGame. Reporte de eventos a terminal en forma de bitácora.
+- Comentarios ::
+  - Muy bien que separen en varios archivos los módulos del proyecto, y que
+    implementando como POO implementen monitores, asgurando que el manejo
+    de sincronización de algunos eventos ocurre dentro del actor en
+    cuestión.
+  - La sincronización empleada es básica 🙁 Únicamente mutex para la
+    atención del /Champion/, multiplex para los platos, y otro mutex para
+    manipular al arreglo de lugares
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.69 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Juárez Barvara
+- Título :: Uso de recursos sanitarios en las vacaiones familiares
+- Documentación :: [[./JuarezBarvara/JuarezValdivia_SOP1.pdf][JuarezValdivia_SOP1.pdf]]
+- Archivos :: [[./JuarezBarvara/CONCURRENCIA.py][CONCURRENCIA.py]]
+- Interfaz :: Bitácora de eventos a terminal, con color por categoría
+- Comentarios ::
+  - Me parece interesante que intentes definir prioridades para las
+    diferentes acciones en el baño. Y sí, en =acciones_disponibles= tienes
+    la lista ordenada de acciones. Pero al hacer
+    =accion=random_choice(acciones_disponibles)= estás eligiendo cualquiera
+    de ellas, y descartando las prioridades.
+  - Manejas únicamente cuatro semáforos en forma de mutex. La situación que
+    modelas está buena y divertida, y daría para algunas situaciones
+    interesantes, pero le faltó un poco de complejidad en cuestiones de
+    sincronización 🙁
+    - Para fines prácticos, los semáforos específicos (=semaforo_lavado=,
+      =semaforo_regadera= y =semaforo_inodoro=) resultan innecesarios, dado
+      que quien los vaya a tomar ya tiene al =semaforo_bano=.
+    - ...Tal vez pudiera haber otras situaciones que ocurrieran en el baño
+      (p.ej. ¿ =reabastecer_closet= ?), y que pudieran ser concurrentes con
+      –digamos– =cepillarse=.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.67 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.01 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Lopez Carlos, Vera Juan
+- Título :: My Feelings
+- Documentación :: [[./LopezCarlos_VeraJuan/Proyecto_1_SO_Estrada_Vera.pdf][Proyecto_1_SO_Estrada_Vera.pdf]], [[./LopezCarlos_VeraJuan/README.md][README.md]]
+- Archivos :: [[./LopezCarlos_VeraJuan/Emocion.java][Emocion.java]], [[./LopezCarlos_VeraJuan/EmocionesApp.java][EmocionesApp.java]], [[./LopezCarlos_VeraJuan/EmocionesP.java][EmocionesP.java]], [[./LopezCarlos_VeraJuan/Pri.java][Pri.java]]
+- Interfaz :: Interfaz gráfica con Swing
+- Comentarios ::
+  - No pude correr el programa 🙁 ¡Lo cual es una lástima, porque se ve que
+    le pusieron mucho amor!
+    - No uso ningún IDE. Compilé con =javac *.java= (sin generar ningún
+      error), busqué cuál era el /punto de entrada/ con =grep main *.java=,
+      e intenté ejecutar con =java Pri=, pero... sólo obtengo una triste
+      pantalla gis. Y yo me siento muy azul 😢
+    - Ojo: Un detalle importante que faltó en la documentación fue... Cómo
+      lanzar el programa. Claro, el =grep= me indicó qué archivo debía
+      ejecutar, pero... ¿no será que hice algo mal? 🤔
+  - ¡Muy buena documentación! Desde la motivación y explicación general, y
+    agradezco que presentaran el “paseo” por el código 😃
+    - ¡Ojo con la ortografía! Hay, por lo menos, varios casos de /“echo
+      esto”/ (/Hecho/ es conjugación irregular del verbo /hacer/), acentos
+      faltantes, /una ves/ (“ves” de ver ≠ “vez” de oportunidad), etc. ¡Es
+      importante para la imagen profesional que debes presentar!
+    - Hay varios dedazos (/contiunamos/, /ocn/, /disminuyenddo/, y estoy
+      seguro que varios más). Sería mejor tener por lo menos un
+      auto-corrector que les avise al respecto. Pero bueno, más importante
+      la ortografía /real/ 😉
+  - Tomo nota de que su entrega /sí incluía/ varios /commits/, a pesar de
+    que se les /batieron/ regacho y tuve que rescatarlos 😉
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.67 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |         5 |        |     0.33 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.52 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Martinez Luis, Urbano Joseph
+- Título :: Uso del quemador en una cocina compartida con /roomies/
+- Documentación :: [[./MartinezLuis-UrbanoJoseph/DescripcionProblema.txt][DescripcionProblema.txt]], [[./MartinezLuis-UrbanoJoseph/Documentacion.txt][Documentacion.txt]], [[./MartinezLuis-UrbanoJoseph/Prueba1Linux.png][Prueba1Linux.png]], [[./MartinezLuis-UrbanoJoseph/Prueba2Linux.png][Prueba2Linux.png]], [[./MartinezLuis-UrbanoJoseph/Prueba3Linux.png][Prueba3Linux.png]], [[./MartinezLuis-UrbanoJoseph/Prueba4Linux.png][Prueba4Linux.png]]
+- Archivos :: [[./MartinezLuis-UrbanoJoseph/proyecto1-MGLA-UMJG.py][proyecto1-MGLA-UMJG.py]]
+- Interfaz :: Reporte de estado mediante TkInter
+- Comentarios ::
+  - El único mecanismo de sincronización que veo es el multiplex(4)
+    representando al uso de los quemadores
+    - Además, =toggle_quemadores()= no está correctamente sincronizado con
+      la adquisición/liberación de quemadores. Es frecuente que las
+      etiquetas se contradigan, mostrando 3 quemadores en uso y presentando
+      la advertencia roja de “los 4 quemadores están en uso”
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.33 |
+| Creatividad            |       7.5 |        |     0.50 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.18 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Melendez Anuar
+- Título :: Simulador de una barbería
+- Documentación :: [[./MelendezAnuar/PROYECTO1_Documentación_Meléndez_Zambrano.pdf][PROYECTO1_Documentación_Meléndez_Zambrano.pdf]]
+- Archivos :: [[./MelendezAnuar/SimuladorBarberia.java][SimuladorBarberia.java]]
+- Interfaz :: Bitácora de eventos a consola
+- Comentarios ::
+  - Bueeeno, habíamos quedado que implementarían una “hipotética situación
+    cotidiana”, ¿no? El problema que planteas es el del [[https://es.wikipedia.org/wiki/Problema_del_barbero_durmiente][barbero dormilón]]. Y
+    además, si lo lees un poquito más de cerca, ¡es el mismo que el de “los
+    alumnos y el profesor” que implementamos en clase como calentamiento
+    para los [[https://github.com/unamfi/sistop-2025-2/tree/main/tareas/1][ejercicios de sincronización]]!
+  - Cuando entregues en Git un proyecto con archivos =*.java=, recuerda
+    crear un =.gitignore= para ignorar los archivos generados por la
+    compilación, =*.class=.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       1. |
+| Cumplimiento           |         5 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.16 |
+| Creatividad            |         5 |        |     0.33 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.17 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |       7.5 |        |     0.50 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     7.34 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Membrilla Isaias, Miramon Jocelyn
+- Título :: El trolebús
+- Documentación :: [[./MembrillaIsaias-MiramonJocelyn/documentacion.md][documentacion.md]], [[./MembrillaIsaias-MiramonJocelyn/images/prueba1.png][prueba1.png]]
+- Archivos :: [[./MembrillaIsaias-MiramonJocelyn/Proyecto1.py][Proyecto1.py]]
+- Interfaz :: Representación gráfica del trolebús utilizando TkInter;
+  bitácora de eventos a consola
+- Comentarios ::
+  - Las funciones =mujer()=, =mujerMayor()=, =hombre()= y =hombreMayor()=
+    son casi idénticas entre sí. ¡Recuerden el principio *DRY*: /Don't
+    Repeat Yourself/. Si encuentran porciones de código demasiado similares
+    entre sí, pregúntense si no se puede parametrizar y generalizar para
+    mejorar la mantenibilidad.
+    - Por poner un ejemplo: ¿qué pasa si alguna normativa define que las
+      mujeres deben sentarse adelante y los hombres atrás? Van a tener que
+      cambiar todos los rangos de asientos empleados /en las cuatro
+      funciones/, con un potencial para fallo por dedazos muy alto.
+  - En ningún lugar encontré documentado el código de color que se utiliza
+    para las diferentes categorías de pasajero
+  - Sería deseable que el trolebús tuviera más paradas, o considerara un
+    circuito redondo (ir a las estaciones 1→2→3→2→1), para que fuera más
+    fácil seguir la simulación.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |      8.6 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Montiel Oscar, Torres Samuel
+- Título :: Estacionamiento de la Facultad
+- Documentación :: [[./MontielOscar-TorresSamuel/proyecto_1_documentacion_Montiel_Torres.pdf][proyecto_1_documentacion_Montiel_Torres.pdf]]
+- Archivos :: [[./MontielOscar-TorresSamuel/MontielOscar-TorresSamuel.py][MontielOscar-TorresSamuel.py]]
+- Interfaz :: Bitácora de eventos sobre interfaz tabular y presentada por
+  colores
+- Comentarios ::
+  - Extrañé un poco que la interfaz usuario hiciera ver más claramente las
+    situaciones excepcionales/erróneas.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.84 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.86 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Nava David, Tavera David
+- Título :: Uso de impresoras
+- Documentación :: [[./NavaDavid-TaveraDavid/NavaDavid-TaveraDavid_Documentación.docx][NavaDavid-TaveraDavid_Documentación.docx]], [[./NavaDavid-TaveraDavid/NavaDavid-TaveraDavid_Proyecto1.pdf][NavaDavid-TaveraDavid_Proyecto1.pdf]]
+- Archivos :: [[./NavaDavid-TaveraDavid/Impresoras.c][Impresoras.c]]
+- Interfaz :: Bitácora de eventos a consola, codificando con color por categoría
+  de mensaje.
+- Comentarios ::
+  - ¿Dos copias de la documentación, una como =.docx= y la otra como =.pdf=?
+    - Voy a tomar al PDF como bueno, e ignorar la otra.
+  - En C, es necesario declarar las funciones antes de su primer uso (es un
+    /compilador de varias pasadas/, y verifica que las invocaciones sean
+    correctas /antes de/ conocer el total del archivo
+    - A su código le faltó declarar una función, por lo que:
+      #+begin_src C
+	$ gcc Impresoras.c -o Impresoras.exe
+	Impresoras.c: In function ‘main’:
+	Impresoras.c:58:5: error: implicit declaration of function ‘MapaImpresoras’; did you mean ‘RepararImpresora’? [-Wimplicit-function-declaration]
+	   58 |     MapaImpresoras();
+	      |     ^~~~~~~~~~~~~~
+	      |     RepararImpresora
+	Impresoras.c: At top level:
+	Impresoras.c:210:6: warning: conflicting types for ‘MapaImpresoras’; have ‘void()’
+	  210 | void MapaImpresoras() {
+	      |      ^~~~~~~~~~~~~~
+	Impresoras.c:58:5: note: previous implicit declaration of ‘MapaImpresoras’ with type ‘void()’
+	   58 |     MapaImpresoras();
+	      |     ^~~~~~~~~~~~~~
+      #+end_src
+    - Basta con agregar =void MapaImpresoras();= antes de =int main() {=
+    - Veo que declaraste =mostrarMapaImpresoras();=, que no existe. Supongo
+      que en algún momento la renombraron...
+  - Es un bonito ejemplo de uso concurrente.
+    - Las primitivas de sincronización utilizadas son muy sencillas 🙁
+      Únicamente mutex y multiplex.
+  - Falta un tanto de explicación interna/comentarios al código; los
+    nombres no son demasiado obvios, y buscar comportamientos específicos
+    me requirió dar varias vueltas...
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.67 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.26 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Nava Erick, Ramirez Eric
+- Título :: El alimentador de gats
+- Documentación :: [[./NavaErick-RamirezEric/GatoInvasor.png][GatoInvasor.png]], [[./NavaErick-RamirezEric/Kermit.png][Kermit.png]], [[./NavaErick-RamirezEric/Luna.png][Luna.png]], [[./NavaErick-RamirezEric/Proyecto1NavaErick-RamirezEric.pdf][Proyecto1NavaErick-RamirezEric.pdf]], [[./NavaErick-RamirezEric/Suiza.png][Suiza.png]], [[./NavaErick-RamirezEric/Violeta.png][Violeta.png]], [[./NavaErick-RamirezEric/Zule.png][Zule.png]], [[./NavaErick-RamirezEric/despenser.png][despenser.png]]
+- Archivos :: [[./NavaErick-RamirezEric/Dispensador.py][Dispensador.py]], [[./NavaErick-RamirezEric/Gato.py][Gato.py]], [[./NavaErick-RamirezEric/Plato.py][Plato.py]], [[./NavaErick-RamirezEric/main.py][main.py]]
+- Interfaz :: Reporte de estado a GUI con TkInter
+- Comentarios ::
+  - ¡Ojo con la cantidad de comentarios! El código fuente que escriban
+    /debe ser/ suficiente para explicar lo básico del funcionamiento de su
+    programa a sus colegas; cuando vemos código como el siguente:
+    #+begin_src python
+      #A este metodo se le asigna tal cual un hilo
+      def run(self):
+          while True: #esto hace que sea un loop sin fin
+              if self.estado != EstadoDispensador.ALERTA: #en caso de que no este en alerta
+
+                  a=len(self.platos)                      #cantidad de platos
+                  for plato in self.platos:               #verificara la comida de cada plato
+                      if plato.comida_disponible < 1:     #si no hay comida en un plato se restara a 'a'
+                          a = a-1
+    #+end_src
+    vemos la misma instrucción descrita dos veces. Esto no ayuda en
+    realidad a la comprensión.
+
+    Los comentarios son _muy importantes_, sí, pero en el lugar correcto:
+    antes de un bloque de código relativamente difícil de entender, o en
+    que haga referencia a conceptos externos.
+  - Después de un segundo de ver gatos compitiendo por la comida, el
+    ventilador de mi computadora me indica que están haciendo espera activa
+  - Me parece que hay algun condición que lleva a algo equiparable a un
+    bloqueo mutuo: Tengo a seis gatos en condición =HAMBRIENTO=, pero el
+    dispensador está =ALERTA=. ¡Hace mucho no hay comida para nadie! 🙁
+    #+begin_src text
+      El plato 2 ha sido rellenado
+      GatoInvasor volverá a intentar comer
+      Violeta ha comido
+      Plato 1 con 2 porciones
+      GatoInvasor ha comido
+      Suiza no encontró plato disponible o con comida. Pasa la cola
+      Zule no encontró plato disponible o con comida. Pasa la cola
+      Luna no encontró plato disponible o con comida. Pasa la cola
+      Kermit no encontró plato disponible o con comida. Pasa la cola
+      GatoInvasor no encontró plato disponible o con comida. Pasa la cola
+      Violeta no encontró plato disponible o con comida. Pasa la cola
+      Suiza no encontró plato disponible o con comida. Pasa la cola
+      Zule no encontró plato disponible o con comida. Pasa la cola
+      GatoInvasor no encontró plato disponible o con comida. Pasa la cola
+      Kermit no encontró plato disponible o con comida. Pasa la cola
+      Violeta no encontró plato disponible o con comida. Pasa la cola
+      (...)
+    #+end_src
+  - Indican en su texto que /«Nos quedamos con la idea de que nuestro
+    planteamiento fue original, se implementó con la lógica correcta, pero/
+    /no podemos evitar pensar que debe de existir un mecanismo para
+    compartir los recursos de manera más elegante que utilizando/
+    /semáforos y locks.»/ Para modelar la situación que están proponiendo,
+    creo que podría haber resultado adecuado utilizar variables de
+    condición.
+
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |      1.5 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.84 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |       7.5 |        |     0.50 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     2.01 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |       7.5 |        |     0.75 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |      8.6 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Rodríguez Alfonso, Arriaga Emilia
+- Título :: Uso de “La Santuaria”
+- Documentación :: [[./RodriguezAlfonso-ArriagaEmilia/identificaciónProblema.txt][identificaciónProblema.txt]], [[./RodriguezAlfonso-ArriagaEmilia/sistOpProy1.pdf][sistOpProy1.pdf]]
+- Archivos :: [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.idea/encodings.xml][encodings.xml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.idea/misc.xml][misc.xml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.idea/uiDesigner.xml][uiDesigner.xml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.idea/vcs.xml][vcs.xml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.mvn/wrapper/maven-wrapper.jar][maven-wrapper.jar]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/.mvn/wrapper/maven-wrapper.properties][maven-wrapper.properties]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/mvnw][mvnw]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/mvnw.cmd][mvnw.cmd]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/pom.xml][pom.xml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/module-info.java][module-info.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/Cubiculo.java][Cubiculo.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/ExecutionController.java][ExecutionController.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/InstructionsController.java][InstructionsController.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/MainMenuController.java][MainMenuController.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/Mesa.java][Mesa.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/OptionsController.java][OptionsController.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/Persona.java][Persona.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/java/sistop/_20252/ProjectStart.java][ProjectStart.java]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/images/BLUE_LIGHT.png][BLUE_LIGHT.png]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/images/PINK_LIGHT.png][PINK_LIGHT.png]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/images/RED_LIGHT.png][RED_LIGHT.png]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/images/YELLOW_LIGHT.png][YELLOW_LIGHT.png]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/sistop/_20252/instructions.fxml][instructions.fxml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/sistop/_20252/options.fxml][options.fxml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/sistop/_20252/projectStart.fxml][projectStart.fxml]], [[./RodriguezAlfonso-ArriagaEmilia/Proyecto1/src/main/resources/sistop/_20252/threadExecution.fxml][threadExecution.fxml]]
+- Interfaz :: Representación gráfica del espacio utilizando JavaFX
+- Comentarios ::
+  - Cuando entreguen en Git un proyecto con archivos =*.java=, recuerden
+    crear un =.gitignore= para ignorar los archivos generados por la
+    compilación, =*.class=.
+    - Si bien incluyeron un archivo =.gitignore=, éste se ve que es copiado
+      de algún otro lugar... y /no cubre/ a =*.class= 🫤
+  - No pude compilar su código 🙁 Al intentar compilar, obtengo:
+    #+begin_src text
+      $ javac module-info.java sistop/_20252/*java
+      module-info.java:3: error: module not found: javafx.controls
+          requires javafx.controls;
+                         ^
+      module-info.java:4: error: module not found: javafx.fxml
+          requires javafx.fxml;
+                         ^
+      2 errors
+    #+end_src
+    - Instalé JavaFX (paquetes =openjfx=, =libopenjfx-java=,
+      =libopenjfx-jni= de  Debian)
+    - Especifiqué =JAVAFX_HOME=/usr/share/openjfx/lib/=
+    - Indiqué al compilador =--module-path $JAVAFX_HOME --add-modules
+      javafx.controls=
+    - ...lo más cerca que llegué fue:
+      #+begin_src text
+	$ javac --module-path $JAVAFX_HOME --add-modules javafx.controls module-info.java sistop/_20252/*java
+	module-info.java:2: warning: [module] module name component _20252 should avoid terminal digits
+	module sistop._20252 {
+	             ^
+	1 warning
+      #+end_src
+    - Contento con que fuera sólo un /warning/, intenté ejecutar el archivo
+      que incluyera un =main=, pero...
+      #+begin_src text
+	$ find . -name \*java -exec grep main \{\} +
+	./sistop/_20252/ProjectStart.java:    public static void main(String[] args) {
+	$ ls sistop/_20252/ProjectStart.class 
+	sistop/_20252/ProjectStart.class
+	$ java sistop/_20252/ProjectStart
+	Error: Could not find or load main class sistop._20252.ProjectStart
+	Caused by: java.lang.NoClassDefFoundError: javafx/application/Application
+      #+end_src
+  - Utilicen el entorno de programación que les resulte más cómodo... sin
+    embargo, ¡presten atención a la cantidad de código autogenerado que
+    incluye esta entrega! 🙁 A futuro, intenten que la entrega conste
+    /exclusivamente/ del código desarrollado por ustedes (y que funcione
+    independientemente de tener o no el mismo IDE)
+  - Buen uso de primitivas específicas de Java que, naturalmente, no
+    cubrimos en clase. 😃
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |      1.5 |
+| Cumplimiento           |       7.5 |        |     1.50 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.84 |
+| Documentación expresa  |       7.5 |        |     0.50 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.17 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |       7.5 |        |     0.50 |
+| Código válido          |         0 |        |     0.00 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.52 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Salazar Luis, Tepal Hansel
+- Título :: Don Rata
+- Documentación :: [[./SalazarLuis-TepalHansel/README.md][README.md]], [[./SalazarLuis-TepalHansel/img/imagenEjecucion.png][imagenEjecucion.png]], [[./SalazarLuis-TepalHansel/img/resultadoEjecución.png][resultadoEjecución.png]]
+- Archivos :: [[./SalazarLuis-TepalHansel/backend/__pycache__/sincronization.cpython-311.pyc][sincronization.cpython-311.pyc]], [[./SalazarLuis-TepalHansel/backend/sincronization.py][sincronization.py]], [[./SalazarLuis-TepalHansel/frontend/interfaz.py][interfaz.py]]
+- Interfaz :: /frontend/ con interfaz TkInter pero sin funcionalidad; /backend/
+  con reporte de bitácora a consola.
+- Comentarios ::
+  - ¡Ojo! ¿Qué es esa /mala educación/ de incluir entre sus archivos un
+    asqueroso Python compilado para la versión 3.11
+    - Recuerden que un archivo =.gitignore= /nunca es retroactivo/: si ya
+      incluyeron archivos autogenerados (los =*.pyc=) en su repositorio
+      antes de agregar el =.gitignore=, ¡deben eliminarlos!
+  - Jé, el efecto de animación de los alumnos está /mono/ y le agrega vida
+    a la simulación 😉 pero... si los dejan un rato andando, los alumnos
+    tienden a /irse de paseo/ por mera suma de probabilidades. Posiblemente
+    sería bueno asegurar que la /posición absoluta/ de los alumnos no
+    saliera de determinados parámetros 😉
+  - Los comentarios más útiles no son línea por línea. Comentarios como
+    estos deberían ser innecesarios:
+    #+begin_src python
+      self.canvas.create_rectangle(
+              self.leftUpperCorner[0], self.leftUpperCorner[1],  # Esquina rightUpperCorner izquierda (x1, y1)
+              self.rightBottomCorner[0], self.rightBottomCorner[1], # Esquina leftUpperCorner derecha (x2, y2)
+              fill="white",  # Color de relleno
+              outline="black",   # Color del borde
+              width=2           # Grosor del borde
+          )
+    #+end_src
+    - Los comentarios más interesantes serían aquellos que ilustran los
+      detalles de sincronización en =sincronization.alumnos()=,
+      =sincronization.workers()=, etc. — pero ahí no hay nada 🙁
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.84 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |       7.5 |        |     0.50 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     1.67 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |         5 |        |     0.33 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.84 |
+| Historial en Git       |        10 |        |     0.67 |
+| Directorio de proyecto |       7.5 |        |     0.50 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.35 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Saldaña Andrea, Salgado Roman
+- Título :: Concurrencia en un sistema de reservas de canchas deportivas
+- Documentación :: [[./SaldañaAndrea-SalgadoRoman/PRO1_Concurrencia_SNA_SCER.pdf][PRO1_Concurrencia_SNA_SCER.pdf]], [[./SaldañaAndrea-SalgadoRoman/PRO1_SO.pdf][PRO1_SO.pdf]]
+- Archivos :: [[./SaldañaAndrea-SalgadoRoman/PROYECTO.zip][PROYECTO.zip]], [[./SaldañaAndrea-SalgadoRoman/gui.py][gui.py]], [[./SaldañaAndrea-SalgadoRoman/main.py][main.py]], [[./SaldañaAndrea-SalgadoRoman/sistema_reservas.py][sistema_reservas.py]], [[./SaldañaAndrea-SalgadoRoman/usuario.py][usuario.py]]
+- Interfaz :: Reporte visual y bitácora de eventos a una interfaz TkInter;
+  almacenamiento de bitácora en un archivo
+- Comentarios ::
+  - El desarrollo del proyecto en Git consta de cinco /commits/, sí,
+    pero... cada uno de ellos es únicamente agregar uno de los archivos
+    - Agregan, además, un archivo =PROYECTO.zip=, que incluye a todos los
+      archivos ya entregados. ¿Para qué?
+  - Entregan dos copias de la documentación. Me parece que la versión
+    correcta es =PRO1_Concurrencia_SNA_SCER=; ignoro a la otra. ¿Por qué
+    entregan dos copias, de versión diferente? ¡Si Git resuelve
+    /precisamente/ ese problema!
+  - ¡Muy bien por modularizar su código en varios archivos fuente! Es una
+    buena costumbre, y ayuda a la legibilidad y mantenibilidad del fuente.
+    - Sin embargo... cuando incluyen a un archivo de Python mediante
+      =import=, el compilador genera un =__pycache__/*.pyc= correspondiente
+      a la combinación específica de software que hay en su computadora →
+      ¡es necesario agregar ya sea a =__pycache__= o a =*.pyc= a un
+      =.gitignore=!
+    - Sería deseable también agregar =acciones.log= al =.gitignore=.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.67 |
+| Historial en Git       |       7.5 |        |     0.50 |
+| Directorio de proyecto |       7.5 |        |     0.50 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.35 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Segura Luisa
+- Título :: Los cruces de avenidas (varias intersecciones)
+- Documentación :: [[./SeguraLuisa/SeguraLuisa_DocumentacionProyecto1.pdf][SeguraLuisa_DocumentacionProyecto1.pdf]]
+- Archivos :: [[./SeguraLuisa/Tráfico.py][Tráfico.py]]
+- Interfaz :: Simulación de acciones mediante TkInter, reporte de eventos a
+  consola en la misma interfaz
+- Comentarios ::
+  - ¡Muy buena ampliación del planteamiento que les hice de un sólo
+    crucero, con diferentes fases, tipos de actor y priorización de
+    tráfico! 🤓🚶🚦🚗🚦🚑
+  - Me gusta el manejo semántico, la implementación de =Interseccion()=,
+    =Vehiculo()= y =Peaton()= como clases derivadas de =threading.Thread=.
+  - Buen uso de variables de condición.
+  - El uso de Git es más bien sintético/artificial, agregando, eliminando y
+    volviendo a agregar el código completo, no mostrando el avance paulatino.
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     2.01 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |        10 |        |     0.67 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.67 |
+| Historial en Git       |         5 |        |     0.33 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |       2. |
+| Estructura             |        10 |        |     1.00 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     9.69 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
+** Talonia Jesus
+- Título :: Hermanos Roomies
+- Documentación :: [[./TaloniaJesus/TFJ-sistop-20252-P1.pdf][TFJ-sistop-20252-P1.pdf]]
+- Archivos :: [[./TaloniaJesus/Hermanos-Roomies.py][Hermanos-Roomies.py]]
+- Interfaz :: Simulación empleando PyGame; reporte de eventos a consola dentro
+  de esta misma intefaz.
+- Comentarios ::
+  - ¡Muy bonito planteamiento! Gracias por darnos una ventana a lo que
+    parece ser la vida real de un estudiante foráneo de ingeniería 😉
+  - La lógica de =roomieC()= y =roomieJ()= son, como era de esperar, /muy/
+    similares. como recomendación para proyectos futuros, recuerda el
+    principio *DRY*: /Don't Repeat Yourself/. Si encuentras porciones de
+    código demasiado similares entre sí, debes preguntarte si no se puede
+    parametrizar y generalizar (por ejemplo, creando una clase =Roomie=,
+    que puedas instanciar especificando nombre y días activo para mejorar
+    la mantenibilidad.
+    - Por poner un ejemplo: ¿y si el próximo año el hermano #3 se suma, o
+      agregan a un /roomie/ que no pertenezca al entorno familiar?  ¿o si
+      cambian los horarios? ¡Tendrías que verificar todas las interacciones
+      en todas las funciones casi-copiadas para asegurar que no se
+      tropiecen entre sí!
+  - Entregado con un único commit 🙁
+
+| *Rubro*                | *Parcial* | *Peso* | *Puntos* |
+|------------------------+-----------+--------+----------|
+| *Requisitos*           |           |    0.2 |       2. |
+| Cumplimiento           |        10 |        |     2.00 |
+|------------------------+-----------+--------+----------|
+| *Proyecto*             |           |    0.2 |     1.67 |
+| Creatividad            |        10 |        |     0.67 |
+| Complejidad            |         5 |        |     0.33 |
+| Interfaz usuario       |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Documentación*        |           |    0.2 |     2.01 |
+| Documentación expresa  |        10 |        |     0.67 |
+| Entorno y dependencias |        10 |        |     0.67 |
+| Comentarios            |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Entrega*              |           |    0.2 |     1.34 |
+| Historial en Git       |         0 |        |     0.00 |
+| Directorio de proyecto |        10 |        |     0.67 |
+| Código válido          |        10 |        |     0.67 |
+|------------------------+-----------+--------+----------|
+| *Legibilidad*          |           |    0.2 |     1.75 |
+| Estructura             |       7.5 |        |     0.75 |
+| Nomenclatura           |        10 |        |     1.00 |
+|------------------------+-----------+--------+----------|
+| *TOTAL*                |           |        |     8.77 |
+|------------------------+-----------+--------+----------|
+#+TBLFM: @2$4=@3::@3$4=@3$2*@2$3 ; f-2::@4$4=@5+@6+@7::@5$4=$2*@4$3/3 ; f-2::@6$4=$2*@4$3/3 ; f-2::@7$4=$2*@4$3/3 ; f-2::@8$4=@9+@10+@11::@9$4=$2*@8$3/3 ; f-2::@10$4=$2*@8$3/3 ; f-2::@11$4=$2*@8$3/3 ; f-2::@12$4=@13+@14+@15::@13$4=$2*@12$3/3 ; f-2::@14$4=$2*@12$3/3 ; f-2::@15$4=$2*@12$3/3 ; f-2::@16$4=@17+@18::@17$4=$2*@16$3/2 ; f-2::@18$4=$2*@16$3/2 ; f-2::@19$4=@2+@4+@8+@12+@16
+
