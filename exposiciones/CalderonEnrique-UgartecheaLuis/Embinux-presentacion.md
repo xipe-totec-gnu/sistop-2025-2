@@ -64,34 +64,6 @@ date:
 - **Automóviles**: Unidades de control, sistemas de infoentretenimiento
 - **Dispositivos portátiles y wearables**: Relojes inteligentes, GPS, cámaras
 
-# Componentes: Kernel
-
-- Núcleo del sistema operativo
-- Intermediario entre hardware y software
-- Gestiona acceso al procesador, memoria y controladores
-
-# Capas funcionales del kernel
-
-- **Interfaz con el hardware**: Controladores de red, buses, etc.
-- **Gestión de memoria**: Asigna memoria a procesos, controla acceso
-- **Gestión de procesos**: Creación, ejecución, suspensión y finalización
-- **Gestión de dispositivos**: Control de dispositivos E/S
-- **Gestión del sistema de archivos**: Acceso a archivos y directorios
-
-# Sistema de archivos
-
-- Organiza, almacena y recupera datos en medio de almacenamiento
-- Define estructura y acceso a datos
-
-# Componentes principales
-
-- **Estructura de directorios**: Organización jerárquica
-- **I-nodos**: Metadatos de archivos (permisos, tamaño, ubicación)
-- **Bloques de datos**: Almacenamiento real del contenido
-- **Tabla de asignación**: Distribución de bloques entre archivos
-- **Gestor de permisos**: Control de acceso a archivos
-- **Journaling**: Registro de operaciones para mantener integridad
-
 # ¿Qué es buildroot?
 
 - Herramienta de construcción de sistemas Linux embebidos
@@ -101,12 +73,11 @@ date:
 
 # Herramientas necesarias
 
-- **Compilador**: Buildroot incluye el suyo (gcc o musl)
+- **Compilador**: Buildroot puede generar uno basado en GCC (junto con una C standard library como glibc, uClibc-ng o musl).
 - **Herramientas de construcción**: make, tar, gzip, etc.
 - **Sistema operativo**: Cualquier distribución Linux
 - **Conexión a internet**: Para descargar paquetes y herramientas
 - **Hardware**: Computadora con capacidad suficiente (compilación puede tardar horas)
-
 
 # Selección de hardware
 
