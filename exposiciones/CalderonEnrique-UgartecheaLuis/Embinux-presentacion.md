@@ -50,7 +50,6 @@ date:
   - Yocto
   - Buildroot
   - OpenWrt
-  - Distribuciones como Raspbian
 - Kernel configurable para hardware específico
 - Reducción de tiempo de arranque y uso de memoria
 - Integración de controladores específicos
