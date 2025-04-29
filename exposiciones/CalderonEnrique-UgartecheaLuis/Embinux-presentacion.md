@@ -98,7 +98,7 @@ date:
 
 - Comando `make` inicia la compilación
 - Genera imagen de disco para instalación
-- No requiere compilador externo
+- No requiere compilador específico para la arquitectura
 - Detecta automáticamente número de núcleos
 
 # Instalación
