@@ -1,0 +1,61 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Mecanismos para mantener la coherencia en caché
+
+- Tema presentado por :: María Fernanda Ayala y Elizabeth Portilla
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   8.11 |  0.3 |               9.55 |  0.7 |    9.12 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 4 | 3 |  8.86 |
+| Nivel        | 0 | 0 | 2 | 3 | 2 |  8.00 |
+| Relevancia   | 0 | 0 | 0 | 3 | 4 |  9.14 |
+| Claridad     | 0 | 2 | 0 | 2 | 3 |  7.71 |
+| Presencia    | 1 | 1 | 1 | 2 | 2 |  6.86 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  8.11 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Ninguno de los compañeros dejó un comentario en texto abierto.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     9.55 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+¡Me pareció una muy buena exposición! El tema es complicado y árido de
+inicio, y me pareció muy bien presentado; tal vez no les jugó muy a favor
+lo difícil que es presentar cómo y cuándo se presentan estas situaciones.
+
+¡Me pareció excelente que compartan esta demostración!

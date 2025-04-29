@@ -1,0 +1,97 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Unix y su papel en la historia e los Sistemas Operativos
+
+- Tema presentado por :: Alan Acosta y José Ángel Rubio
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                    7.8 |  0.3 |               7.45 |  0.7 |    7.56 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 2 | 4 | 2 |  8.00 |
+| Nivel        | 0 | 0 | 4 | 0 | 4 |  8.00 |
+| Relevancia   | 0 | 0 | 1 | 4 | 3 |  8.50 |
+| Claridad     | 1 | 1 | 1 | 0 | 5 |  7.75 |
+| Presencia    | 0 | 3 | 1 | 2 | 2 |  6.75 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  7.80 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |            7 |     1.05 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     7.45 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- ¡Ojo! Varias veces en la exposición mencionan como ejemplos de
+  /“terminal”/ a los diferentes /shells/ (=bash=, =csh=, =ksh=, =sh=,
+  =zsh=...)
+  - La /terminal/ se refiere al dispositivo de entrada/salida que se
+    conectaba a la computadora, un remanente de la época del desarrollo
+    inicial de los Unixes. Aquí en la UNAM me tocó utilizar a principios
+    de los 1980s la [[https://i.pinimg.com/736x/5d/bc/10/5dbc1008e91d71a3fa1b50a88e301abe.jpg][Heathkit H19]]; había unas 10 terminales como la de la
+    foto conectadas a una PDP-11 y a una Foonly F-2; otra marca que fue
+    bastante popular fue [[https://www.vecmar.com/products/productpage.asp?pid=553-Wyse_160_Terminals][Wyse]]. Como pueden ver, son monitores y teclados
+    conectados a un puerto serial (sin lógica de procesamiento, únicamente
+    de presentación de texto en pantalla). Sus antecedentes directos son
+    los [[https://blog.solidsignal.com/news/fun-and-games/obsolete-technology-teletype/][teletipos]].
+  - Hoy en día usamos /emuladores de terminal/: Programas que se “conectan”
+    a un dispositivo virtual del kernel y presentan la funcionalidad de una
+    terminal. Algunos ejemplos conocidos de emuladores de terminal son son
+    [[https://en.wikipedia.org/wiki/Xterm][xterm]] y [[https://en.wikipedia.org/wiki/Rxvt][urxvt]]; la terminal que yo uso es [[https://en.wikipedia.org/wiki/Kitty_(terminal_emulator)][kitty]]. La de MacOS se llama,
+    sin mucha imaginación, [[https://en.wikipedia.org/wiki/Terminal_(macOS)][Terminal]].
+
+    Windows no tiene terminal como tal, pues su desarrollo histórico viene
+    de sistemas con /un/ teclado y /un/ monitor, por lo que la interfaz de
+    línea de comandos se llama técnicamente /consola/. Hay emuladores de
+    terminal en Windows, pero se usan para /conectarse con otros equipos/,
+    como [[https://en.wikipedia.org/wiki/PuTTY][PuTTY]].
+  - Los programas que ustedes mencionan son, sencillamente /[[https://es.wikipedia.org/wiki/Shell_de_Unix][shells]]/,
+    intérpretes de línea de comando.
+  - Les dejo la liga a un bonito texto que explica, partiendo desde el
+    /código morse/ y el telégrafo, estas ideas: [[https://thevaluable.dev/guide-terminal-shell-console/][A guide to the Terminal,
+    Console and Shell]].
+- La presentación me pareció más bien revuelta. Como se los mencioné desde
+  la revisión de su texto, comienzan hablando de la historia de Unix, y me
+  parece muy bien que terminaran hablando del /legado/ de Unix hacia
+  sistemas actuales. Sin embargo, a la parte en que presentan el uso de un
+  par de comandos de Unix... no le veo mucha relación con el tema
+  planteado, ni una muy clara planeación de qué comandos cubrir (y por
+  qué).
+- Se nota bastante claro las partes en que hablaban libremente y las partes
+  en que seguían un guión escrito. Leer un guión tiene como resultado una
+  presentación de ritmo más difícil de seguir, más tediosa 🙁 Les sugiero
+  trabajar en este punto.
