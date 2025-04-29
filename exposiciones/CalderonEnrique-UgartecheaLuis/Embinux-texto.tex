@@ -129,7 +129,7 @@
 
 	\subsection{Ventajas de Linux embebido}
 
-	Una de las principales ventajas de utilizar Linux en sistemas embebidos es el acceso a una gran comunidad y a una amplia gama de herramientas y bibliotecas. Facilitando el desarrollo y mantenimiento. Además, existen versiones específicas de Linux diseñadas para sistemas con recursos limitados, como \textit{Yocto}, \textit{Buildroot}, \textit{OpenWrt} o distribuciones como \textit{Raspbian} para Raspberry Pi.
+	Una de las principales ventajas de utilizar Linux en sistemas embebidos es el acceso a una gran comunidad y a una amplia gama de herramientas y bibliotecas. Facilitando el desarrollo y mantenimiento. Además, existen versiones específicas de Linux diseñadas para sistemas con recursos limitados, como \textit{Yocto}, \textit{Buildroot}, \textit{OpenWrt}, etc.
 
 	En este contexto, el kernel Linux puede ser configurado para soportar únicamente el hardware del sistema embebido en cuestión, reduciendo el tiempo de arranque y el uso de memoria. También es posible integrar controladores específicos y definir mecanismos de comunicación eficientes con los periféricos del dispositivo.
 
@@ -153,49 +153,49 @@
 
 	Estas aplicaciones son algunas de las más utilizadas aunque también se encuentra presente en otros dispositivos como cámaras de seguridad, drones, sistemas de control de acceso, sistemas de monitoreo ambiental, entre otros.
 
-	\section{Componentes}
+	% \section{Componentes}
 
-	\subsection{Kernel}
+	% \subsection{Kernel}
 
-	El \textbf{kernel} es el núcleo de un sistema operativo; actúa como intermediario entre el hardware y el software. Es responsable de gestionar el acceso al procesador, la memoria y los controladores (drivers) más importantes, permitiendo así la comunicación directa con el hardware.
+	% El \textbf{kernel} es el núcleo de un sistema operativo; actúa como intermediario entre el hardware y el software. Es responsable de gestionar el acceso al procesador, la memoria y los controladores (drivers) más importantes, permitiendo así la comunicación directa con el hardware.
 
-	Aunque puede variar en complejidad y diseño, un kernel suele estar organizado en varias capas funcionales:
+	% Aunque puede variar en complejidad y diseño, un kernel suele estar organizado en varias capas funcionales:
 
-	\begin{itemize}
-		\item \textbf{Interfaz con el hardware:} Es la capa más baja y se encarga de tareas como la gestión de controladores de red, controladores de buses como PCI Express, y otros elementos específicos del hardware.
-		\item \textbf{Gestión de memoria:} Asigna y distribuye la memoria entre los procesos, controla el acceso a la memoria física y virtual, y maneja técnicas como la paginación o la segmentación.
-		\item \textbf{Gestión de procesos:} Supervisa la creación, ejecución, suspensión y finalización de los procesos, además de encargarse de la planificación (scheduling) y sincronización entre ellos.
-		\item \textbf{Gestión de dispositivos:} Controla el acceso a los dispositivos de entrada/salida (E/S), como discos duros, impresoras, teclados, entre otros, a través de sus respectivos controladores.
-		\item \textbf{Gestión del sistema de archivos:} Regula el acceso a archivos y directorios, manteniendo la organización lógica de los datos almacenados y garantizando su integridad.
-	\end{itemize}
+	% \begin{itemize}
+	% 	\item \textbf{Interfaz con el hardware:} Es la capa más baja y se encarga de tareas como la gestión de controladores de red, controladores de buses como PCI Express, y otros elementos específicos del hardware.
+	% 	\item \textbf{Gestión de memoria:} Asigna y distribuye la memoria entre los procesos, controla el acceso a la memoria física y virtual, y maneja técnicas como la paginación o la segmentación.
+	% 	\item \textbf{Gestión de procesos:} Supervisa la creación, ejecución, suspensión y finalización de los procesos, además de encargarse de la planificación (scheduling) y sincronización entre ellos.
+	% 	\item \textbf{Gestión de dispositivos:} Controla el acceso a los dispositivos de entrada/salida (E/S), como discos duros, impresoras, teclados, entre otros, a través de sus respectivos controladores.
+	% 	\item \textbf{Gestión del sistema de archivos:} Regula el acceso a archivos y directorios, manteniendo la organización lógica de los datos almacenados y garantizando su integridad.
+	% \end{itemize}
 
-	\subsection{Sistema de archivos}
+	% \subsection{Sistema de archivos}
 
-	Un sistema de archivos es el componente del sistema operativo encargado de organizar, almacenar y recuperar datos en un medio de almacenamiento, como un disco duro o una memoria flash. Define cómo se estructuran los datos y cómo se accede a ellos.
+	% Un sistema de archivos es el componente del sistema operativo encargado de organizar, almacenar y recuperar datos en un medio de almacenamiento, como un disco duro o una memoria flash. Define cómo se estructuran los datos y cómo se accede a ellos.
 
-	\subsubsection{Componentes principales}
+	% \subsubsection{Componentes principales}
 
-	\begin{itemize}
-		\item \textbf{Estructura de directorios:} Organización jerárquica que permite agrupar archivos en carpetas y subcarpetas.
-		\item \textbf{I-nodos (o estructuras de control):} Contienen metadatos de cada archivo, como permisos, tamaño, fechas de creación/modificación y ubicación física en el disco.
-		\item \textbf{Bloques de datos:} Espacios del medio de almacenamiento donde se guarda el contenido real de los archivos.
-		\item \textbf{Tabla de asignación:} Registra cómo se distribuyen los bloques de datos entre los archivos. Ejemplos incluyen FAT (File Allocation Table) y estructuras similares en otros sistemas.
-		\item \textbf{Gestor de permisos:} Controla el acceso a archivos y directorios, definiendo qué usuarios pueden leer, escribir o ejecutar.
-		\item \textbf{Journaling:} Mecanismo que registra operaciones pendientes para mantener la integridad del sistema de archivos en caso de fallos o apagados inesperados.
-	\end{itemize}
+	% \begin{itemize}
+	% 	\item \textbf{Estructura de directorios:} Organización jerárquica que permite agrupar archivos en carpetas y subcarpetas.
+	% 	\item \textbf{I-nodos (o estructuras de control):} Contienen metadatos de cada archivo, como permisos, tamaño, fechas de creación/modificación y ubicación física en el disco.
+	% 	\item \textbf{Bloques de datos:} Espacios del medio de almacenamiento donde se guarda el contenido real de los archivos.
+	% 	\item \textbf{Tabla de asignación:} Registra cómo se distribuyen los bloques de datos entre los archivos. Ejemplos incluyen FAT (File Allocation Table) y estructuras similares en otros sistemas.
+	% 	\item \textbf{Gestor de permisos:} Controla el acceso a archivos y directorios, definiendo qué usuarios pueden leer, escribir o ejecutar.
+	% 	\item \textbf{Journaling:} Mecanismo que registra operaciones pendientes para mantener la integridad del sistema de archivos en caso de fallos o apagados inesperados.
+	% \end{itemize}
 
 	\section{Proceso de creación (buildroot)}
 
-	Para crear este sistema embebido, se usará buildroot. Buildroot es una herramienta de construcción de sistemas Linux embebidos que permite crear un sistema Linux completo a partir de un conjunto de paquetes y configuraciones.
+	Para crear este sistema embebido, se utilizará Buildroot. Buildroot es una herramienta de construcción de sistemas Linux embebidos que permite crear un sistema Linux completo a partir de un conjunto de paquetes y configuraciones.
 
-	Buildroot utiliza un proceso con cross-compilation para generar un sistema Linux que se puede ejecutar en una arquitectura diferente a la de la computadora de desarrollo. Esto es posible gracias a que buildroot incluye su propio compilador y herramientas de construcción, lo que facilita la creación de un sistema embebido personalizado.
+	Buildroot utiliza un proceso con cross-compilation para generar un sistema Linux que se puede ejecutar en una arquitectura diferente a la de la computadora de desarrollo. Esto es posible gracias a que Buildroot incluye su propio compilador y herramientas de construcción, lo que facilita la creación de un sistema embebido personalizado.
 
 	\subsection{Herramientas}
 
-	Para compilar un sistema embebido con buildroot, se necesitan las siguientes herramientas:
+	Para compilar un sistema embebido con Buildroot, se requieren las siguientes herramientas y condiciones:
 
 	\begin{itemize}
-		\item \textbf{Compilador:} Buildroot incluye su propio compilador, por lo que no es necesario instalar uno externo. Algunas de las opciones son \texttt{gcc} o \texttt{musl}.
+		\item \textbf{Compilador:} Buildroot puede generar su propio cross-compiler basado en \texttt{gcc},así como seleccionar diferentes bibliotecas estándar de C como \texttt{glibc}, \texttt{uClibc-ng} o \texttt{musl}.
 		\item \textbf{Herramientas de construcción:} Buildroot incluye herramientas de construcción como \texttt{make}, \texttt{tar}, \texttt{gzip}, entre otras.
 		\item \textbf{Sistema operativo:} Buildroot se puede ejecutar en cualquier sistema operativo Linux.
 		\item \textbf{Conexión a internet:} Se necesita una conexión a internet para descargar los paquetes y herramientas necesarias para la construcción del sistema embebido. Esto pues buildroot compila de fuente todos los paquetes necesarios para el sistema embebido.
