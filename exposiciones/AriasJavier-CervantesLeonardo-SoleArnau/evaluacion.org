@@ -1,0 +1,108 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Concurrencia en la programación funcional
+
+- Tema presentado por :: Leonardo Mikel Cervantes, Arnau Roger Solé y Javier Arias
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   8.44 |  0.3 |                9.1 |  0.7 |    8.90 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 2 | 3 | 4 |  8.44 |
+| Nivel        | 0 | 0 | 2 | 2 | 5 |  8.67 |
+| Relevancia   | 0 | 0 | 0 | 3 | 6 |  9.33 |
+| Claridad     | 0 | 0 | 3 | 2 | 4 |  8.22 |
+| Presencia    | 0 | 1 | 2 | 4 | 2 |  7.56 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  8.44 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- Un tema muy interesante y muy poco conocido para mi, considero que la
+  informacion e ejemplos fueron de gran utilidad. Solo diria que el
+  compañero Mikel le costo un poco el explicar, se comprende el nerviosismo
+  del grabar un video hablando de este tipo de temas, pero fuera de eso, la
+  expo fue muy interesante.
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profundidad    |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |            7 |     1.05 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     9.10 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Su presentación es muy interesante. Por la fluidez en la explicación, me
+  parece claro que Arnau es, de los tres, quien más se ha compenetrado con
+  el tema; los otros dos compañeros explican bien los conceptos, pero se
+  “atoran” un poco.
+- La parte de la presentación que hace Mikel quedó a muy baja resolución, y
+  dado el tamaño del código que presentan, en varias de las láminas no se
+  alcanza a entender el código que va explicando el compañero 🙁
+- Quisiera agregar a lo que presentan: Otra característica de la
+  programación funcional que lleva a un mayor uso de memoria es que, dado
+  que los resultados de las /funciones puras/ es por definición /estable/,
+  el modo de operación habitual de varios compiladores de este tipo
+  incluyen hacer una especie de caché de resultados de las funciones, de
+  forma que llamadas reiteradas a una función con el mismo valor no lo
+  vuelvan a calcular.
+
+  Por poner un ejemplo (en un lenguaje que /no es funcional/ y cuyas
+  funciones /no son puras/), consideren el cálculo de la secuencia de
+  Fibonacci en Python:
+  #+begin_src python
+    def fib(n):
+        if not(isinstance(n, int)) or n < 0:
+            raise(RuntimeError, 'Debe invocarse con un entero positivo')
+        if n==0 or n==1:
+            return 1
+        return fib(n-1) + fib(n-2)
+  #+end_src
+  La implementación es correcta, pero la recursión hace que =fib(20)= ya
+  demore lo suficiente para que sea (apenas) perceptible, y =fib(30)=
+  demora un segundo (y el crecimiento... es rapido). Sin embargo, asumiendo
+  que =fib(n)= se comporta como una función pura:
+  #+begin_src python
+    res_de_fib = {}
+    def fib(n):
+        if not(isinstance(n, int)) or n < 0:
+            raise(RuntimeError, 'Debe invocarse con un entero positivo')
+        if n in res_de_fib:
+            return res_de_fib[n]
+        if n==0 or n==1:
+            return 1
+        res_de_fib[n] = fib(n-1) + fib(n-2)
+        return res_de_fib[n]
+  #+end_src
+  Los resultados incluso de números grandes se entregan prácticamente de
+  inmediato, porque /se resolvió la recurrencia/ (a costa, claro, de un
+  pequeño uso de memoria).

@@ -1,0 +1,85 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Proceso de creación de un sistema Linux embebido
+
+- Tema presentado por :: Luis Antonio Ugartechea y Enrique Job Calderón
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.13 |  0.3 |               8.65 |  0.7 |    8.79 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 2 | 9 |  9.64 |
+| Nivel        | 0 | 0 | 2 | 0 | 9 |  9.27 |
+| Relevancia   | 0 | 0 | 0 | 3 | 8 |  9.45 |
+| Claridad     | 0 | 0 | 3 | 2 | 6 |  8.55 |
+| Presencia    | 0 | 1 | 2 | 0 | 8 |  8.73 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.13 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- niceee
+- Ninguno :)
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profundidad    |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |            7 |     1.05 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |           10 |      2.5 |
+| Uso de recursos visuales           |   0.15 |            4 |      0.6 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     8.65 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Un microprocesador no está /diseñado para realizar las tareas específicas
+  del sistema embebido/: Un microprocesador es una máquina de propósito
+  general (excepto casos muy específicos, pero... hace falta muuuuuucho
+  para que una idea cualquiera que tenemos de automatización o lo que sea
+  amerite el diseño de un procesador acorde 😉)
+  - Tampoco /gestiona los recursos/: Eso lo hace el sistema operativo
+    (software) que corre en dicho equipo. El procesador simplemente va
+    ejecutando siempre la siguiente instrucción, a ciegas y sin preguntar.
+- Ummm... Generaron el video sin verificar que estuviera capturando la
+  salida de su terminal 😐
+  - La única interacción que vimos es la que presentaron como capturas de
+    pantalla como parte de la presentación 🙁
+  - Pero los dos fragmentos más interesantes no aparecen en el video que
+    compartieron 🙁
+- ¿ =bs=4M= para el =dd=? ¡Uy, qué atascados! 😉 Yo me siento muy atascado
+  por usar =256K=...
+  - Sugiero que cuando usan =dd= usen la opción =oflags=dsync=; esto hace
+    que cada llamada de escritura vaya seguida de un =sync()=, lo cual no
+    únicamente les ahorra el correr el =sync()= final, sino que va
+    reportando 
+- Les dejo una liga que puede interesarles como ejemplo de /IoT/ y de
+  /automatización de casa/: Mi amigo Jonathan McDowell está construyendo un
+  asistente de voz similar a los /Alexa/ ([[https://www.earth.li/~noodles/blog/2025/04/voice-assistant-atom-echo.html][parte 1]], [[https://www.earth.li/~noodles/blog/2025/05/voice-assistant-whisper.html][parte 2]]), con
+  reconocimiento de voz, y con capacidad de controlar los [[https://www.earth.li/~noodles/blog/tags/homeautomation/][diversos
+  componentes de su automatización de casa]].
