@@ -1,0 +1,71 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Seguridad en el kernel: Cómo proteger a un SO contra rootkits
+
+- Tema presentado por :: Héctor Zambrano y Anuar Meléndez
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.43 |  0.3 |               6.55 |  0.7 |    7.41 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 1 | 0 | 6 |  9.43 |
+| Nivel        | 0 | 0 | 0 | 1 | 6 |  9.71 |
+| Relevancia   | 0 | 0 | 0 | 1 | 6 |  9.71 |
+| Claridad     | 0 | 1 | 0 | 0 | 6 |  9.14 |
+| Presencia    | 0 | 1 | 0 | 0 | 6 |  9.14 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.43 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- (ningún comentario)
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |            4 |      0.6 |
+| Organización                       |   0.15 |            7 |     1.05 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     6.55 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Si bien hacen una buena lectura, en que se nota que se guían por el
+  contenido que aparece en pantalla pero no lo van leyendo demasiado
+  “mecánicamente”, queda mucho la sensación de que van presentando cada
+  lámina como temas separados, sin relación entre sí
+- Eso me lleva a otro tema importante: Falta hilación entre los temas. En
+  una presentación, hay que intentar que el avance vaya siendo natural y
+  “suave”. Si (casi) a cada lámina se siente que están volviendo a iniciar,
+  les está faltando hilación/fluidez.
+- La estructura y tipo de redacción que presentan es muy consistente con el
+  estilo general de los LLMs. Los conceptos presentados dan mucho la
+  impresión de que son texto leído, pero no interiorizado... ¿Seguros que
+  es información /generada/ por ustedes?

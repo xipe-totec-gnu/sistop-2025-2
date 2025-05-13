@@ -1,0 +1,65 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Sistemas de archivos NTFS y exFat
+
+- Tema presentado por :: Yordi Josué Jiménez y Gustavo Valenzuela
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                    9.7 |  0.3 |               9.25 |  0.7 |    9.39 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 1 | 7 |  9.75 |
+| Nivel        | 0 | 0 | 0 | 1 | 7 |  9.75 |
+| Relevancia   | 0 | 0 | 0 | 1 | 7 |  9.75 |
+| Claridad     | 0 | 0 | 0 | 2 | 6 |  9.50 |
+| Presencia    | 0 | 0 | 0 | 1 | 7 |  9.75 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.70 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- UwU
+- ¡Qué increíble presentación!
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |           10 |      1.5 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     9.25 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- ¡Excelente edición! Luego luego se nota quién tiene experiencia como
+  /streamer/ 😉
+  - Aunque hay un salto importante y no explicado entre la primera parte,
+    en que presentan los sistemas de archivos, y la segunda, cuando hacen
+    los ejemplos de código.

@@ -1,0 +1,76 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Sistema de archivos Btrfs (B-Tree File System)
+
+- Tema presentado por :: Christian Gustavo Romero e Iker Ávila
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   8.67 |  0.3 |                8.8 |  0.7 |    8.76 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 0 | 3 | 3 |  9.00 |
+| Nivel        | 0 | 0 | 0 | 2 | 4 |  9.33 |
+| Relevancia   | 0 | 0 | 0 | 3 | 3 |  9.00 |
+| Claridad     | 1 | 0 | 0 | 2 | 3 |  8.00 |
+| Presencia    | 0 | 1 | 0 | 3 | 2 |  8.00 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  8.67 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- (ningún comentario recibido)
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     8.80 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+
+- La presentación la van leyendo buena parte del tiempo del documento
+  que entregaron. Eso hace que el ritmo de presentacion sea un poco lento y
+  tedioso de entender
+  - Y de hecho, cuando extienden algo que no está escrito, se nota de
+    inmediato el cambio de ritmo.
+- Al hacer la comparativa, llegan a conclusiones de qué sistemas de
+  archivos son mejores para uso en escritorio, en contenedores o en entorno
+  empresarial. Sin embargo, no explican /por qué/ sostienen esas
+  conclusiones. Sería de esperarse por lo menos dedicar un breve párrafo a
+  justificar estas decisiones.
+- ¡Qué abuso de =sudo= que veo en su demostración! 🙁 =sudo= debe
+  utilizarse /únicamente cuando es necesario/; acostúmbrense a trabajar
+  /siempre que sea posible/ como usuario normal, y únicamente utilizar
+  =sudo= para las operaciones que requieran permisos de superusuario.
+- La presentación es buena, tiene buena profundidad y contenido
+  interesante, aunque mantener un mejor ritmo podría mejorarla mucho.
