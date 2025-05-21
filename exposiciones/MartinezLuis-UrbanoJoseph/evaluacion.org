@@ -1,0 +1,89 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Sistemas operativos en equipos náuticos
+
+- Tema presentado por :: Luis Martínez y Joseph Urbano
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.09 |  0.3 |               8.05 |  0.7 |    8.36 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 1 | 3 | 7 |  9.09 |
+| Nivel        | 0 | 0 | 0 | 5 | 6 |  9.09 |
+| Relevancia   | 0 | 0 | 0 | 4 | 7 |  9.27 |
+| Claridad     | 0 | 0 | 1 | 3 | 7 |  9.09 |
+| Presencia    | 0 | 1 | 0 | 3 | 7 |  8.91 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.09 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- Excelente exposición. Se nota un claro dominio del tema aunque es muy
+  larga la duración
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |           10 |       3. |
+| Fuentes bibliográficas             |   0.15 |           10 |      1.5 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            4 |       1. |
+| Uso de recursos visuales           |   0.15 |            7 |     1.05 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     8.05 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- ¡34 minutos de exposición! Es prácticamente el doble del tiempo
+  estimado. Voy a verla a 1.5× su velocidad, lo cual sin duda afectará cómo
+  la alcanzo a apreciar... y estoy seguro que varios de sus compañeros
+  habrán decidido hacer esto mismo (o habrán abandonado a medio camino) 🙁
+  - El tema me parece _muy_ interesante, y seguro vale la pena escucharlo
+    con interés. Pero el ámbito en que lo están presentando no es el
+    adecuado para este nivel de detalle que dan
+- Las láminas llevan mucho texto, y muy frecuentemente, leen directamente
+  de ellas.
+  - En algunas láminas, leen una línea, y explican de forma independiente;
+    esto lleva a un mucho mejor ritmo, y demuestran su interés y
+    conocimiento por el tema mucho mejor.
+  - Si bien las láminas están cargadas, el emplear recursos dinámicos en
+    las imágenes de fondo es un buen agregado 🙂
+- Cuando explican subsistmas como AIS o ECDIS, ¿es _realmente_ el sistema
+  operativo el que lo gestiona?
+  - Me parece que los sistemas operativos se limitan a gestionar las
+    señales y los procesos en tiempo real, pero son /los programas de
+    aplicación/ los que se encargan de las cartas de navegación, la emisión
+    de identificación, los sensores necesarios, etc.
+  - Recuerden lo que discutimos a lo largo del cursado respecto a el /papel
+    básico/ que debe ocupar el sistema operativo, en contraposición con /la
+    flexibilidad/ que nos da el implementar el conocimiento específico en
+    programas de aplicación.
+    - De hecho, esto mismo lo presentan ustedes sin decirlo muy
+      explícitamente,, hacia los 23:30, en la lámina que está titulada
+      Zephyr pero habla de QNX 😉
+- La presentación es muy original y parte de un ángulo muy único e
+  interesante. ¡Muchas gracias por compartirla con nosotros!

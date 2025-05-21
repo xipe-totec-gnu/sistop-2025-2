@@ -1,0 +1,80 @@
+#+title:  Evaluación de la exposición
+#+author: Gunnar Wolf
+
+* Aspectos de sistemas operativos en los dispositivos IoT
+
+- Tema presentado por :: Rodrigo García Peñafort y Gustavo Santana
+- Calificación global :: Por favor lean todo el archivo para entender de dónde
+  vienen todos estos números 😉
+
+|------------------------+------+--------------------+------+---------|
+| Evaluación  compañeros | Peso | Evaluación docente | Peso | *Total* |
+|------------------------+------+--------------------+------+---------|
+|                   9.05 |  0.3 |                  7 |  0.7 |    7.62 |
+|------------------------+------+--------------------+------+---------|
+#+TBLFM: @2$5=$1*$2+$3*$4;f-2
+
+* Comentarios
+
+Dado que es una presentación en video, no puedo evaluar /dominio del tema/ y
+/presencia/ como lo haríamos habitualmente. Me centro en las respuestas que
+hagan a las preguntas de sus compañeros para el primero y en si la presentación
+"suena" leída directamente del material que prepararon o expuesta más libremente
+para el segundo.
+
+* Evaluación grupal
+
+|              | 1 | 2 | 3 | 4 | 5 | Total |
+|--------------+---+---+---+---+---+-------|
+| Originalidad | 0 | 0 | 1 | 1 | 6 |  9.25 |
+| Nivel        | 0 | 0 | 2 | 2 | 4 |  8.50 |
+| Relevancia   | 0 | 0 | 0 | 2 | 6 |  9.50 |
+| Claridad     | 0 | 0 | 1 | 2 | 5 |  9.00 |
+| Presencia    | 0 | 0 | 1 | 2 | 5 |  9.00 |
+|--------------+---+---+---+---+---+-------|
+|              |   |   |   |   |   |  9.05 |
+#+TBLFM: @2$7..@6$7=10 * (0.2*$2 + 0.4*$3 + 0.6*$4 + 0.8*$5 + $6 ) / vsum($2..$6); f-2::@7$7=vmean(@2$7..@6$7); f-2
+
+** Comentarios de los compañeros
+
+Su exposición recibió los siguientes comentarios anonimizados por
+parte de sus compañeros:
+
+- Sin comentarios 🙂
+
+* Evaluación por parte del docente
+
+| *Aspecto*                          | *Peso* | *Evaluación* | *Puntos* |
+|------------------------------------+--------+--------------+----------|
+| Contenido técnico y profunidad     |    0.3 |            7 |      2.1 |
+| Fuentes bibliográficas             |   0.15 |            7 |     1.05 |
+| Organización                       |   0.15 |           10 |      1.5 |
+| Comunicación oral y uso del tiempo |   0.25 |            7 |     1.75 |
+| Uso de recursos visuales           |   0.15 |            4 |      0.6 |
+|------------------------------------+--------+--------------+----------|
+| *Global*                           |        |              |     7.00 |
+#+TBLFM: @<<$4..@>>$4=$2*$3::$4=vsum(@<<..@>>);f-2
+
+** Comentarios del docente
+- Al presentar el texto van claramente leyendo del texto preparado. Si bien
+  haces un buen esfuerzo en no decirlo exactamente igual y dándole algo de
+  entonación, se nota mucho, y hace más “pastoso” ir siguiendo la
+  presentación 🙁
+- La presentación es /descriptiva/ (cuenta /qué es/, no /cómo lo hace/) y
+  da una panorámica de características. Las presentaciones que les pedí
+  para esta materia debería llevar una mayor carga técnica.
+- Volver a hablar de /qué es un sistema operativo/ o volver a presentar las
+  características de los más conocidos. La tabla comparativa (pág. 2/3 del
+  documento) resulta un poco tediosa de ir leyendo... Explicarla renglón
+  por renglón, sin siquiera poner la tabla en pantalla, estoy seguro que
+  hace más difícil todavía el irlos siguiendo 🙁
+- Por fin, hacia los últimos 5 minutos vemos algo de “acción”, mostrando el
+  uso de alguno de estos sistemas 😃
+  - Si bien el ejemplo es muy trivial (únicamente un /ping ICMP/, no
+    hicieron uso de ningún protocolo que pudiera ser pertinente a IoT), es
+    muy bueno ver que probaron “qué se siente” 😉
+  - Resultaría mucho mejor no poner los pantallazos estáticos de las
+    terminales al finalizar el proceso, sino que clonar, lanzar y comunicar
+    las VMs /en vivo/ para que los compañeros lo vieran.
+
+
